@@ -29,6 +29,9 @@ Topgoalscorer of tournament = 4 pts
 Team with worst record = 3 pts
 Correct goalscorer in game = 2 pts
 
+-----------------------------------------------------------------------------------------------------------------------
+link to a json file which included the first day of WC: http://footballdb.herokuapp.com/api/v1/event/world.2014/round/1
+
 
 
 
