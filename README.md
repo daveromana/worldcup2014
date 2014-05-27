@@ -30,7 +30,9 @@ Team with worst record = 3 pts
 Correct goalscorer in game = 2 pts
 
 -----------------------------------------------------------------------------------------------------------------------
-link to a json file which included the first day of WC: http://footballdb.herokuapp.com/api/v1/event/world.2014/round/1
+link to a json file which includes all the games in the 2010 WC: http://www.kimonolabs.com/api/9jx2j8b4?apikey=b5e0dc064de0b4591f16d850ae429fca
+
+
 
 
 
