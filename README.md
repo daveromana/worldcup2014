@@ -5,7 +5,7 @@ Guess game for World Cup 2014
 
 Requirements: 
 
-Login system (done, waiting to be pushed)
+Login system (done, waiting to be pushed) ---- DONE
 
 User has to guess on the following things:
 
@@ -30,7 +30,15 @@ Team with worst record = 3 pts
 Correct goalscorer in game = 2 pts
 
 -----------------------------------------------------------------------------------------------------------------------
-link to a json file which included the first day of WC: http://footballdb.herokuapp.com/api/v1/event/world.2014/round/1
+link to a json file which includes all the games in the 2010 WC: http://www.kimonolabs.com/api/9jx2j8b4?apikey=b5e0dc064de0b4591f16d850ae429fca
+
+-----------------------------------------------------------------------------------------------------------------------
+TODO:
+
+1. Setup a page with the fixtures, results and goalscorers from WC2010(will then edit the JSON and change it to 2014). This page will be display the same material for each user.
+2. Setup a user-speficic page which allows him to guess on the results, goalscorers and overall results.
+
+
 
 
 
