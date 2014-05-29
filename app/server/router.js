@@ -2,6 +2,7 @@
 var CT = require('./modules/country-list');
 var AM = require('./modules/account-manager');
 var EM = require('./modules/email-dispatcher');
+var fs = require('fs');
 
 module.exports = function(app) {
 
@@ -182,12 +183,30 @@ module.exports = function(app) {
 // View the results of 2010 //
 	
 	app.get('/results2010', function(req, res) {
-	    if (req.session.user == null){
-	// if user is not logged-in redirect back to login page //
+	    if (req.session.user == null)
+	    {
+			// if user is not logged-in redirect back to login page //
 	        res.redirect('/');
-	    }   else{
-			res.render('results2010', {
-				title : 'Results of 2010'
+	    }
+	    else
+	   	{
+			var file = __dirname + '/files/results2010.json';
+			fs.readFile(file, 'utf8', function (err, data)
+			{
+				if (err)
+				{
+					console.log('Error: ' + err);
+				}
+				else
+				{
+					data = JSON.parse(data);
+					console.log(data);
+					res.render('results2010',
+					{
+						title : 'Results of 2010',
+						resultsof2010 : data
+					});
+				}
 			});
 	    }
 	});

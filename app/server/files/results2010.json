@@ -1,0 +1,934 @@
+{
+  "name": "World Cup - Groups",
+  "count": 52,
+  "frequency": "realtime",
+  "version": 3,
+  "newdata": true,
+  "lastrunstatus": "success",
+  "lastsuccess": "Sun May 25 2014 23:34:30 GMT+0000 (UTC)",
+  "results": {
+    "Group A": [
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/South_Africa_national_football_team",
+          "text": "South Africa"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Siphiwe_Tshabalala",
+          "text": "Tshabalala"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Mexico_national_football_team",
+          "text": "Mexico"
+        },
+        "awayscorer": {
+          "href": "http://en.wikipedia.org/wiki/Rafael_M%C3%A1rquez",
+          "text": "Márquez"
+        },
+        "scoreline": "1–1"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Uruguay_national_football_team",
+          "text": "Uruguay"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/France_national_football_team",
+          "text": "France"
+        },
+        "awayscorer": "",
+        "scoreline": "0–0"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/South_Africa_national_football_team",
+          "text": "South Africa"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Uruguay_national_football_team",
+          "text": "Uruguay"
+        },
+        "awayscorer": [
+          {
+            "href": "http://en.wikipedia.org/wiki/Diego_Forl%C3%A1n",
+            "text": "Forlán"
+          },
+          {
+            "href": "http://en.wikipedia.org/wiki/%C3%81lvaro_Pereira",
+            "text": "Á. Pereira"
+          }
+        ],
+        "scoreline": "0–3"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/France_national_football_team",
+          "text": "France"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Mexico_national_football_team",
+          "text": "Mexico"
+        },
+        "awayscorer": [
+          {
+            "href": "http://en.wikipedia.org/wiki/Javier_Hern%C3%A1ndez_Balc%C3%A1zar",
+            "text": "Hernández"
+          },
+          {
+            "href": "http://en.wikipedia.org/wiki/Cuauht%C3%A9moc_Blanco",
+            "text": "Blanco"
+          }
+        ],
+        "scoreline": "0–2"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Mexico_national_football_team",
+          "text": "Mexico"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Uruguay_national_football_team",
+          "text": "Uruguay"
+        },
+        "awayscorer": {
+          "href": "http://en.wikipedia.org/wiki/Luis_Su%C3%A1rez",
+          "text": "Suárez"
+        },
+        "scoreline": "0–1"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/France_national_football_team",
+          "text": "France"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Florent_Malouda",
+          "text": "Malouda"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/South_Africa_national_football_team",
+          "text": "South Africa"
+        },
+        "awayscorer": [
+          {
+            "href": "http://en.wikipedia.org/wiki/Bongani_Khumalo",
+            "text": "Khumalo"
+          },
+          {
+            "href": "http://en.wikipedia.org/wiki/Katlego_Mphela",
+            "text": "Mphela"
+          }
+        ],
+        "scoreline": "1–2"
+      },
+      {
+        "hometeam": "",
+        "homescorers": "",
+        "awayteam": "",
+        "awayscorer": "",
+        "scoreline": ""
+      },
+      {
+        "hometeam": "",
+        "homescorers": "",
+        "awayteam": "",
+        "awayscorer": "",
+        "scoreline": ""
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/South_Korea_national_football_team",
+          "text": "South Korea"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Lee_Jung-Soo",
+          "text": "Lee Jung-Soo"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Greece_national_football_team",
+          "text": "Greece"
+        },
+        "awayscorer": "",
+        "scoreline": "2–0"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Argentina_national_football_team",
+          "text": "Argentina"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Gabriel_Heinze",
+          "text": "Heinze"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Nigeria_national_football_team",
+          "text": "Nigeria"
+        },
+        "awayscorer": "",
+        "scoreline": "1–0"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Argentina_national_football_team",
+          "text": "Argentina"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Park_Chu-Young",
+          "text": "Park Chu-Young"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/South_Korea_national_football_team",
+          "text": "South Korea"
+        },
+        "awayscorer": {
+          "href": "http://en.wikipedia.org/wiki/Lee_Chung-Yong",
+          "text": "Lee Chung-Yong"
+        },
+        "scoreline": "4–1"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Greece_national_football_team",
+          "text": "Greece"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Dimitris_Salpingidis",
+          "text": "Salpingidis"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Nigeria_national_football_team",
+          "text": "Nigeria"
+        },
+        "awayscorer": {
+          "href": "http://en.wikipedia.org/wiki/Kalu_Uche",
+          "text": "Uche"
+        },
+        "scoreline": "2–1"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Nigeria_national_football_team",
+          "text": "Nigeria"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Kalu_Uche",
+          "text": "Uche"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/South_Korea_national_football_team",
+          "text": "South Korea"
+        },
+        "awayscorer": [
+          {
+            "href": "http://en.wikipedia.org/wiki/Lee_Jung-Soo",
+            "text": "Lee Jung-Soo"
+          },
+          {
+            "href": "http://en.wikipedia.org/wiki/Park_Chu-Young",
+            "text": "Park Chu-Young"
+          }
+        ],
+        "scoreline": "2–2"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Greece_national_football_team",
+          "text": "Greece"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Argentina_national_football_team",
+          "text": "Argentina"
+        },
+        "awayscorer": [
+          {
+            "href": "http://en.wikipedia.org/wiki/Mart%C3%ADn_Demichelis",
+            "text": "Demichelis"
+          },
+          {
+            "href": "http://en.wikipedia.org/wiki/Mart%C3%ADn_Palermo",
+            "text": "Palermo"
+          }
+        ],
+        "scoreline": "0–2"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/England_national_football_team",
+          "text": "England"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Steven_Gerrard",
+          "text": "Gerrard"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/United_States_men%27s_national_soccer_team",
+          "text": "United States"
+        },
+        "awayscorer": {
+          "href": "http://en.wikipedia.org/wiki/Clint_Dempsey",
+          "text": "Dempsey"
+        },
+        "scoreline": "1–1"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Algeria_national_football_team",
+          "text": "Algeria"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Slovenia_national_football_team",
+          "text": "Slovenia"
+        },
+        "awayscorer": {
+          "href": "http://en.wikipedia.org/wiki/Robert_Koren",
+          "text": "Koren"
+        },
+        "scoreline": "0–1"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Slovenia_national_football_team",
+          "text": "Slovenia"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Valter_Birsa",
+          "text": "Birsa"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/United_States_men%27s_national_soccer_team",
+          "text": "United States"
+        },
+        "awayscorer": [
+          {
+            "href": "http://en.wikipedia.org/wiki/Landon_Donovan",
+            "text": "Donovan"
+          },
+          {
+            "href": "http://en.wikipedia.org/wiki/Michael_Bradley_(soccer)",
+            "text": "Bradley"
+          }
+        ],
+        "scoreline": "2–2"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/England_national_football_team",
+          "text": "England"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Algeria_national_football_team",
+          "text": "Algeria"
+        },
+        "awayscorer": "",
+        "scoreline": "0–0"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Slovenia_national_football_team",
+          "text": "Slovenia"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/England_national_football_team",
+          "text": "England"
+        },
+        "awayscorer": {
+          "href": "http://en.wikipedia.org/wiki/Jermain_Defoe",
+          "text": "Defoe"
+        },
+        "scoreline": "0–1"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/United_States_men%27s_national_soccer_team",
+          "text": "United States"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Landon_Donovan",
+          "text": "Donovan"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Algeria_national_football_team",
+          "text": "Algeria"
+        },
+        "awayscorer": "",
+        "scoreline": "1–0"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Serbia_national_football_team",
+          "text": "Serbia"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Ghana_national_football_team",
+          "text": "Ghana"
+        },
+        "awayscorer": {
+          "href": "http://en.wikipedia.org/wiki/Asamoah_Gyan",
+          "text": "Gyan"
+        },
+        "scoreline": "0–1"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Germany_national_football_team",
+          "text": "Germany"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Lukas_Podolski",
+          "text": "Podolski"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Australia_national_association_football_team",
+          "text": "Australia"
+        },
+        "awayscorer": "",
+        "scoreline": "4–0"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Germany_national_football_team",
+          "text": "Germany"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Serbia_national_football_team",
+          "text": "Serbia"
+        },
+        "awayscorer": {
+          "href": "http://en.wikipedia.org/wiki/Milan_Jovanovi%C4%87_(footballer_born_1981)",
+          "text": "Jovanović"
+        },
+        "scoreline": "0–1"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Ghana_national_football_team",
+          "text": "Ghana"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Asamoah_Gyan",
+          "text": "Gyan"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Australia_national_association_football_team",
+          "text": "Australia"
+        },
+        "awayscorer": {
+          "href": "http://en.wikipedia.org/wiki/Brett_Holman",
+          "text": "Holman"
+        },
+        "scoreline": "1–1"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Ghana_national_football_team",
+          "text": "Ghana"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Germany_national_football_team",
+          "text": "Germany"
+        },
+        "awayscorer": {
+          "href": "http://en.wikipedia.org/wiki/Mesut_%C3%96zil",
+          "text": "Özil"
+        },
+        "scoreline": "0–1"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Australia_national_association_football_team",
+          "text": "Australia"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Tim_Cahill",
+          "text": "Cahill"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Serbia_national_football_team",
+          "text": "Serbia"
+        },
+        "awayscorer": {
+          "href": "http://en.wikipedia.org/wiki/Marko_Panteli%C4%87",
+          "text": "Pantelić"
+        },
+        "scoreline": "2–1"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Netherlands_national_football_team",
+          "text": "Netherlands"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Daniel_Agger",
+          "text": "Agger"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Denmark_national_football_team",
+          "text": "Denmark"
+        },
+        "awayscorer": "",
+        "scoreline": "2–0"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Japan_national_football_team",
+          "text": "Japan"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Keisuke_Honda",
+          "text": "Honda"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Cameroon_national_football_team",
+          "text": "Cameroon"
+        },
+        "awayscorer": "",
+        "scoreline": "1–0"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Netherlands_national_football_team",
+          "text": "Netherlands"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Wesley_Sneijder",
+          "text": "Sneijder"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Japan_national_football_team",
+          "text": "Japan"
+        },
+        "awayscorer": "",
+        "scoreline": "1–0"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Cameroon_national_football_team",
+          "text": "Cameroon"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Samuel_Eto%27o",
+          "text": "Eto'o"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Denmark_national_football_team",
+          "text": "Denmark"
+        },
+        "awayscorer": [
+          {
+            "href": "http://en.wikipedia.org/wiki/Nicklas_Bendtner",
+            "text": "Bendtner"
+          },
+          {
+            "href": "http://en.wikipedia.org/wiki/Dennis_Rommedahl",
+            "text": "Rommedahl"
+          }
+        ],
+        "scoreline": "1–2"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Denmark_national_football_team",
+          "text": "Denmark"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Jon_Dahl_Tomasson",
+          "text": "Tomasson"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Japan_national_football_team",
+          "text": "Japan"
+        },
+        "awayscorer": [
+          {
+            "href": "http://en.wikipedia.org/wiki/Keisuke_Honda",
+            "text": "Honda"
+          },
+          {
+            "href": "http://en.wikipedia.org/wiki/Yasuhito_End%C5%8D",
+            "text": "Endō"
+          },
+          {
+            "href": "http://en.wikipedia.org/wiki/Shinji_Okazaki",
+            "text": "Okazaki"
+          }
+        ],
+        "scoreline": "1–3"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Cameroon_national_football_team",
+          "text": "Cameroon"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Samuel_Eto%27o",
+          "text": "Eto'o"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Netherlands_national_football_team",
+          "text": "Netherlands"
+        },
+        "awayscorer": [
+          {
+            "href": "http://en.wikipedia.org/wiki/Robin_van_Persie",
+            "text": "Van Persie"
+          },
+          {
+            "href": "http://en.wikipedia.org/wiki/Klaas-Jan_Huntelaar",
+            "text": "Huntelaar"
+          }
+        ],
+        "scoreline": "1–2"
+      },
+      {
+        "hometeam": "",
+        "homescorers": "",
+        "awayteam": "",
+        "awayscorer": "",
+        "scoreline": ""
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Italy_national_football_team",
+          "text": "Italy"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Daniele_De_Rossi",
+          "text": "De Rossi"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Paraguay_national_football_team",
+          "text": "Paraguay"
+        },
+        "awayscorer": {
+          "href": "http://en.wikipedia.org/wiki/Antol%C3%ADn_Alcaraz",
+          "text": "Alcaraz"
+        },
+        "scoreline": "1–1"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/New_Zealand_national_football_team",
+          "text": "New Zealand"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Winston_Reid_(footballer)",
+          "text": "Reid"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Slovakia_national_football_team",
+          "text": "Slovakia"
+        },
+        "awayscorer": {
+          "href": "http://en.wikipedia.org/wiki/R%C3%B3bert_Vittek",
+          "text": "Vittek"
+        },
+        "scoreline": "1–1"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Slovakia_national_football_team",
+          "text": "Slovakia"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Paraguay_national_football_team",
+          "text": "Paraguay"
+        },
+        "awayscorer": [
+          {
+            "href": "http://en.wikipedia.org/wiki/Enrique_Vera",
+            "text": "Vera"
+          },
+          {
+            "href": "http://en.wikipedia.org/wiki/Cristian_Riveros",
+            "text": "Riveros"
+          }
+        ],
+        "scoreline": "0–2"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Italy_national_football_team",
+          "text": "Italy"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Vincenzo_Iaquinta",
+          "text": "Iaquinta"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/New_Zealand_national_football_team",
+          "text": "New Zealand"
+        },
+        "awayscorer": {
+          "href": "http://en.wikipedia.org/wiki/Shane_Smeltz",
+          "text": "Smeltz"
+        },
+        "scoreline": "1–1"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Paraguay_national_football_team",
+          "text": "Paraguay"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/New_Zealand_national_football_team",
+          "text": "New Zealand"
+        },
+        "awayscorer": "",
+        "scoreline": "0–0"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Slovakia_national_football_team",
+          "text": "Slovakia"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/R%C3%B3bert_Vittek",
+          "text": "Vittek"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Italy_national_football_team",
+          "text": "Italy"
+        },
+        "awayscorer": [
+          {
+            "href": "http://en.wikipedia.org/wiki/Antonio_Di_Natale",
+            "text": "Di Natale"
+          },
+          {
+            "href": "http://en.wikipedia.org/wiki/Fabio_Quagliarella",
+            "text": "Quagliarella"
+          }
+        ],
+        "scoreline": "3–2"
+      },
+      {
+        "hometeam": "",
+        "homescorers": "",
+        "awayteam": "",
+        "awayscorer": "",
+        "scoreline": ""
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Ivory_Coast_national_football_team",
+          "text": "Ivory Coast"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Portugal_national_football_team",
+          "text": "Portugal"
+        },
+        "awayscorer": "",
+        "scoreline": "0–0"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Brazil_national_football_team",
+          "text": "Brazil"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Maicon_Douglas_Sisenando",
+          "text": "Maicon"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/North_Korea_national_football_team",
+          "text": "North Korea"
+        },
+        "awayscorer": {
+          "href": "http://en.wikipedia.org/wiki/Ji_Yun-Nam",
+          "text": "Ji Yun-Nam"
+        },
+        "scoreline": "2–1"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Brazil_national_football_team",
+          "text": "Brazil"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Lu%C3%ADs_Fabiano",
+          "text": "Luís Fabiano"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Ivory_Coast_national_football_team",
+          "text": "Ivory Coast"
+        },
+        "awayscorer": {
+          "href": "http://en.wikipedia.org/wiki/Didier_Drogba",
+          "text": "Drogba"
+        },
+        "scoreline": "3–1"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Portugal_national_football_team",
+          "text": "Portugal"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Raul_Meireles",
+          "text": "Meireles"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/North_Korea_national_football_team",
+          "text": "North Korea"
+        },
+        "awayscorer": "",
+        "scoreline": "7–0"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Portugal_national_football_team",
+          "text": "Portugal"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Brazil_national_football_team",
+          "text": "Brazil"
+        },
+        "awayscorer": "",
+        "scoreline": "0–0"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/North_Korea_national_football_team",
+          "text": "North Korea"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Ivory_Coast_national_football_team",
+          "text": "Ivory Coast"
+        },
+        "awayscorer": [
+          {
+            "href": "http://en.wikipedia.org/wiki/Yaya_Tour%C3%A9",
+            "text": "Y. Touré"
+          },
+          {
+            "href": "http://en.wikipedia.org/wiki/Romaric_(footballer)",
+            "text": "Romaric"
+          },
+          {
+            "href": "http://en.wikipedia.org/wiki/Salomon_Kalou",
+            "text": "Kalou"
+          }
+        ],
+        "scoreline": "0–3"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Honduras_national_football_team",
+          "text": "Honduras"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Chile_national_football_team",
+          "text": "Chile"
+        },
+        "awayscorer": {
+          "href": "http://en.wikipedia.org/wiki/Jean_Beausejour",
+          "text": "Beausejour"
+        },
+        "scoreline": "0–1"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Spain_national_football_team",
+          "text": "Spain"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Switzerland_national_football_team",
+          "text": "Switzerland"
+        },
+        "awayscorer": {
+          "href": "http://en.wikipedia.org/wiki/Gelson_Fernandes",
+          "text": "Fernandes"
+        },
+        "scoreline": "0–1"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Chile_national_football_team",
+          "text": "Chile"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Mark_Gonz%C3%A1lez",
+          "text": "González"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Switzerland_national_football_team",
+          "text": "Switzerland"
+        },
+        "awayscorer": "",
+        "scoreline": "1–0"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Spain_national_football_team",
+          "text": "Spain"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/David_Villa",
+          "text": "Villa"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Honduras_national_football_team",
+          "text": "Honduras"
+        },
+        "awayscorer": "",
+        "scoreline": "2–0"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Chile_national_football_team",
+          "text": "Chile"
+        },
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/Rodrigo_Millar",
+          "text": "Millar"
+        },
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Spain_national_football_team",
+          "text": "Spain"
+        },
+        "awayscorer": [
+          {
+            "href": "http://en.wikipedia.org/wiki/David_Villa",
+            "text": "Villa"
+          },
+          {
+            "href": "http://en.wikipedia.org/wiki/Andr%C3%A9s_Iniesta",
+            "text": "Iniesta"
+          }
+        ],
+        "scoreline": "1–2"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Switzerland_national_football_team",
+          "text": "Switzerland"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Honduras_national_football_team",
+          "text": "Honduras"
+        },
+        "awayscorer": "",
+        "scoreline": "0–0"
+      }
+    ]
+  }
+}

@@ -1,6 +1,35 @@
+- datafrom2010 = typeof(resultsof2010) != 'undefined' ? resultsof2010 : { }
+
 #account-form-container
   div.content
     div.page-header
       h1 #{title} 
     div.row
-      p Here will be the results of the games from 2010
+      h4 Name : 
+      p #{datafrom2010.name}
+      h4 Data since : 
+      p #{datafrom2010.lastsuccess}
+      h3 Results:
+      -for(var group in datafrom2010.results)
+        -for(var game in datafrom2010.results[group])
+          h4 Game #{parseInt(game)+1}
+
+          p Hometeam: #{datafrom2010.results[group][game].hometeam.text}
+
+          p Awayteam: #{datafrom2010.results[group][game].awayteam.text}
+          
+          if parseInt(datafrom2010.results[group][game].homescorers.length) > 1
+            p Homescorers:
+            -for(var homescorer in datafrom2010.results[group][game].homescorers)
+              p &nbsp;&nbsp;&nbsp;&nbsp; #{datafrom2010.results[group][game].homescorers[homescorer].text}
+          else
+            p Homescorer: #{datafrom2010.results[group][game].homescorers.text}
+
+          if parseInt(datafrom2010.results[group][game].awayscorer.length) > 1
+            p Awayscorers:
+            -for(var awayscorer in datafrom2010.results[group][game].awayscorer)
+              p &nbsp;&nbsp;&nbsp;&nbsp; #{datafrom2010.results[group][game].awayscorer[awayscorer].text}
+          else
+            p Awayscorer: #{datafrom2010.results[group][game].awayscorer.text}
+
+          p Scoreline: #{datafrom2010.results[group][game].scoreline}
