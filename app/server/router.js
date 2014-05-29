@@ -70,7 +70,7 @@ module.exports = function(app) {
 	        res.redirect('/');
 	    }   else{
 			res.render('settings', {
-				title : 'Control Panel',
+				title : 'Account Settings',
 				countries : CT,
 				udata : req.session.user
 			});
@@ -177,6 +177,27 @@ module.exports = function(app) {
 				res.send('unable to update password', 400);
 			}
 		})
+	});
+
+// View the results of 2010 //
+	
+	app.get('/results2010', function(req, res) {
+	    if (req.session.user == null){
+	// if user is not logged-in redirect back to login page //
+	        res.redirect('/');
+	    }   else{
+			res.render('results2010', {
+				title : 'Results of 2010'
+			});
+	    }
+	});
+	
+	app.post('/results2010', function(req, res){
+		if (req.param('logout') == 'true'){
+			res.clearCookie('user');
+			res.clearCookie('pass');
+			req.session.destroy(function(e){ res.send('ok', 200); });
+		}
 	});
 	
 // view & delete accounts //
