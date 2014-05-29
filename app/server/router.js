@@ -38,15 +38,38 @@ module.exports = function(app) {
 			}
 		});
 	});
-	
+
+// Logged-in user homepage // 
+
+	app.get('/home', function(req, res) {
+	    if (req.session.user == null){
+		// if user is not logged-in redirect back to login page //
+	        res.redirect('/');
+	    }   else{
+			res.render('home', {
+				title : 'Home',
+				udata : req.session.user
+			});
+	    }
+	});
+
+	app.post('/home', function(req, res)
+	{
+		if (req.param('logout') == 'true'){
+			res.clearCookie('user');
+			res.clearCookie('pass');
+			req.session.destroy(function(e){ res.send('ok', 200); });
+		}
+	});
+
 // logged-in user homepage //
 	
-	app.get('/home', function(req, res) {
+	app.get('/settings', function(req, res) {
 	    if (req.session.user == null){
 	// if user is not logged-in redirect back to login page //
 	        res.redirect('/');
 	    }   else{
-			res.render('home', {
+			res.render('settings', {
 				title : 'Control Panel',
 				countries : CT,
 				udata : req.session.user
@@ -54,7 +77,7 @@ module.exports = function(app) {
 	    }
 	});
 	
-	app.post('/home', function(req, res){
+	app.post('/settings', function(req, res){
 		if (req.param('user') != undefined) {
 			AM.updateAccount({
 				user 		: req.param('user'),
