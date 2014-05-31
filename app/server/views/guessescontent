@@ -1,0 +1,21 @@
+
+<div class="well span9">
+<form id="form-inline">
+    <fieldset>
+        <legend>Personal Details</legend>
+        <label>Last name</label>
+        <input type="text" placeholder="Smith" class="input-xlarge">
+        <label>Middle Name</label>
+        <input type="text" placeholder="K" class="input-xlarge">
+        <label>First Name</label>
+        <input type="text" placeholder="John" class="input-xlarge">
+        <label>Nickname</label>
+        <input type="text" placeholder="Nickname" class="input-xlarge">
+        <label>Gender</label>
+        <select name="Gender" id="DropdownGender" class="input-xlarge">
+            <option value="">Male</option>
+            <option value="">Female</option>
+        </select>
+    </fieldset>
+</form>
+</div>

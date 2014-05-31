@@ -3,6 +3,7 @@ var CT = require('./modules/country-list');
 var AM = require('./modules/account-manager');
 var EM = require('./modules/email-dispatcher');
 var fs = require('fs');
+http = require('http');
 
 module.exports = function(app) {
 
@@ -190,24 +191,66 @@ module.exports = function(app) {
 	    }
 	    else
 	   	{
-			var file = __dirname + '/files/results2010.json';
-			fs.readFile(file, 'utf8', function (err, data)
-			{
-				if (err)
+
+	   		var options =
 				{
-					console.log('Error: ' + err);
-				}
-				else
+					host: 'www.kimonolabs.com',
+					path: 'http://www.kimonolabs.com/api/9jx2j8b4?apikey=461b4c8a5e6424e6899784f5f0e4f463&kimpath1=wiki&kimpath2=2014_FIFA_World_Cup_Group_A#Matches',
+					method: 'GET'
+				};
+
+				var apiRequest = http.request(options, function(apiResponse)
 				{
-					data = JSON.parse(data);
-					console.log(data);
-					res.render('results2010',
+					console.log("\nCalling api.");
+
+					var requestBody = "";
+					apiResponse.on('data', function(data)
 					{
-						title : 'Results of 2010',
-						resultsof2010 : data
+						console.log(data);
+						requestBody += data;
 					});
-				}
-			});
+					apiResponse.on('end', function()
+					{
+						try
+						{
+							var jsonResults = JSON.parse(requestBody);
+							console.log(jsonResults);
+							res.render('results2010',
+							{
+							title : 'Results of 2010',
+							resultsof2010 : jsonResults
+							});
+						}
+						catch(err2)
+						{
+							console.log('Problem with request: ' + err2.message);
+
+						}
+					});
+				});
+				apiRequest.on('error', function(e)
+				{
+					console.log('Error: ' + e.message);
+				});
+				apiRequest.end();
+			// var file = __dirname + '/files/results2010.json';
+			// fs.readFile(file, 'utf8', function (err, data)
+			// {
+			// 	if (err)
+			// 	{
+			// 		console.log('Error: ' + err);
+			// 	}
+			// 	else
+			// 	{
+			// 		data = JSON.parse(data);
+			// 		console.log(data);
+			// 		res.render('results2010',
+			// 		{
+			// 			title : 'Results of 2010',
+			// 			resultsof2010 : data
+			// 		});
+			// 	}
+			// });
 	    }
 	});
 	
@@ -218,6 +261,30 @@ module.exports = function(app) {
 			req.session.destroy(function(e){ res.send('ok', 200); });
 		}
 	});
+
+	app.get('/guesses', function(req, res) {
+	    if (req.session.user == null){
+		// if user is not logged-in redirect back to login page //
+	        res.redirect('/');
+	    }   else{
+			res.render('guesses', {
+				title : 'Guesses',
+				countries : CT,
+				udata : req.session.user
+			});
+	    }
+	});
+
+	app.post('/guesses', function(req, res)
+	{
+		if (req.param('logout') == 'true'){
+			res.clearCookie('user');
+			res.clearCookie('pass');
+			req.session.destroy(function(e){ res.send('ok', 200); });
+		}
+	});
+
+
 	
 // view & delete accounts //
 	

@@ -6,30 +6,30 @@
       h1 #{title} 
     div.row
       h4 Name : 
-      p #{datafrom2010.name}
-      h4 Data since : 
+      p Úrslit Heimsmeistaramótsins í knattspyrnu 2010 
+      h4 Gögn síðast uppfærð : 
       p #{datafrom2010.lastsuccess}
-      h3 Results:
+      h3 Úrslit:
       -for(var group in datafrom2010.results)
         -for(var game in datafrom2010.results[group])
-          h4 Game #{parseInt(game)+1}
+          h4 Leikur #{parseInt(game)+1}
 
-          p Hometeam: #{datafrom2010.results[group][game].hometeam.text}
+          p Heimalið: #{datafrom2010.results[group][game].hometeam.text}
 
-          p Awayteam: #{datafrom2010.results[group][game].awayteam.text}
+          p Útilið: #{datafrom2010.results[group][game].awayteam.text}
           
           if parseInt(datafrom2010.results[group][game].homescorers.length) > 1
-            p Homescorers:
+            p Markarskorarar heimaliðs:
             -for(var homescorer in datafrom2010.results[group][game].homescorers)
               p &nbsp;&nbsp;&nbsp;&nbsp; #{datafrom2010.results[group][game].homescorers[homescorer].text}
           else
-            p Homescorer: #{datafrom2010.results[group][game].homescorers.text}
+            p Markaskorari heimaliðs: #{datafrom2010.results[group][game].homescorers.text}
 
           if parseInt(datafrom2010.results[group][game].awayscorer.length) > 1
-            p Awayscorers:
+            p Markarskorarar útiliðs:
             -for(var awayscorer in datafrom2010.results[group][game].awayscorer)
               p &nbsp;&nbsp;&nbsp;&nbsp; #{datafrom2010.results[group][game].awayscorer[awayscorer].text}
           else
-            p Awayscorer: #{datafrom2010.results[group][game].awayscorer.text}
+            p Markaskorari útliðliðs: #{datafrom2010.results[group][game].awayscorer.text}
 
-          p Scoreline: #{datafrom2010.results[group][game].scoreline}
+          p Úrslit: #{datafrom2010.results[group][game].scoreline}
