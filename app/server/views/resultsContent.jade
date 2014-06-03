@@ -1,0 +1,40 @@
+- data = typeof(resultsof2014) != 'undefined' ? resultsof2014 : { }
+
+#account-form-container
+  div.content
+    div.page-header
+      h1 #{title} 
+    div.row
+      h4 Úrslit Heimsmeistaramótsins í knattspyrnu 2014
+      h4 Gögn síðast uppfærð : #{data.lastsuccess}
+      p
+      
+      -var gamerepresent = 1
+      -for(var group in data.results)
+
+        -for(var game in data.results[group])
+          
+          if(parseInt(data.results[group][game].hometeam.length) != 0)
+         
+            h4 Leikur #{parseInt(gamerepresent++)}
+
+            p Heimalið: #{data.results[group][game].hometeam.text}
+
+            p Útilið: #{data.results[group][game].awayteam.text}
+          
+            if parseInt(data.results[group][game].homescorers.length) > 1
+              p Markarskorarar heimaliðs:
+              -for(var homescorer in data.results[group][game].homescorers)
+                p &nbsp;&nbsp;&nbsp;&nbsp; #{data.results[group][game].homescorers[homescorer].text}
+            else
+              p Markaskorari heimaliðs: #{data.results[group][game].homescorers.text}
+
+            if parseInt(data.results[group][game].awayscorer.length) > 1
+              p Markarskorarar útiliðs:
+              -for(var awayscorer in data.results[group][game].awayscorer)
+                p &nbsp;&nbsp;&nbsp;&nbsp; #{data.results[group][game].awayscorer[awayscorer].text}
+            else
+              p Markaskorari útliðliðs: #{data.results[group][game].awayscorer.text}
+
+            p Úrslit: #{data.results[group][game].scoreline}
+

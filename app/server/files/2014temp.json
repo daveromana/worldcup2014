@@ -1,0 +1,717 @@
+{
+  "name": "World Cup - Groups",
+  "count": 56,
+  "frequency": "realtime",
+  "version": 10,
+  "newdata": true,
+  "lastrunstatus": "success",
+  "lastsuccess": "Mon Jun 02 2014 17:56:03 GMT+0000 (UTC)",
+  "results": {
+    "Group A": [
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Brazil_national_football_team",
+          "text": "Brazil"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Croatia_national_football_team",
+          "text": "Croatia"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 1"
+      },
+      {
+        "hometeam": "",
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/2014_FIFA_World_Cup_knockout_stage",
+          "text": "round of 16"
+        },
+        "awayteam": "",
+        "awayscorer": "",
+        "scoreline": ""
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Mexico_national_football_team",
+          "text": "Mexico"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Cameroon_national_football_team",
+          "text": "Cameroon"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 2"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Brazil_national_football_team",
+          "text": "Brazil"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Mexico_national_football_team",
+          "text": "Mexico"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 17"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Cameroon_national_football_team",
+          "text": "Cameroon"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Croatia_national_football_team",
+          "text": "Croatia"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 18"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Cameroon_national_football_team",
+          "text": "Cameroon"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Brazil_national_football_team",
+          "text": "Brazil"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 33"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Croatia_national_football_team",
+          "text": "Croatia"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Mexico_national_football_team",
+          "text": "Mexico"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 34"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Spain_national_football_team",
+          "text": "Spain"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Netherlands_national_football_team",
+          "text": "Netherlands"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 3"
+      },
+      {
+        "hometeam": "",
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/2014_FIFA_World_Cup_knockout_stage",
+          "text": "round of 16"
+        },
+        "awayteam": "",
+        "awayscorer": "",
+        "scoreline": ""
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Chile_national_football_team",
+          "text": "Chile"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Australia_national_association_football_team",
+          "text": "Australia"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 4"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Australia_national_association_football_team",
+          "text": "Australia"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Netherlands_national_football_team",
+          "text": "Netherlands"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 20"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Spain_national_football_team",
+          "text": "Spain"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Chile_national_football_team",
+          "text": "Chile"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 19"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Australia_national_association_football_team",
+          "text": "Australia"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Spain_national_football_team",
+          "text": "Spain"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 35"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Netherlands_national_football_team",
+          "text": "Netherlands"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Chile_national_football_team",
+          "text": "Chile"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 36"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Colombia_national_football_team",
+          "text": "Colombia"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Greece_national_football_team",
+          "text": "Greece"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 5"
+      },
+      {
+        "hometeam": "",
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/2014_FIFA_World_Cup_knockout_stage",
+          "text": "round of 16"
+        },
+        "awayteam": "",
+        "awayscorer": "",
+        "scoreline": ""
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Ivory_Coast_national_football_team",
+          "text": "Ivory Coast"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Japan_national_football_team",
+          "text": "Japan"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 6"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Colombia_national_football_team",
+          "text": "Colombia"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Ivory_Coast_national_football_team",
+          "text": "Ivory Coast"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 21"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Japan_national_football_team",
+          "text": "Japan"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Greece_national_football_team",
+          "text": "Greece"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 22"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Japan_national_football_team",
+          "text": "Japan"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Colombia_national_football_team",
+          "text": "Colombia"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 37"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Greece_national_football_team",
+          "text": "Greece"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Ivory_Coast_national_football_team",
+          "text": "Ivory Coast"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 38"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Uruguay_national_football_team",
+          "text": "Uruguay"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Costa_Rica_national_football_team",
+          "text": "Costa Rica"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 7"
+      },
+      {
+        "hometeam": "",
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/2014_FIFA_World_Cup_knockout_stage",
+          "text": "round of 16"
+        },
+        "awayteam": "",
+        "awayscorer": "",
+        "scoreline": ""
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/England_national_football_team",
+          "text": "England"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Italy_national_football_team",
+          "text": "Italy"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 8"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Uruguay_national_football_team",
+          "text": "Uruguay"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/England_national_football_team",
+          "text": "England"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 23"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Italy_national_football_team",
+          "text": "Italy"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Costa_Rica_national_football_team",
+          "text": "Costa Rica"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 24"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Italy_national_football_team",
+          "text": "Italy"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Uruguay_national_football_team",
+          "text": "Uruguay"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 39"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Costa_Rica_national_football_team",
+          "text": "Costa Rica"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/England_national_football_team",
+          "text": "England"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 40"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Switzerland_national_football_team",
+          "text": "Switzerland"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Ecuador_national_football_team",
+          "text": "Ecuador"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 9"
+      },
+      {
+        "hometeam": "",
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/2014_FIFA_World_Cup_knockout_stage",
+          "text": "round of 16"
+        },
+        "awayteam": "",
+        "awayscorer": "",
+        "scoreline": ""
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/France_national_football_team",
+          "text": "France"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Honduras_national_football_team",
+          "text": "Honduras"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 10"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Switzerland_national_football_team",
+          "text": "Switzerland"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/France_national_football_team",
+          "text": "France"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 25"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Honduras_national_football_team",
+          "text": "Honduras"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Ecuador_national_football_team",
+          "text": "Ecuador"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 26"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Honduras_national_football_team",
+          "text": "Honduras"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Switzerland_national_football_team",
+          "text": "Switzerland"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 41"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Ecuador_national_football_team",
+          "text": "Ecuador"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/France_national_football_team",
+          "text": "France"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 42"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Argentina_national_football_team",
+          "text": "Argentina"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Bosnia_and_Herzegovina_national_football_team",
+          "text": "Bosnia and Herzegovina"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 11"
+      },
+      {
+        "hometeam": "",
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/2014_FIFA_World_Cup_knockout_stage",
+          "text": "round of 16"
+        },
+        "awayteam": "",
+        "awayscorer": "",
+        "scoreline": ""
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Iran_national_football_team",
+          "text": "Iran"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Nigeria_national_football_team",
+          "text": "Nigeria"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 12"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Argentina_national_football_team",
+          "text": "Argentina"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Iran_national_football_team",
+          "text": "Iran"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 27"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Nigeria_national_football_team",
+          "text": "Nigeria"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Bosnia_and_Herzegovina_national_football_team",
+          "text": "Bosnia and Herzegovina"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 28"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Nigeria_national_football_team",
+          "text": "Nigeria"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Argentina_national_football_team",
+          "text": "Argentina"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 43"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Bosnia_and_Herzegovina_national_football_team",
+          "text": "Bosnia and Herzegovina"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Iran_national_football_team",
+          "text": "Iran"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 44"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Germany_national_football_team",
+          "text": "Germany"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Portugal_national_football_team",
+          "text": "Portugal"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 13"
+      },
+      {
+        "hometeam": "",
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/2014_FIFA_World_Cup_knockout_stage",
+          "text": "round of 16"
+        },
+        "awayteam": "",
+        "awayscorer": "",
+        "scoreline": ""
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Ghana_national_football_team",
+          "text": "Ghana"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/United_States_men%27s_national_soccer_team",
+          "text": "United States"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 14"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Germany_national_football_team",
+          "text": "Germany"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Ghana_national_football_team",
+          "text": "Ghana"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 29"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/United_States_men%27s_national_soccer_team",
+          "text": "United States"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Portugal_national_football_team",
+          "text": "Portugal"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 30"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/United_States_men%27s_national_soccer_team",
+          "text": "United States"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Germany_national_football_team",
+          "text": "Germany"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 45"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Portugal_national_football_team",
+          "text": "Portugal"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Ghana_national_football_team",
+          "text": "Ghana"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 46"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Belgium_national_football_team",
+          "text": "Belgium"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Algeria_national_football_team",
+          "text": "Algeria"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 15"
+      },
+      {
+        "hometeam": "",
+        "homescorers": {
+          "href": "http://en.wikipedia.org/wiki/2014_FIFA_World_Cup_knockout_stage",
+          "text": "round of 16"
+        },
+        "awayteam": "",
+        "awayscorer": "",
+        "scoreline": ""
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Russia_national_football_team",
+          "text": "Russia"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/South_Korea_national_football_team",
+          "text": "South Korea"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 16"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Belgium_national_football_team",
+          "text": "Belgium"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Russia_national_football_team",
+          "text": "Russia"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 31"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/South_Korea_national_football_team",
+          "text": "South Korea"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Algeria_national_football_team",
+          "text": "Algeria"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 32"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/South_Korea_national_football_team",
+          "text": "South Korea"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Belgium_national_football_team",
+          "text": "Belgium"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 47"
+      },
+      {
+        "hometeam": {
+          "href": "http://en.wikipedia.org/wiki/Algeria_national_football_team",
+          "text": "Algeria"
+        },
+        "homescorers": "",
+        "awayteam": {
+          "href": "http://en.wikipedia.org/wiki/Russia_national_football_team",
+          "text": "Russia"
+        },
+        "awayscorer": "",
+        "scoreline": "Match 48"
+      }
+    ]
+  }
+}

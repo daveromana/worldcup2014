@@ -183,7 +183,7 @@ module.exports = function(app) {
 
 // View the results of 2010 //
 	
-	app.get('/results2010', function(req, res) {
+	app.get('/results', function(req, res) {
 	    if (req.session.user == null)
 	    {
 			// if user is not logged-in redirect back to login page //
@@ -206,7 +206,6 @@ module.exports = function(app) {
 					var requestBody = "";
 					apiResponse.on('data', function(data)
 					{
-						console.log(data);
 						requestBody += data;
 					});
 					apiResponse.on('end', function()
@@ -214,11 +213,10 @@ module.exports = function(app) {
 						try
 						{
 							var jsonResults = JSON.parse(requestBody);
-							console.log(jsonResults);
-							res.render('results2010',
+							res.render('results',
 							{
-							title : 'Results of 2010',
-							resultsof2010 : jsonResults
+								title : 'Results of 2014',
+								resultsof2014 : jsonResults
 							});
 						}
 						catch(err2)
@@ -254,7 +252,7 @@ module.exports = function(app) {
 	    }
 	});
 	
-	app.post('/results2010', function(req, res){
+	app.post('/results', function(req, res){
 		if (req.param('logout') == 'true'){
 			res.clearCookie('user');
 			res.clearCookie('pass');
