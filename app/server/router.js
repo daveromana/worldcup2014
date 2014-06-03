@@ -195,7 +195,7 @@ module.exports = function(app) {
 	   		var options =
 				{
 					host: 'www.kimonolabs.com',
-					path: 'http://www.kimonolabs.com/api/9jx2j8b4?apikey=461b4c8a5e6424e6899784f5f0e4f463&kimpath1=wiki&kimpath2=2014_FIFA_World_Cup_Group_A#Matches',
+					path: 'http://www.kimonolabs.com/api/9jx2j8b4?apikey=71c506eb1ea29c70e74985c84fcef611',
 					method: 'GET'
 				};
 

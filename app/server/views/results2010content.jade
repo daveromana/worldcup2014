@@ -10,26 +10,32 @@
       h4 Gögn síðast uppfærð : 
       p #{datafrom2010.lastsuccess}
       h3 Úrslit:
+      -var gamerepresent = 1
       -for(var group in datafrom2010.results)
+
         -for(var game in datafrom2010.results[group])
-          h4 Leikur #{parseInt(game)+1}
-
-          p Heimalið: #{datafrom2010.results[group][game].hometeam.text}
-
-          p Útilið: #{datafrom2010.results[group][game].awayteam.text}
           
-          if parseInt(datafrom2010.results[group][game].homescorers.length) > 1
-            p Markarskorarar heimaliðs:
-            -for(var homescorer in datafrom2010.results[group][game].homescorers)
-              p &nbsp;&nbsp;&nbsp;&nbsp; #{datafrom2010.results[group][game].homescorers[homescorer].text}
-          else
-            p Markaskorari heimaliðs: #{datafrom2010.results[group][game].homescorers.text}
+          if(parseInt(datafrom2010.results[group][game].hometeam.length) != 0)
+         
+            h4 Leikur #{parseInt(gamerepresent++)}
 
-          if parseInt(datafrom2010.results[group][game].awayscorer.length) > 1
-            p Markarskorarar útiliðs:
-            -for(var awayscorer in datafrom2010.results[group][game].awayscorer)
-              p &nbsp;&nbsp;&nbsp;&nbsp; #{datafrom2010.results[group][game].awayscorer[awayscorer].text}
-          else
-            p Markaskorari útliðliðs: #{datafrom2010.results[group][game].awayscorer.text}
+            p Heimalið: #{datafrom2010.results[group][game].hometeam.text}
 
-          p Úrslit: #{datafrom2010.results[group][game].scoreline}
+            p Útilið: #{datafrom2010.results[group][game].awayteam.text}
+          
+            if parseInt(datafrom2010.results[group][game].homescorers.length) > 1
+              p Markarskorarar heimaliðs:
+              -for(var homescorer in datafrom2010.results[group][game].homescorers)
+                p &nbsp;&nbsp;&nbsp;&nbsp; #{datafrom2010.results[group][game].homescorers[homescorer].text}
+            else
+              p Markaskorari heimaliðs: #{datafrom2010.results[group][game].homescorers.text}
+
+            if parseInt(datafrom2010.results[group][game].awayscorer.length) > 1
+              p Markarskorarar útiliðs:
+              -for(var awayscorer in datafrom2010.results[group][game].awayscorer)
+                p &nbsp;&nbsp;&nbsp;&nbsp; #{datafrom2010.results[group][game].awayscorer[awayscorer].text}
+            else
+              p Markaskorari útliðliðs: #{datafrom2010.results[group][game].awayscorer.text}
+
+            p Úrslit: #{datafrom2010.results[group][game].scoreline}
+
