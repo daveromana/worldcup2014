@@ -5,13 +5,13 @@ input(type='hidden', value= user._id)#userId
 
 #account-form-container
     form( method="post")#account-form.form-horizontal.well.span6
-        h1
-        p#sub1.subheading Please tell us a little about yourself.
+        h2
+        p#sub2.subheading Please tell us a little about yourself.
         hr
         fieldset
             
             #clist-cg.control-group
-                label.control-label(for='country-list') Tournament Topscorer
+                label.control-label(for='country-list') Tournament Topscorer:
                 .controls
                     select#country-list(name='country')
                         each item in countries

@@ -36,6 +36,9 @@ $(document).ready(function(){
 	$('#account-form-btn1').html('Delete');
 	$('#account-form-btn1').addClass('btn-danger');
 	$('#account-form-btn2').html('Update');
+	$('#account-form h2').text('My Guesses');
+	$('#account-form #sub2').text('Here are your current guesses.');
+
 
 // setup the confirm window that displays when the user chooses to delete their account //
 
