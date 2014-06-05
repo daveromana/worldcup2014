@@ -8,6 +8,7 @@ var express = require('express');
 var http = require('http');
 var app = express();
 
+
 app.configure(function(){
 	app.set('port', 8080);
 	app.set('views', __dirname + '/app/server/views');
@@ -31,4 +32,18 @@ require('./app/server/router')(app);
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log("Express server listening on port " + app.get('port'));
+
+var mongo = require('mongodb');
+
+var mongoUri = process.env.MONGOLAB_URI ||
+  process.env.MONGOHQ_URL ||
+  'mongodb://localhost/node-login';
+
+mongo.Db.connect(mongoUri, function (err, db) {
+  db.collection('mydocs', function(er, collection) {
+    collection.insert({'mykey': 'myvalue'}, {safe: true}, function(er,rs) {
+    });
+  });
+});
+
 })
