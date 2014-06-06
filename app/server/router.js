@@ -2,7 +2,9 @@
 var CT = require('./modules/country-list');
 var AM = require('./modules/account-manager');
 var EM = require('./modules/email-dispatcher');
+var dbpopulation = require('./modules/db-population');
 var fs = require('fs');
+
 http = require('http');
 
 module.exports = function(app) {
@@ -43,11 +45,14 @@ module.exports = function(app) {
 
 // Logged-in user homepage // 
 
-	app.get('/home', function(req, res) {
+	app.get('/home', function(req, res)
+	{
 	    if (req.session.user == null){
 		// if user is not logged-in redirect back to login page //
 	        res.redirect('/');
 	    }   else{
+			dbpopulation.populatePlayers();
+			dbpopulation.populateMatchups();
 			res.render('home', {
 				title : 'Home',
 				udata : req.session.user
@@ -191,7 +196,7 @@ module.exports = function(app) {
 	    }
 	    else
 	   	{
-
+	   		console.log(req.session.user);
 	   		var options =
 				{
 					host: 'www.kimonolabs.com',
