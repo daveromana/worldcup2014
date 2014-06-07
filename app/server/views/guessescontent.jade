@@ -19,29 +19,30 @@ Group Topscorer (ekki round of 16 topscorer), tournament topscorer, top 1 2 og 3
             - for (group in groups)
               #clist-cg.control-group
                 label.control-label(for='#group-top-scorer') Group #{groups[group].name} Topscorer:
+                .controls
+                    select#group-top-scorer(name='group-top-scorer')
+                      - for (match in matches)
+                        - for (player in players)
+                          - if(matches[match].away_team_id == players[player].country_id)
+                            - var currentPlayerCountry = matches[match].away_team
+                          - if(matches[match].home_team_id == players[player].country_id)
+                            - var currentPlayerCountry = matches[match].away_team
+                          - if(players[player].country_id == matches[match].home_team_id || players[player].country_id == matches[match].away_team_id)
+                            - if(matches[match].group == groups[group].name)
+                              option(id=players[player].id)= players[player].name + ' (' + currentPlayerCountry + ')'
 
             #clist-cg.control-group
-                label.control-label(for='round-top-scorer') Round of 16 Topscorer:
-                .controls
-                    select#round-top-scorer(name='country')
-                      - for (player in players)
-                        - for (match in matches)
-                          - if(matches[match].away_team_id == players[player].country_id)
-                            - var currentPlayerCountry = matches[match].away_team
-                          - if(matches[match].home_team_id == players[player].country_id)
-                            - var currentPlayerCountry = matches[match].away_team
-                              option(id=players[player].id)= players[player].name + ' (' + currentPlayerCountry + ')'
-            #clist-cg.control-group                  
-                label.control-label(for='tournament-top-scorer') Tournament Topscorer (Remove):
+                label.control-label(for='tournament-top-scorer') Tournament Topscorer:
                 .controls
                     select#tournament-top-scorer(name='country')
-                      - for (player in players)
-                        - for (match in matches)
+                      - for (match in matches)
+                        - for (player in players)
                           - if(matches[match].away_team_id == players[player].country_id)
                             - var currentPlayerCountry = matches[match].away_team
                           - if(matches[match].home_team_id == players[player].country_id)
                             - var currentPlayerCountry = matches[match].away_team
-                              option(id=players[player].id)= players[player].name + ' (' + currentPlayerCountry + ')'
+                          - if(players[player].country_id == matches[match].home_team_id || players[player].country_id == matches[match].away_team_id)
+                            option(id=players[player].id)= players[player].name + ' (' + currentPlayerCountry + ')'
         p Format; Group : Home - Away
         - for (match in matches)
           br

@@ -31,7 +31,7 @@ var getPlayers = function(callback)
 {
 	pool.getConnection(function(connError, con)
 	{
-		var selectQuery = "SELECT p.id, p.name, p.country_id FROM players p";
+		var selectQuery = "SELECT p.id, p.name, p.country_id FROM players p ORDER BY (SELECT c.name FROM countries c WHERE c.id = p.country_id) ASC, p.name";
 		var query = con.query(selectQuery, function(err, result, fields)
 		{
 			if(err) throw err;
