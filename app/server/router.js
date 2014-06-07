@@ -275,13 +275,16 @@ module.exports = function(app) {
 	    	{
 	    		dbSelect.getPlayers(function(players)
 	    		{
-					res.render('guesses', {
-						title : 'Guesses',
-						countries : CT,
-						udata : req.session.user,
-						matches : matchups,
-						players : players
-					});
+	    			dbSelect.getGroups(function(groups){
+						res.render('guesses', {
+							title : 'Guesses',
+							countries : CT,
+							udata : req.session.user,
+							matches : matchups,
+							players : players,
+							groups : groups
+						});
+	    			});
 	    		});
 	    	});
 	    }

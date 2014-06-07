@@ -5,6 +5,10 @@ input(type='hidden', value= user._id)#userId
 
 - matches = typeof(matches) != 'undefined' ? matches : {}
 - players = typeof(players) != 'undefined' ? players : {}
+- groups = typeof(groups) != 'undefined' ? groups : {}
+
+Group Topscorer (ekki round of 16 topscorer), tournament topscorer, top 1 2 og 3 teams, team with the worst record
+
 
 #account-form-container
     form( method="post")#account-form.form-horizontal.well.span6
@@ -12,6 +16,10 @@ input(type='hidden', value= user._id)#userId
         p#sub2.subheading Please tell us a little about yourself.
         hr
         fieldset
+            - for (group in groups)
+              #clist-cg.control-group
+                label.control-label(for='#group-top-scorer') Group #{groups[group].name} Topscorer:
+
             #clist-cg.control-group
                 label.control-label(for='round-top-scorer') Round of 16 Topscorer:
                 .controls

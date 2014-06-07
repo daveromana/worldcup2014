@@ -1,8 +1,10 @@
 var mysql = require('mysql');
 var fs = require('fs');
+var serverFunctions = require('./server-functions');
 
-var dbConfig = {
-	host: '127.0.0.1',
+var dbConfig =
+{
+	host: serverFunctions.getInternalIp(),
 	user: 'root',
 	password: '',
 	database: 'hm',
@@ -39,5 +41,20 @@ var getPlayers = function(callback)
 	});
 }
 
+var getGroups = function(callback)
+{
+	pool.getConnection(function(connError, con)
+	{
+		var selectQuery = "SELECT g.id, g.name FROM groups g";
+		var query = con.query(selectQuery, function(err, result, fields)
+		{
+			if(err) throw err;
+			con.release();
+			callback(result);
+		});
+	});
+}
+
 module.exports.getMatchups = getMatchups;
 module.exports.getPlayers = getPlayers;
+module.exports.getGroups = getGroups;

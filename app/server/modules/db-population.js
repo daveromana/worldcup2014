@@ -1,8 +1,10 @@
 var mysql = require('mysql');
 var fs = require('fs');
+var serverFunctions = require('./server-functions');
 
-var dbConfig = {
-	host: '127.0.0.1',
+var dbConfig =
+{
+	host: serverFunctions.getInternalIp(),
 	user: 'root',
 	password: '',
 	database: 'hm',
