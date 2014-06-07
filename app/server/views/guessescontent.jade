@@ -6,6 +6,7 @@ input(type='hidden', value= user._id)#userId
 - matches = typeof(matches) != 'undefined' ? matches : {}
 - players = typeof(players) != 'undefined' ? players : {}
 - groups = typeof(groups) != 'undefined' ? groups : {}
+- countries = typeof(countries) != 'undefined' ? countries : {}
 
 Group Topscorer (ekki round of 16 topscorer), tournament topscorer, top 1 2 og 3 teams, team with the worst record
 
@@ -21,28 +22,21 @@ Group Topscorer (ekki round of 16 topscorer), tournament topscorer, top 1 2 og 3
                 label.control-label(for='#group-top-scorer') Group #{groups[group].name} Topscorer:
                 .controls
                     select#group-top-scorer(name='group-top-scorer')
-                      - for (match in matches)
-                        - for (player in players)
-                          - if(matches[match].away_team_id == players[player].country_id)
-                            - var currentPlayerCountry = matches[match].away_team
-                          - if(matches[match].home_team_id == players[player].country_id)
-                            - var currentPlayerCountry = matches[match].away_team
-                          - if(players[player].country_id == matches[match].home_team_id || players[player].country_id == matches[match].away_team_id)
-                            - if(matches[match].group == groups[group].name)
-                              option(id=players[player].id)= players[player].name + ' (' + currentPlayerCountry + ')'
+                      - for (country in countries)
+                        - if(countries[country].group_id == groups[group].id)
+                          - for(player in players)
+                            - if(countries[country].id == players[player].country_id)
+                              option(id=players[player].id)= players[player].name + ' (' + countries[country].name + ')'
 
             #clist-cg.control-group
                 label.control-label(for='tournament-top-scorer') Tournament Topscorer:
                 .controls
                     select#tournament-top-scorer(name='country')
-                      - for (match in matches)
-                        - for (player in players)
-                          - if(matches[match].away_team_id == players[player].country_id)
-                            - var currentPlayerCountry = matches[match].away_team
-                          - if(matches[match].home_team_id == players[player].country_id)
-                            - var currentPlayerCountry = matches[match].away_team
-                          - if(players[player].country_id == matches[match].home_team_id || players[player].country_id == matches[match].away_team_id)
-                            option(id=players[player].id)= players[player].name + ' (' + currentPlayerCountry + ')'
+                      - for (country in countries)
+                        - for(player in players)
+                          - if(countries[country].id == players[player].country_id)
+                            option(id=players[player].id)= players[player].name + ' (' + countries[country].name + ')'
+
         p Format; Group : Home - Away
         - for (match in matches)
           br

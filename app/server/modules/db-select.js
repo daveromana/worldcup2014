@@ -31,7 +31,7 @@ var getPlayers = function(callback)
 {
 	pool.getConnection(function(connError, con)
 	{
-		var selectQuery = "SELECT p.id, p.name, p.country_id FROM players p ORDER BY (SELECT c.name FROM countries c WHERE c.id = p.country_id) ASC, p.name";
+		var selectQuery = "SELECT p.id, p.name, p.country_id FROM players p ORDER BY (SELECT c.name FROM countries c WHERE c.id = p.country_id), p.name";
 		var query = con.query(selectQuery, function(err, result, fields)
 		{
 			if(err) throw err;
@@ -55,6 +55,21 @@ var getGroups = function(callback)
 	});
 }
 
+var getCountries = function(callback)
+{
+	pool.getConnection(function(connError, con)
+	{
+		var selectQuery = "SELECT c.id, c.name, c.group_id FROM countries c ORDER BY c.name";
+		var query = con.query(selectQuery, function(err, result, fields)
+		{
+			if(err) throw err;
+			con.release();
+			callback(result);
+		});
+	});
+}
+
 module.exports.getMatchups = getMatchups;
 module.exports.getPlayers = getPlayers;
 module.exports.getGroups = getGroups;
+module.exports.getCountries = getCountries;

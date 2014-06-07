@@ -17,7 +17,7 @@ var getCountryId = function(playersCountry, actualCountry, callback)
 {
 	pool.getConnection(function(connError, con)
 	{
-		var selectQuery = "SELECT c.id FROM countries c WHERE c.name LIKE ?";
+		var selectQuery = "SELECT c.id FROM countries c WHERE c.name LIKE ? ORDER BY c.name";
 		var query = con.query(selectQuery, [actualCountry], function(err, result, fields)
 		{
 			con.release();
