@@ -3,6 +3,7 @@ var CT = require('./modules/country-list');
 var AM = require('./modules/account-manager');
 var EM = require('./modules/email-dispatcher');
 var dbpopulation = require('./modules/db-population');
+var dbSelect = require('./modules/db-select');
 var fs = require('fs');
 
 http = require('http');
@@ -51,8 +52,8 @@ module.exports = function(app) {
 		// if user is not logged-in redirect back to login page //
 	        res.redirect('/');
 	    }   else{
-			dbpopulation.populatePlayers();
-			dbpopulation.populateMatchups();
+			//dbpopulation.populatePlayers();
+			//dbpopulation.populateMatchups();
 			res.render('home', {
 				title : 'Home',
 				udata : req.session.user
@@ -270,11 +271,19 @@ module.exports = function(app) {
 		// if user is not logged-in redirect back to login page //
 	        res.redirect('/');
 	    }   else{
-			res.render('guesses', {
-				title : 'Guesses',
-				countries : CT,
-				udata : req.session.user
-			});
+	    	dbSelect.getMatchups(function(matchups)
+	    	{
+	    		dbSelect.getPlayers(function(players)
+	    		{
+					res.render('guesses', {
+						title : 'Guesses',
+						countries : CT,
+						udata : req.session.user,
+						matches : matchups,
+						players : players
+					});
+	    		});
+	    	});
 	    }
 	});
 

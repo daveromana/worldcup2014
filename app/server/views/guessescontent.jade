@@ -3,20 +3,65 @@
 // store the userId on the client side in a hidden input field //
 input(type='hidden', value= user._id)#userId
 
+- matches = typeof(matches) != 'undefined' ? matches : {}
+- players = typeof(players) != 'undefined' ? players : {}
+
 #account-form-container
     form( method="post")#account-form.form-horizontal.well.span6
         h2
         p#sub2.subheading Please tell us a little about yourself.
         hr
         fieldset
-            
             #clist-cg.control-group
-                label.control-label(for='country-list') Tournament Topscorer:
+                label.control-label(for='round-top-scorer') Round of 16 Topscorer:
                 .controls
-                    select#country-list(name='country')
-                        each item in countries
-                            option(selected=item.name == user.country)= item.name
-           
+                    select#round-top-scorer(name='country')
+                      - for (player in players)
+                        - for (match in matches)
+                          - if(matches[match].away_team_id == players[player].country_id)
+                            - var currentPlayerCountry = matches[match].away_team
+                          - if(matches[match].home_team_id == players[player].country_id)
+                            - var currentPlayerCountry = matches[match].away_team
+                              option(id=players[player].id)= players[player].name + ' (' + currentPlayerCountry + ')'
+            #clist-cg.control-group                  
+                label.control-label(for='tournament-top-scorer') Tournament Topscorer (Remove):
+                .controls
+                    select#tournament-top-scorer(name='country')
+                      - for (player in players)
+                        - for (match in matches)
+                          - if(matches[match].away_team_id == players[player].country_id)
+                            - var currentPlayerCountry = matches[match].away_team
+                          - if(matches[match].home_team_id == players[player].country_id)
+                            - var currentPlayerCountry = matches[match].away_team
+                              option(id=players[player].id)= players[player].name + ' (' + currentPlayerCountry + ')'
+        p Format; Group : Home - Away
+        - for (match in matches)
+          br
+          p(id=matches[match].id) #{matches[match].group} : #{matches[match].home_team} - #{matches[match].away_team}
+            fieldset
+                cg.control-group
+                    label.control-label(for='home-goals') Home goals:
+                    .controls
+                        select#home-goals(name='home-goals')
+                          - for (var i = 0; i < 100; ++i) {
+                            option= i
+                          - }
+                    br
+                    label.control-label(for='home-goals') Away goals:
+                    .controls
+                        select#away-goals(name='away-goals')
+                          - for (var i = 0; i < 100; ++i) {
+                            option= i
+                          - }          
+                    br
+                    label.control-label(for='country-list') Scorer:
+                    .controls
+                        select#scorer-list(name='game-scorer')
+                          - for (player in players)
+                            - if(players[player].country_id == matches[match].home_team_id || players[player].country_id == matches[match].away_team_id)
+                              - var currentCountry = players[player].country_id == matches[match].home_team_id ? matches[match].home_team : matches[match].away_team;
+                              option(id=players[player].id)= players[player].name + ' (' + currentCountry + ')'
+            br
 
 // display form errors in a custom modal window //
 
