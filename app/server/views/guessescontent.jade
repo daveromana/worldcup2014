@@ -16,10 +16,12 @@ Group Topscorer (ekki round of 16 topscorer), tournament topscorer, top 1 2 og 3
         h2
         p#sub2.subheading Please tell us a little about yourself.
         hr
+        h3 Special guesses
+        h4 Group Topscorers
         fieldset
             - for (group in groups)
               #clist-cg.control-group
-                label.control-label(for='#group-top-scorer') Group #{groups[group].name} Topscorer:
+                label.control-label(for='#group-top-scorer') Group #{groups[group].name}:
                 .controls
                     select#group-top-scorer(name='group-top-scorer')
                       - for (country in countries)
@@ -27,20 +29,35 @@ Group Topscorer (ekki round of 16 topscorer), tournament topscorer, top 1 2 og 3
                           - for(player in players)
                             - if(countries[country].id == players[player].country_id)
                               option(id=players[player].id)= players[player].name + ' (' + countries[country].name + ')'
-
+        h4 Tournament Topscorer
             #clist-cg.control-group
-                label.control-label(for='tournament-top-scorer') Tournament Topscorer:
+                label.control-label(for='tournament-top-scorer') Topscorer:
                 .controls
                     select#tournament-top-scorer(name='country')
                       - for (country in countries)
                         - for(player in players)
                           - if(countries[country].id == players[player].country_id)
                             option(id=players[player].id)= players[player].name + ' (' + countries[country].name + ')'
+        h4 Tournament Worst Record
+            #clist-cg.control-group
+                label.control-label(for='tournament-worst-record') Worst:
+                .controls
+                    select#tournament-worst-record(name='tournament-worst-record')
+                      - for (country in countries)
+                        option(id=countries[country].id)= countries[country].name
+        h4 Tournament top teams
+            - for (var i = 1 ; i < 4 ; i++)
+              #clist-cg.control-group
+                  label.control-label(for='tournament-place') #{i}. place:
+                  .controls
+                    select#tournament-place(name='tournament-place')
+                      - for (country in countries)
+                        option(id=countries[country].id)= countries[country].name
 
-        p Format; Group : Home - Away
+        h3 Match guesses (Group : Home - Away)
         - for (match in matches)
           br
-          p(id=matches[match].id) #{matches[match].group} : #{matches[match].home_team} - #{matches[match].away_team}
+          h4 #{matches[match].group} : #{matches[match].home_team} - #{matches[match].away_team}
             fieldset
                 cg.control-group
                     label.control-label(for='home-goals') Home goals:
