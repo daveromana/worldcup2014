@@ -8,16 +8,14 @@ input(type='hidden', value= user._id)#userId
 - groups = typeof(groups) != 'undefined' ? groups : {}
 - countries = typeof(countries) != 'undefined' ? countries : {}
 
-Group Topscorer (ekki round of 16 topscorer), tournament topscorer, top 1 2 og 3 teams, team with the worst record
-
-
 #account-form-container
-    form( method="post")#account-form.form-horizontal.well.span6
-        h2
-        p#sub2.subheading Please tell us a little about yourself.
-        hr
-        h3 Special guesses
-        h4 Group Topscorers
+ div
+  form(action='/guesses',method='post').form-horizontal.well.span6
+    h2 My guesses
+    p Here are your current guesses
+    h3 Special guesses
+    h4 Group Topscorers
+    div(data-role='fieldcontain')
         fieldset
             - for (group in groups)
               #clist-cg.control-group
@@ -28,37 +26,44 @@ Group Topscorer (ekki round of 16 topscorer), tournament topscorer, top 1 2 og 3
                         - if(countries[country].group_id == groups[group].id)
                           - for(player in players)
                             - if(countries[country].id == players[player].country_id)
-                              option(id=players[player].id)= players[player].name + ' (' + countries[country].name + ')'
-        h4 Tournament Topscorer
+                              option(id=players[player].id, value=players[player].id)= players[player].name + ' (' + countries[country].name + ')'
+    h4 Tournament Topscorer
+    div(data-role='fieldcontain')
+        fieldset
             #clist-cg.control-group
                 label.control-label(for='tournament-top-scorer') Topscorer:
                 .controls
-                    select#tournament-top-scorer(name='country')
+                    select#tournament-top-scorer(name='tournament-top-scorer')
                       - for (country in countries)
                         - for(player in players)
                           - if(countries[country].id == players[player].country_id)
-                            option(id=players[player].id)= players[player].name + ' (' + countries[country].name + ')'
-        h4 Tournament Worst Record
+                            option(id=players[player].id, value=players[player].id)= players[player].name + ' (' + countries[country].name + ')'
+    h4 Tournament Worst Record
+    div(data-role='fieldcontain')
+        fieldset
             #clist-cg.control-group
                 label.control-label(for='tournament-worst-record') Worst:
                 .controls
                     select#tournament-worst-record(name='tournament-worst-record')
                       - for (country in countries)
-                        option(id=countries[country].id)= countries[country].name
-        h4 Tournament top teams
+                        option(id=countries[country].id, value=countries[country].id)= countries[country].name
+    h4 Tournament Top Teams
+    div(data-role='fieldcontain')
+        fieldset
             - for (var i = 1 ; i < 4 ; i++)
               #clist-cg.control-group
                   label.control-label(for='tournament-place') #{i}. place:
                   .controls
                     select#tournament-place(name='tournament-place')
                       - for (country in countries)
-                        option(id=countries[country].id)= countries[country].name
-
-        h3 Match guesses (Group : Home - Away)
-        - for (match in matches)
-          br
-          h4 #{matches[match].group} : #{matches[match].home_team} - #{matches[match].away_team}
-            fieldset
+                        option(id=countries[country].id, value=countries[country].id)= countries[country].name
+    h3 Match guesses (Group : Home - Away)
+    div(data-role='fieldcontain')
+        fieldset
+            - for (match in matches)
+              input(type="hidden", value=matches[match].id, name='match-order')
+              br
+              h4 #{matches[match].group} : #{matches[match].home_team} - #{matches[match].away_team}
                 cg.control-group
                     label.control-label(for='home-goals') Home goals:
                     .controls
@@ -67,21 +72,23 @@ Group Topscorer (ekki round of 16 topscorer), tournament topscorer, top 1 2 og 3
                             option= i
                           - }
                     br
-                    label.control-label(for='home-goals') Away goals:
+                    label.control-label(for='away-goals') Away goals:
                     .controls
                         select#away-goals(name='away-goals')
                           - for (var i = 0; i < 100; ++i) {
                             option= i
                           - }          
                     br
-                    label.control-label(for='country-list') Scorer:
+                    label.control-label(for='match-scorer') Scorer:
                     .controls
-                        select#scorer-list(name='game-scorer')
+                        select#match-scorer(name='match-scorer')
                           - for (player in players)
                             - if(players[player].country_id == matches[match].home_team_id || players[player].country_id == matches[match].away_team_id)
                               - var currentCountry = players[player].country_id == matches[match].home_team_id ? matches[match].home_team : matches[match].away_team;
-                              option(id=players[player].id)= players[player].name + ' (' + currentCountry + ')'
-            br
+                              option(id=players[player].id, value=players[player].id)= players[player].name + ' (' + currentCountry + ')'
+    br
+    div(data-role='fieldcontain')
+      input(type='submit',value='Submit My Guesses',data-transition='fade', data-theme='c')
 
 // display form errors in a custom modal window //
 

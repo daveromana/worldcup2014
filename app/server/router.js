@@ -5,6 +5,7 @@ var EM = require('./modules/email-dispatcher');
 var dbpopulation = require('./modules/db-population');
 var dbSelect = require('./modules/db-select');
 var fs = require('fs');
+var guesses = require('./modules/guesses-manager');
 
 http = require('http');
 
@@ -297,14 +298,20 @@ module.exports = function(app) {
 
 	app.post('/guesses', function(req, res)
 	{
-		if (req.param('logout') == 'true'){
+ 		if (req.session.user == null){
+			// if user is not logged-in redirect back to login page //
+	        res.redirect('/');
+	    }
+		else if (req.param('logout') == 'true'){
 			res.clearCookie('user');
 			res.clearCookie('pass');
 			req.session.destroy(function(e){ res.send('ok', 200); });
 		}
+		else
+		{
+			guesses.handleGuesses(req.session.user, req.body);
+		}
 	});
-
-
 	
 // view & delete accounts //
 	
