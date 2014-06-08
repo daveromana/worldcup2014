@@ -52,8 +52,8 @@ module.exports = function(app) {
 		// if user is not logged-in redirect back to login page //
 	        res.redirect('/');
 	    }   else{
-			//dbpopulation.populatePlayers();
-			//dbpopulation.populateMatchups();
+			dbpopulation.populatePlayers();
+			dbpopulation.populateMatchups();
 			res.render('home', {
 				title : 'Home',
 				udata : req.session.user
