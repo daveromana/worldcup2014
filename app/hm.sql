@@ -100,5 +100,51 @@ CREATE TABLE IF NOT EXISTS league_participation
 (
 	id MEDIUMINT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	user_id VARCHAR(64) NOT NULL,
-	league_id  MEDIUMINT UNSIGNED NOT NULL REFERENCES leagues(id)
+	league_id MEDIUMINT UNSIGNED NOT NULL REFERENCES leagues(id)
+);
+
+CREATE TABLE IF NOT EXISTS guesses
+(
+	id BIGINT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	user_id VARCHAR(64) NOT NULL,
+	matchup_id MEDIUMINT UNSIGNED NOT NULL REFERENCES matchups(id),
+	scorer_id MEDIUMINT UNSIGNED NOT NULL REFERENCES players(id),
+	home_goals INT NOT NULL DEFAULT 0,
+	away_goals INT NOT NULL DEFAULT 0,
+	CONSTRAINT uc_user_matchup UNIQUE (user_id, matchup_id),
+	CONSTRAINT uc_user_scorer UNIQUE (user_id, scorer_id)
+);
+
+CREATE TABLE IF NOT EXISTS group_top_scorers_guesses
+(
+	id BIGINT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	user_id VARCHAR(64) NOT NULL,
+	group_id MEDIUMINT UNSIGNED NOT NULL REFERENCES groups(id),
+	scorer_id MEDIUMINT UNSIGNED NOT NULL REFERENCES players(id),
+	CONSTRAINT uc_user_group UNIQUE (user_id, group_id)
+);
+
+CREATE TABLE IF NOT EXISTS tournament_top_scorers_guesses
+(
+	id BIGINT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	user_id VARCHAR(64) UNIQUE NOT NULL,
+	scorer_id MEDIUMINT UNSIGNED NOT NULL REFERENCES players(id),
+	CONSTRAINT uc_user_scorer UNIQUE (user_id, scorer_id)
+);
+
+CREATE TABLE IF NOT EXISTS tournament_worst_records_guesses
+(
+	id BIGINT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	user_id VARCHAR(64) UNIQUE NOT NULL,
+	country_id MEDIUMINT UNSIGNED NOT NULL REFERENCES countries(id),
+	CONSTRAINT uc_user_country UNIQUE (user_id, country_id)
+);
+
+CREATE TABLE IF NOT EXISTS tournament_top_teams_guesses
+(
+	id BIGINT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	user_id VARCHAR(64) NOT NULL,
+	place INT NOT NULL,
+	country_id MEDIUMINT UNSIGNED NOT NULL REFERENCES countries(id),
+	CONSTRAINT uc_user_country UNIQUE (user_id, country_id)
 );

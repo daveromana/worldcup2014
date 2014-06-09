@@ -18,6 +18,7 @@ input(type='hidden', value= user._id)#userId
     div(data-role='fieldcontain')
         fieldset
             - for (group in groups)
+              input(type="hidden", value=groups[group].id, name='group_order')
               #clist-cg.control-group
                 label.control-label(for='#group_top_scorer') Group #{groups[group].name}:
                 .controls

@@ -97,12 +97,12 @@ var createTournamentWorstRecordGuess = function(user, country)
 	});
 }
 
-var createTournamentTopTeamsGuess = function(user, first, second, third)
+var createTournamentTopTeamsGuess = function(user, place, country)
 {
 	pool.getConnection(function(connError, con)
 	{
-		var guess = {user_id: user, first_country_id: first, second_country_id: second, third_country_id: third};
-		var insertQuery = "INSERT INTO tournment_top_teams_guesses SET ?";
+		var guess = {user_id: user, place: place, country_id: country};
+		var insertQuery = "INSERT INTO tournament_top_teams_guesses SET ?";
 		var query = con.query(insertQuery, guess, function(err, result, fields)
 		{
 			if(err)
@@ -111,7 +111,7 @@ var createTournamentTopTeamsGuess = function(user, first, second, third)
 			}
 			else
 			{
-				console.log("Inserted tournament worst record guess successful.");
+				console.log("Inserted tournament top team guess successful.");
 			}
 		});
 		con.release();
@@ -120,23 +120,22 @@ var createTournamentTopTeamsGuess = function(user, first, second, third)
 
 var handleGuesses = function(user, guesses, callback)
 {
+	console.log(user);
+	var userId = user._id;
 	console.log("Heeeyyy");
-	console.log(guesses);
-	/*for(guess in guesses)
+	/* Populate the group top scorers */
+	for(var i = 0 ; i < guesses.group_order.length ; i++)
 	{
-		console.log(guesses[guess]);
-	}*/
-	/*
-	pool.getConnection(function(connError, con)
+		createGroupTopScorerGuess(userId, guesses.group_order[i], guesses.group_top_scorer[i]);
+	}
+	createTournamentTopScorerGuess(userId, guesses.tournament_top_scorer[0]);
+	createTournamentWorstRecordGuess(userId, guesses.tournament_worst_record[0]);
+	/* Populate the top teams gueses */
+	for(var i = 0 ; i < guesses.tournament_place.length ; i++)
 	{
-		var selectQuery = "SELECT c.id, c.name, c.group_id FROM countries c ORDER BY c.name";
-		var query = con.query(selectQuery, function(err, result, fields)
-		{
-			if(err) throw err;
-			con.release();
-			callback(result);
-		});
-	});*/
+		var place = i + 1;
+		createTournamentTopTeamsGuess(userId, place, guesses.tournament_place[i]);
+	}
 }
 
 module.exports.handleGuesses = handleGuesses;
