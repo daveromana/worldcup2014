@@ -136,6 +136,11 @@ var handleGuesses = function(user, guesses, callback)
 		var place = i + 1;
 		createTournamentTopTeamsGuess(userId, place, guesses.tournament_place[i]);
 	}
+	/* Populate the matches guesses */
+	for(var i = 0 ; i < guesses.match_order.length ; i++)
+	{
+		createGuess(userId, guesses.match_order[i], guesses.match_scorer[i], guesses.home_goals[i], guesses.away_goals[i]);
+	}
 }
 
 module.exports.handleGuesses = handleGuesses;
