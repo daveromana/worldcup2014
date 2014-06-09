@@ -80,7 +80,8 @@ CREATE TABLE IF NOT EXISTS guesses
 	scorer_id MEDIUMINT UNSIGNED NOT NULL REFERENCES players(id),
 	home_goals INT NOT NULL DEFAULT 0,
 	away_goals INT NOT NULL DEFAULT 0,
-	CONSTRAINT uc_user_matchup UNIQUE (user_id, matchup_id)
+	CONSTRAINT uc_user_matchup UNIQUE (user_id, matchup_id),
+	CONSTRAINT uc_user_scorer UNIQUE (user_id, scorer_id)
 );
 
 CREATE TABLE IF NOT EXISTS scores
@@ -93,6 +94,7 @@ CREATE TABLE IF NOT EXISTS scores
 CREATE TABLE IF NOT EXISTS leagues
 (
 	id MEDIUMINT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	code VARCHAR(64) UNIQUE NOT NULL,
 	name VARCHAR(128) UNIQUE NOT NULL
 );
 
@@ -101,18 +103,6 @@ CREATE TABLE IF NOT EXISTS league_participation
 	id MEDIUMINT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	user_id VARCHAR(64) NOT NULL,
 	league_id MEDIUMINT UNSIGNED NOT NULL REFERENCES leagues(id)
-);
-
-CREATE TABLE IF NOT EXISTS guesses
-(
-	id BIGINT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	user_id VARCHAR(64) NOT NULL,
-	matchup_id MEDIUMINT UNSIGNED NOT NULL REFERENCES matchups(id),
-	scorer_id MEDIUMINT UNSIGNED NOT NULL REFERENCES players(id),
-	home_goals INT NOT NULL DEFAULT 0,
-	away_goals INT NOT NULL DEFAULT 0,
-	CONSTRAINT uc_user_matchup UNIQUE (user_id, matchup_id),
-	CONSTRAINT uc_user_scorer UNIQUE (user_id, scorer_id)
 );
 
 CREATE TABLE IF NOT EXISTS group_top_scorers_guesses
@@ -146,5 +136,6 @@ CREATE TABLE IF NOT EXISTS tournament_top_teams_guesses
 	user_id VARCHAR(64) NOT NULL,
 	place INT NOT NULL,
 	country_id MEDIUMINT UNSIGNED NOT NULL REFERENCES countries(id),
-	CONSTRAINT uc_user_country UNIQUE (user_id, country_id)
+	CONSTRAINT uc_user_country UNIQUE (user_id, country_id),
+	CONSTRAINT uc_user_place UNIQUE (user_id, place)
 );
