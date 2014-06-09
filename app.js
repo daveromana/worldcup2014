@@ -7,10 +7,10 @@
 var express = require('express');
 var http = require('http');
 var app = express();
-
+var serverFunctions = require('./app/server/modules/server-functions');
 
 app.configure(function(){
-	app.set('port', 80);
+	app.set('port', serverFunctions.getInternalIp() == '127.0.0.1' ? 8080 : 80);
 	app.set('views', __dirname + '/app/server/views');
 	app.set('view engine', 'jade');
 	app.locals.pretty = true;
