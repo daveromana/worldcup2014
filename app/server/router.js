@@ -282,16 +282,33 @@ module.exports = function(app) {
 		    			{
 			    			dbSelect.getGuesses(req.session.user, function(guesses)
 			    			{
-			    				res.render('guesses', {
-									title : 'Guesses',
-									countries : CT,
-									udata : req.session.user,
-									matches : matchups,
-									players : players,
-									groups : groups,
-									countries : countries,
-									guesses : guesses
-								});
+				    			dbSelect.getTopGroupScorers(req.session.user, function(topGroupScorers)
+				    			{
+				    				dbSelect.getTopTeamsGuesses(req.session.user, function(topTeamsGuesses)
+				    				{
+					    				dbSelect.getTournamentTopScorerGuess(req.session.user, function(topScorer)
+					    				{
+						    				dbSelect.getTournamentWorstRecordGuess(req.session.user, function(worstRecord)
+						    				{
+						    					res.render('guesses',
+						    					{
+													title : 'Guesses',
+													countries : CT,
+													udata : req.session.user,
+													matches : matchups,
+													players : players,
+													groups : groups,
+													countries : countries,
+													guesses : guesses,
+													topGroupScorers : topGroupScorers,
+													topTeams : topTeamsGuesses,
+													topScorer : topScorer,
+													worstRecord : worstRecord
+												});
+											});
+										});
+				    				});
+				    			});
 			    			});
 		    			});
 	    			});
@@ -325,16 +342,34 @@ module.exports = function(app) {
 			    			{
 				    			dbSelect.getGuesses(req.session.user, function(guesses)
 				    			{
-				    				res.render('guesses', {
-										title : 'Guesses',
-										countries : CT,
-										udata : req.session.user,
-										matches : matchups,
-										players : players,
-										groups : groups,
-										countries : countries,
-										guesses : guesses
-									});
+					    			dbSelect.getTopGroupScorers(req.session.user, function(topGroupScorers)
+					    			{
+					    				dbSelect.getTopTeamsGuesses(req.session.user, function(topTeamsGuesses)
+					    				{
+						    				dbSelect.getTournamentTopScorerGuess(req.session.user, function(topScorer)
+						    				{
+							    				dbSelect.getTournamentWorstRecordGuess(req.session.user, function(worstRecord)
+							    				{
+													res.render('guesses',
+							    					{
+														title : 'Guesses',
+														countries : CT,
+														udata : req.session.user,
+														matches : matchups,
+														players : players,
+														groups : groups,
+														countries : countries,
+														guesses : guesses,
+														topGroupScorers : topGroupScorers,
+														topTeams : topTeamsGuesses,
+														topScorer : topScorer,
+														worstRecord : worstRecord,
+														messages : messages
+													});
+												});
+											});
+					    				});
+					    			});
 				    			});
 			    			});
 		    			});

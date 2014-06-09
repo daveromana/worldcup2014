@@ -8,6 +8,10 @@ input(type='hidden', value= user._id)#userId
 - groups = typeof(groups) != 'undefined' ? groups : {}
 - countries = typeof(countries) != 'undefined' ? countries : {}
 - guesses = typeof(guesses) != 'undefined' ? guesses : {}
+- topGroupScorers = typeof(topGroupScorers) != 'undefined' ? topGroupScorers : {}
+- topTeams = typeof(topTeams) != 'undefined' ? topTeams : {}
+- topScorer = typeof(topScorer) != 'undefined' ? topScorer : {}
+- worstRecord = typeof(worstRecord) != 'undefined' ? worstRecord : {}
 - messages = typeof(messages) != 'undefined' ? messages : {}
 
 #account-form-container
@@ -16,14 +20,16 @@ input(type='hidden', value= user._id)#userId
     h2 My guesses
     p Here are your current guesses
     - if(messages == {})
-      p.alert-success Your guesses were successfully committed!
+      p.alert-success Your guesses were successfully stored!
     - else 
       p.alert-danger #{messages.guessError} #{messages.topScorerGroupError} #{messages.topScorerTournamentError} #{messages.topTournamentError} #{messages.worstTournamentError}
+
     h3 Special guesses
     h4 Group Topscorers
     div(data-role='fieldcontain')
         fieldset
             - for (group in groups)
+              - var selectedGroupTopScorer = -1
               input(type="hidden", value=groups[group].id, name='group_order')
               #clist-cg.control-group
                 label.control-label(for='#group_top_scorer') Group #{groups[group].name}:
@@ -31,9 +37,12 @@ input(type='hidden', value= user._id)#userId
                     select#group_top_scorer(name='group_top_scorer')
                       - for (country in countries)
                         - if(countries[country].group_id == groups[group].id)
+                          - for(groupTopScorer in topGroupScorers)
+                            - if(topGroupScorers[groupTopScorer].group_id == groups[group].id)
+                              - selectedGroupTopScorer = topGroupScorers[groupTopScorer].scorer_id
                           - for(player in players)
                             - if(countries[country].id == players[player].country_id)
-                              option(id=players[player].id, value=players[player].id)= players[player].name + ' (' + countries[country].name + ')'
+                              option(selected = selectedGroupTopScorer == players[player].id, id=players[player].id, value=players[player].id)= players[player].name + ' (' + countries[country].name + ')'
     h4 Tournament Topscorer
     div(data-role='fieldcontain')
         fieldset
@@ -44,7 +53,11 @@ input(type='hidden', value= user._id)#userId
                       - for (country in countries)
                         - for(player in players)
                           - if(countries[country].id == players[player].country_id)
-                            option(id=players[player].id, value=players[player].id)= players[player].name + ' (' + countries[country].name + ')'
+                            - if(topScorer[0] == undefined)
+                              - var mvp = -1
+                            - else
+                              - var mvp = topScorer[0].scorer_id
+                            option(selected = players[player].id == mvp, id=players[player].id, value=players[player].id)= players[player].name + ' (' + countries[country].name + ')'
     h4 Tournament Worst Record
     div(data-role='fieldcontain')
         fieldset
@@ -53,17 +66,25 @@ input(type='hidden', value= user._id)#userId
                 .controls
                     select#tournament_worst_record(name='tournament_worst_record')
                       - for (country in countries)
-                        option(id=countries[country].id, value=countries[country].id)= countries[country].name
+                        - if(worstRecord[0] == undefined)
+                          - var worst = -1
+                        - else
+                          - var worst = worstRecord[0].country_id
+                        option(selected= countries[country].id == worst, id=countries[country].id, value=countries[country].id)= countries[country].name
     h4 Tournament Top Teams
     div(data-role='fieldcontain')
         fieldset
             - for (var i = 1 ; i < 4 ; i++)
+              - var selectedTopTeam = -1
               #clist-cg.control-group
                   label.control-label(for='tournament_place') #{i}. place:
                   .controls
                     select#tournament_place(name='tournament_place')
                       - for (country in countries)
-                        option(id=countries[country].id, value=countries[country].id)= countries[country].name
+                        - for(team in topTeams)
+                          - if(i == topTeams[team].place && countries[country].id == topTeams[team].country_id)
+                            - selectedTopTeam = topTeams[team].country_id
+                        option(selected=selectedTopTeam == countries[country].id, id=countries[country].id, value=countries[country].id)= countries[country].name
     h3 Match guesses (Group : Home - Away)
     div(data-role='fieldcontain')
         fieldset

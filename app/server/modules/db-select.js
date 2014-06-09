@@ -42,6 +42,66 @@ var getGuesses = function(user, callback)
 	});
 }
 
+var getTopGroupScorers = function(user, callback)
+{
+	var userId = user._id;
+	pool.getConnection(function(connError, con)
+	{
+		var selectQuery = "SELECT g.group_id, scorer_id FROM group_top_scorers_guesses g WHERE g.user_id = ?";
+		var query = con.query(selectQuery, userId, function(err, result, fields)
+		{
+			if(err) throw err;
+			con.release();
+			callback(result);
+		});
+	});
+}
+
+var getTopTeamsGuesses = function(user, callback)
+{
+	var userId = user._id;
+	pool.getConnection(function(connError, con)
+	{
+		var selectQuery = "SELECT t.place, t.country_id FROM tournament_top_teams_guesses t WHERE t.user_id = ?";
+		var query = con.query(selectQuery, userId, function(err, result, fields)
+		{
+			if(err) throw err;
+			con.release();
+			callback(result);
+		});
+	});
+}
+
+var getTournamentTopScorerGuess = function(user, callback)
+{
+	var userId = user._id;
+	pool.getConnection(function(connError, con)
+	{
+		var selectQuery = "SELECT t.scorer_id FROM tournament_top_scorers_guesses t WHERE t.user_id = ?";
+		var query = con.query(selectQuery, userId, function(err, result, fields)
+		{
+			if(err) throw err;
+			con.release();
+			callback(result);
+		});
+	});
+}
+
+var getTournamentWorstRecordGuess = function(user, callback)
+{
+	var userId = user._id;
+	pool.getConnection(function(connError, con)
+	{
+		var selectQuery = "SELECT w.country_id FROM tournament_worst_records_guesses w WHERE w.user_id = ?";
+		var query = con.query(selectQuery, userId, function(err, result, fields)
+		{
+			if(err) throw err;
+			con.release();
+			callback(result);
+		});
+	});
+}
+
 var getPlayers = function(callback)
 {
 	pool.getConnection(function(connError, con)
@@ -89,3 +149,7 @@ module.exports.getPlayers = getPlayers;
 module.exports.getGroups = getGroups;
 module.exports.getCountries = getCountries;
 module.exports.getGuesses = getGuesses;
+module.exports.getTopGroupScorers = getTopGroupScorers;
+module.exports.getTopTeamsGuesses = getTopTeamsGuesses;
+module.exports.getTournamentTopScorerGuess = getTournamentTopScorerGuess;
+module.exports.getTournamentWorstRecordGuess = getTournamentWorstRecordGuess;

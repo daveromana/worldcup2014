@@ -239,14 +239,15 @@ var createTournamentTopTeamsGuess = function(user, place, country)
 
 var handleGuesses = function(user, guesses, callback)
 {
+	errors = {guessError: '', topScorerGroupError: '', topScorerTournamentError:'', topTournamentError: '', worstTournamentError:''}
 	var userId = user._id;
 	/* Populate the group top scorers */
 	for(var i = 0 ; i < guesses.group_order.length ; i++)
 	{
 		createGroupTopScorerGuess(userId, guesses.group_order[i], guesses.group_top_scorer[i]);
 	}
-	createTournamentTopScorerGuess(userId, guesses.tournament_top_scorer[0]);
-	createTournamentWorstRecordGuess(userId, guesses.tournament_worst_record[0]);
+	createTournamentTopScorerGuess(userId, guesses.tournament_top_scorer);
+	createTournamentWorstRecordGuess(userId, guesses.tournament_worst_record);
 	/* Populate the top teams gueses */
 	for(var i = 0 ; i < guesses.tournament_place.length ; i++)
 	{
@@ -258,7 +259,7 @@ var handleGuesses = function(user, guesses, callback)
 	{
 		createGuess(userId, guesses.match_order[i], guesses.match_scorer[i], guesses.home_goals[i], guesses.away_goals[i]);
 	}
-	callback(errors);
+	setTimeout(function(){callback(errors);}, 2500);
 }
 
 module.exports.handleGuesses = handleGuesses;
