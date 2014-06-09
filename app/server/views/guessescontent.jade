@@ -7,6 +7,7 @@ input(type='hidden', value= user._id)#userId
 - players = typeof(players) != 'undefined' ? players : {}
 - groups = typeof(groups) != 'undefined' ? groups : {}
 - countries = typeof(countries) != 'undefined' ? countries : {}
+- guesses = typeof(guesses) != 'undefined' ? guesses : {}
 - messages = typeof(messages) != 'undefined' ? messages : {}
 
 #account-form-container
@@ -67,6 +68,15 @@ input(type='hidden', value= user._id)#userId
     div(data-role='fieldcontain')
         fieldset
             - for (match in matches)
+              - var homeGoals = 0
+              - var awayGoals = 0
+              - var scorer = 0
+              - for (guess in guesses)
+                - if (guesses[guess].matchup_id == matches[match].id)
+                  - homeGoals = guesses[guess].home_goals
+                  - awayGoals = guesses[guess].away_goals
+                  - scorer = guesses[guess].scorer_id
+
               input(type="hidden", value=matches[match].id, name='match_order')
               br
               h4 #{matches[match].group} : #{matches[match].home_team} - #{matches[match].away_team}
@@ -75,15 +85,15 @@ input(type='hidden', value= user._id)#userId
                     .controls
                         select#home_goals(name='home_goals')
                           - for (var i = 0; i < 100; ++i) {
-                            option= i
+                            option(selected=homeGoals == i)= i
                           - }
                     br
                     label.control-label(for='away_goals') Away goals:
                     .controls
                         select#away_goals(name='away_goals')
                           - for (var i = 0; i < 100; ++i) {
-                            option= i
-                          - }          
+                            option(selected=awayGoals == i)= i
+                          - }
                     br
                     label.control-label(for='match_scorer') Scorer:
                     .controls
@@ -91,7 +101,7 @@ input(type='hidden', value= user._id)#userId
                           - for (player in players)
                             - if(players[player].country_id == matches[match].home_team_id || players[player].country_id == matches[match].away_team_id)
                               - var currentCountry = players[player].country_id == matches[match].home_team_id ? matches[match].home_team : matches[match].away_team;
-                              option(id=players[player].id, value=players[player].id)= players[player].name + ' (' + currentCountry + ')'
+                              option(selected= scorer == players[player].id, id=players[player].id, value=players[player].id)= players[player].name + ' (' + currentCountry + ')'
     br
     div(data-role='fieldcontain')
       input(type='submit',value='Submit My Guesses',data-transition='fade', data-theme='c')

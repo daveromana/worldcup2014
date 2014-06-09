@@ -280,15 +280,19 @@ module.exports = function(app) {
 	    			{
 		    			dbSelect.getCountries(function(countries)
 		    			{
-							res.render('guesses', {
-								title : 'Guesses',
-								countries : CT,
-								udata : req.session.user,
-								matches : matchups,
-								players : players,
-								groups : groups,
-								countries : countries
-							});
+			    			dbSelect.getGuesses(req.session.user, function(guesses)
+			    			{
+			    				res.render('guesses', {
+									title : 'Guesses',
+									countries : CT,
+									udata : req.session.user,
+									matches : matchups,
+									players : players,
+									groups : groups,
+									countries : countries,
+									guesses : guesses
+								});
+			    			});
 		    			});
 	    			});
 	    		});
@@ -319,16 +323,19 @@ module.exports = function(app) {
 		    			{
 			    			dbSelect.getCountries(function(countries)
 			    			{
-								res.render('guesses', {
-									title : 'Guesses',
-									countries : CT,
-									udata : req.session.user,
-									matches : matchups,
-									players : players,
-									groups : groups,
-									countries : countries,
-									messages : messages
-								});
+				    			dbSelect.getGuesses(req.session.user, function(guesses)
+				    			{
+				    				res.render('guesses', {
+										title : 'Guesses',
+										countries : CT,
+										udata : req.session.user,
+										matches : matchups,
+										players : players,
+										groups : groups,
+										countries : countries,
+										guesses : guesses
+									});
+				    			});
 			    			});
 		    			});
 		    		});

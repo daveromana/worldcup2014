@@ -27,6 +27,21 @@ var getMatchups = function(callback)
 	});
 }
 
+var getGuesses = function(user, callback)
+{
+	var userId = user._id;
+	pool.getConnection(function(connError, con)
+	{
+		var selectQuery = "SELECT matchup_id, scorer_id, home_goals, away_goals FROM guesses g WHERE g.user_id = ?";
+		var query = con.query(selectQuery, userId, function(err, result, fields)
+		{
+			if(err) throw err;
+			con.release();
+			callback(result);
+		});
+	});
+}
+
 var getPlayers = function(callback)
 {
 	pool.getConnection(function(connError, con)
@@ -73,3 +88,4 @@ module.exports.getMatchups = getMatchups;
 module.exports.getPlayers = getPlayers;
 module.exports.getGroups = getGroups;
 module.exports.getCountries = getCountries;
+module.exports.getGuesses = getGuesses;
