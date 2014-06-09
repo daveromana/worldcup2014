@@ -120,9 +120,7 @@ var createTournamentTopTeamsGuess = function(user, place, country)
 
 var handleGuesses = function(user, guesses, callback)
 {
-	console.log(user);
 	var userId = user._id;
-	console.log("Heeeyyy");
 	/* Populate the group top scorers */
 	for(var i = 0 ; i < guesses.group_order.length ; i++)
 	{
