@@ -7,12 +7,17 @@ input(type='hidden', value= user._id)#userId
 - players = typeof(players) != 'undefined' ? players : {}
 - groups = typeof(groups) != 'undefined' ? groups : {}
 - countries = typeof(countries) != 'undefined' ? countries : {}
+- messages = typeof(messages) != 'undefined' ? messages : {}
 
 #account-form-container
  div
   form(action='/guesses',method='post').form-horizontal.well.span6
     h2 My guesses
     p Here are your current guesses
+    - if(messages == {})
+      p.alert-success Your guesses were successfully committed!
+    - else 
+      p.alert-danger #{messages.guessError} #{messages.topScorerGroupError} #{messages.topScorerTournamentError} #{messages.topTournamentError} #{messages.worstTournamentError}
     h3 Special guesses
     h4 Group Topscorers
     div(data-role='fieldcontain')

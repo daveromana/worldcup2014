@@ -309,7 +309,31 @@ module.exports = function(app) {
 		}
 		else
 		{
-			guesses.handleGuesses(req.session.user, req.body);
+			guesses.handleGuesses(req.session.user, req.body, function(messages)
+			{
+				dbSelect.getMatchups(function(matchups)
+	    		{
+		    		dbSelect.getPlayers(function(players)
+		    		{
+		    			dbSelect.getGroups(function(groups)
+		    			{
+			    			dbSelect.getCountries(function(countries)
+			    			{
+								res.render('guesses', {
+									title : 'Guesses',
+									countries : CT,
+									udata : req.session.user,
+									matches : matchups,
+									players : players,
+									groups : groups,
+									countries : countries,
+									messages : messages
+								});
+			    			});
+		    			});
+		    		});
+		    	});
+			});
 		}
 	});
 	

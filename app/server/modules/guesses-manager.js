@@ -13,6 +13,8 @@ var dbConfig =
 
 var pool = mysql.createPool(dbConfig);
 
+var errors = {guessError: '', topScorerGroupError: '', topScorerTournamentError:'', topTournamentError: '', worstTournamentError:''}
+
 var createGuess = function(user, matchup, scorer, homeGoals, awayGoals)
 {
 	pool.getConnection(function(connError, con)
@@ -23,11 +25,36 @@ var createGuess = function(user, matchup, scorer, homeGoals, awayGoals)
 		{
 			if(err)
 			{
-				console.log("Failed to create a guess for " + user + ". " + err);
+				pool.getConnection(function(connError2, con2)
+				{
+					var guess2 = {matchup_id: matchup, scorer_id: scorer, home_goals: homeGoals, away_goals: awayGoals};
+					var updateQuery = "UPDATE guesses SET ? WHERE user_id = ? AND matchup_id = ?";
+					var query2 = con2.query(updateQuery, [guess2, user, matchup], function(err2, result2, fields2)
+					{
+						if(err2)
+						{
+							console.log("Failed to create or update a guess for " + user + ". " + err2);
+							errors.guessError = "Failed to guess for a match! It's very likely that you chose a game-scorer who you had already chosen in another match. ";
+						}
+						else
+						{
+							if(result2.affectedRows == 0)
+							{
+								console.log("Failed to create or update a guess for " + user + ". " + result2.affectedRows + " rows affected.");
+								errors.guessError = "Failed to update a guess for a match! It's very likely that you chose a game-scorer who you had already chosen in another match. ";
+							}
+							else
+							{
+								//console.log("Updated guess successful.");
+							}
+						}
+					});
+					con2.release();
+				});
 			}
 			else
 			{
-				console.log("Inserted guess successful.");
+				//console.log("Inserted guess successful.");
 			}
 		});
 		con.release();
@@ -44,11 +71,28 @@ var createGroupTopScorerGuess = function(user, group, scorer)
 		{
 			if(err)
 			{
-				console.log("Failed to create a group top scorer guess for " + user + ". " + err);
+				pool.getConnection(function(connError2, con2)
+				{
+					var guess2 = {user_id: user, group_id: group, scorer_id: scorer};
+					var updateQuery = "UPDATE group_top_scorers_guesses SET ? WHERE user_id = ? AND group_id = ?";
+					var query2 = con2.query(updateQuery, [guess2, user, group], function(err2, result2, fields2)
+					{
+						if(err2)
+						{
+							console.log("UNEXPECTED Failed to create or update a group top scorer guess for " + user + ". " + err2);
+							errors.topScorerGroupError = "Unexpected error occurred while guessing for a group top scorer :( ";
+						}
+						else
+						{
+							//console.log("Updated group top scorer guess successful.");
+						}
+					});
+					con2.release();
+				});
 			}
 			else
 			{
-				console.log("Inserted group top scorer guess successful.");
+				//console.log("Inserted group top scorer guess successful.");
 			}
 		});
 		con.release();
@@ -65,11 +109,36 @@ var createTournamentTopScorerGuess = function(user, scorer)
 		{
 			if(err)
 			{
-				console.log("Failed to create a tournament top scorer guess for " + user + ". " + err);
+				pool.getConnection(function(connError2, con2)
+				{
+					var guess2 = {user_id: user, scorer_id: scorer};
+					var updateQuery = "UPDATE tournament_top_scorers_guesses SET ? WHERE user_id = ?";
+					var query2 = con2.query(updateQuery, [guess2, user], function(err2, result2, fields2)
+					{
+						if(err2)
+						{
+							console.log("UNEXPECTED Failed to create or update a tournament top scorer guess for " + user + ". " + err2);
+							errors.topScorerTournamentError = "Unexpected error occurred while guessing a tournament top scorer guess. ";
+						}
+						else
+						{
+							if(result2.affectedRows == 0)
+							{
+								console.log("UNEXPECTED Failed to create or update a tournament top scorer guess for " + user + ". " + result2.affectedRows + " rows affected.");
+								errors.topScorerTournamentError = "Unexpected error occurred while guessing a tournament top scorer guess. ";
+							}
+							else
+							{
+								//console.log("Updated a tournament top scorer guess successful.");
+							}
+						}
+					});
+					con2.release();
+				});
 			}
 			else
 			{
-				console.log("Inserted tournament top scorer guess successful.");
+				//console.log("Inserted tournament top scorer guess successful.");
 			}
 		});
 		con.release();
@@ -86,11 +155,36 @@ var createTournamentWorstRecordGuess = function(user, country)
 		{
 			if(err)
 			{
-				console.log("Failed to create a tournament worst record guess for " + user + ". " + err);
+				pool.getConnection(function(connError2, con2)
+				{
+					var guess2 = {user_id: user, country_id: country};
+					var updateQuery = "UPDATE tournament_worst_records_guesses SET ? WHERE user_id = ?";
+					var query2 = con2.query(updateQuery, [guess2, user], function(err2, result2, fields2)
+					{
+						if(err2)
+						{
+							console.log("UNEXPECTED Failed to create or update a worst record guess for " + user + ". " + err2);
+							errors.worstTournamentError = "Unexpected error occurred while guessing a worst record team. ";
+						}
+						else
+						{
+							if(result2.affectedRows == 0)
+							{
+								console.log("UNEXPECTED Failed to create or update a worst record guess for " + user + ". " + result2.affectedRows + " rows affected.");
+								errors.worstTournamentError = "Unexpected error occurred while guessing a worst record team. ";
+							}
+							else
+							{
+								//console.log("Updated a top worst record guess successful.");
+							}
+						}
+					});
+					con2.release();
+				});
 			}
 			else
 			{
-				console.log("Inserted tournament worst record guess successful.");
+				//console.log("Inserted tournament worst record guess successful.");
 			}
 		});
 		con.release();
@@ -107,11 +201,36 @@ var createTournamentTopTeamsGuess = function(user, place, country)
 		{
 			if(err)
 			{
-				console.log("Failed to create a tournament top teams guess for " + user + ". " + err);
+				pool.getConnection(function(connError2, con2)
+				{
+					var guess2 = {user_id: user, place: place, country_id: country};
+					var updateQuery = "UPDATE tournament_top_teams_guesses SET ? WHERE user_id = ? AND place = ?";
+					var query2 = con2.query(updateQuery, [guess2, user, place], function(err2, result2, fields2)
+					{
+						if(err2)
+						{
+							console.log("Failed to create or update a top tournament team guess for " + user + ". " + err2);
+							errors.topTournamentError = "Failed to guess a tournament top team, make sure you're not guessing with the same team for two different places(e.g. 1.st and 2.nd place). ";
+						}
+						else
+						{
+							if(result2.affectedRows == 0)
+							{
+								console.log("Failed to create or update a top tournament team guess for " + user + ". " + result2.affectedRows + " rows affected.");
+								errors.topTournamentError = "Failed to guess a tournament top team, make sure you're not guessing with the same team for two different places(e.g. 1.st and 2.nd place). ";
+							}
+							else
+							{
+								//console.log("Updated a top tournament team guess successful.");
+							}
+						}
+					});
+					con2.release();
+				});
 			}
 			else
 			{
-				console.log("Inserted tournament top team guess successful.");
+				//console.log("Inserted tournament top team guess successful.");
 			}
 		});
 		con.release();
@@ -139,6 +258,7 @@ var handleGuesses = function(user, guesses, callback)
 	{
 		createGuess(userId, guesses.match_order[i], guesses.match_scorer[i], guesses.home_goals[i], guesses.away_goals[i]);
 	}
+	callback(errors);
 }
 
 module.exports.handleGuesses = handleGuesses;
