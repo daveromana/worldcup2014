@@ -53,8 +53,8 @@ module.exports = function(app) {
 		// if user is not logged-in redirect back to login page //
 	        res.redirect('/');
 	    }   else{
-			//dbpopulation.populatePlayers();
-			//dbpopulation.populateMatchups();
+			dbpopulation.populatePlayers();
+			dbpopulation.populateMatchups();
 			res.render('home', {
 				title : 'Guess game for the 2014 FIFA World Cup',
 				udata : req.session.user
@@ -188,7 +188,7 @@ module.exports = function(app) {
 		})
 	});
 
-// View the results of 2010 //
+// View the results of 2014 //
 	
 	app.get('/results', function(req, res) {
 	    if (req.session.user == null)
@@ -198,65 +198,65 @@ module.exports = function(app) {
 	    }
 	    else
 	   	{
-	   		console.log(req.session.user);
-	   		var options =
+	   		var file = __dirname + '/files/results2014.json';
+			fs.readFile(file, 'utf8', function (err, data)
+			{
+				if (err) throw err;
+				try
 				{
-					host: 'www.kimonolabs.com',
-					path: 'http://www.kimonolabs.com/api/9jx2j8b4?apikey=71c506eb1ea29c70e74985c84fcef611',
-					method: 'GET'
-				};
-
-				var apiRequest = http.request(options, function(apiResponse)
-				{
-					console.log("\nCalling api.");
-
-					var requestBody = "";
-					apiResponse.on('data', function(data)
+					var data = JSON.parse(data);
+					res.render('results',
 					{
-						requestBody += data;
+						title : 'Results of 2014',
+						resultsof2014 : data
 					});
-					apiResponse.on('end', function()
-					{
-						try
-						{
-							var jsonResults = JSON.parse(requestBody);
-							res.render('results',
-							{
-								title : 'Results of 2014',
-								resultsof2014 : jsonResults
-							});
-						}
-						catch(err2)
-						{
-							console.log('Problem with request: ' + err2.message);
-
-						}
-					});
-				});
-				apiRequest.on('error', function(e)
+				}
+				catch(exception)
 				{
-					console.log('Error: ' + e.message);
-				});
-				apiRequest.end();
-			// var file = __dirname + '/files/results2010.json';
-			// fs.readFile(file, 'utf8', function (err, data)
-			// {
-			// 	if (err)
-			// 	{
-			// 		console.log('Error: ' + err);
-			// 	}
-			// 	else
-			// 	{
-			// 		data = JSON.parse(data);
-			// 		console.log(data);
-			// 		res.render('results2010',
-			// 		{
-			// 			title : 'Results of 2010',
-			// 			resultsof2010 : data
-			// 		});
-			// 	}
-			// });
-	    }
+					console.log('Problem with reading file: ' + exception.message);
+				}
+			});
+		}
+		/*
+   		var options =
+		{
+			host: 'www.kimonolabs.com',
+			path: 'http://www.kimonolabs.com/api/9jx2j8b4?apikey=71c506eb1ea29c70e74985c84fcef611',
+			method: 'GET'
+		};
+
+		var apiRequest = http.request(options, function(apiResponse)
+		{
+			console.log("\nCalling api.");
+
+			var requestBody = "";
+			apiResponse.on('data', function(data)
+			{
+				requestBody += data;
+			});
+			apiResponse.on('end', function()
+			{
+				try
+				{
+					var jsonResults = JSON.parse(requestBody);
+					res.render('results',
+					{
+						title : 'Results of 2014',
+						resultsof2014 : jsonResults
+					});
+				}
+				catch(err2)
+				{
+					console.log('Problem with request: ' + err2.message);
+
+				}
+			});
+		});
+		apiRequest.on('error', function(e)
+		{
+			console.log('Error: ' + e.message);
+		});
+		apiRequest.end();*/
 	});
 	
 	app.post('/results', function(req, res){
