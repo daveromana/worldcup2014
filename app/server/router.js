@@ -56,7 +56,7 @@ module.exports = function(app) {
 			//dbpopulation.populatePlayers();
 			//dbpopulation.populateMatchups();
 			res.render('home', {
-				title : 'Home',
+				title : 'Guess game for the 2014 FIFA World Cup',
 				udata : req.session.user
 			});
 	    }
