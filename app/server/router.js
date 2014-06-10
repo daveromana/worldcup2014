@@ -386,6 +386,30 @@ module.exports = function(app) {
 			});
 		}
 	});
+
+	app.get('/leagues', function(req, res)
+	{
+	    if (req.session.user == null){
+		// if user is not logged-in redirect back to login page //
+	        res.redirect('/');
+	    }   else{
+			//dbpopulation.populatePlayers();
+			//dbpopulation.populateMatchups();
+			res.render('leagues', {
+				title : 'Create And Join Leagues',
+				udata : req.session.user
+			});
+	    }
+	});
+
+	app.post('/leagues', function(req, res)
+	{
+		if (req.param('logout') == 'true'){
+			res.clearCookie('user');
+			res.clearCookie('pass');
+			req.session.destroy(function(e){ res.send('ok', 200); });
+		}
+	});
 	
 // view & delete accounts //
 	
