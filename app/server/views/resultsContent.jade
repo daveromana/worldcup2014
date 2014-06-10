@@ -5,8 +5,8 @@
     div.page-header
       h1 #{title} 
     div.row
-      h4 Úrslit Heimsmeistaramótsins í knattspyrnu 2014
-      h4 Gögn síðast uppfærð : #{data.lastsuccess}
+      h4 Results for the 2014 FIFA World Cup
+      h4 Data last time updated : #{data.lastsuccess}
       p
 
       -var gamerepresent = 1
@@ -16,24 +16,24 @@
           
           if(parseInt(data.results[group][game].hometeam.length) != 0)
          
-            h4 Leikur #{parseInt(gamerepresent++)}
+            h4 Game #{parseInt(gamerepresent++)}
 
-            p Heimalið: #{data.results[group][game].hometeam.text}
+            p Home: #{data.results[group][game].hometeam.text}
 
-            p Útilið: #{data.results[group][game].awayteam.text}
+            p Away: #{data.results[group][game].awayteam.text}
           
             if parseInt(data.results[group][game].homescorers.length) > 1
-              p Markarskorarar heimaliðs:
+              p Homes' scorers:
               -for(var homescorer in data.results[group][game].homescorers)
                 p &nbsp;&nbsp;&nbsp;&nbsp; #{data.results[group][game].homescorers[homescorer].text}
             else
-              p Markaskorari heimaliðs: #{data.results[group][game].homescorers.text}
+              p Home's scorer: #{data.results[group][game].homescorers.text}
 
             if parseInt(data.results[group][game].awayscorer.length) > 1
-              p Markarskorarar útiliðs:
+              p Aways' scorers:
               -for(var awayscorer in data.results[group][game].awayscorer)
                 p &nbsp;&nbsp;&nbsp;&nbsp; #{data.results[group][game].awayscorer[awayscorer].text}
             else
-              p Markaskorari útliðliðs: #{data.results[group][game].awayscorer.text}
+              p Away's scorer: #{data.results[group][game].awayscorer.text}
 
-            p Úrslit: #{data.results[group][game].scoreline}
+            p Results: #{data.results[group][game].scoreline}
