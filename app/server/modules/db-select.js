@@ -102,6 +102,21 @@ var getTournamentWorstRecordGuess = function(user, callback)
 	});
 }
 
+var getTournamentTopAssister = function(user, callback)
+{
+	var userId = user._id;
+	pool.getConnection(function(connError, con)
+	{
+		var selectQuery = "SELECT t.player_id FROM tournament_top_assists t WHERE t.user_id = ?";
+		var query = con.query(selectQuery, userId, function(err, result, fields)
+		{
+			if(err) throw err;
+			con.release();
+			callback(result);
+		});
+	});
+}
+
 var getPlayers = function(callback)
 {
 	pool.getConnection(function(connError, con)
@@ -153,3 +168,4 @@ module.exports.getTopGroupScorers = getTopGroupScorers;
 module.exports.getTopTeamsGuesses = getTopTeamsGuesses;
 module.exports.getTournamentTopScorerGuess = getTournamentTopScorerGuess;
 module.exports.getTournamentWorstRecordGuess = getTournamentWorstRecordGuess;
+module.exports.getTournamentTopAssister = getTournamentTopAssister;

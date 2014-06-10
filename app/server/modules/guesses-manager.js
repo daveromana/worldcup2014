@@ -13,7 +13,7 @@ var dbConfig =
 
 var pool = mysql.createPool(dbConfig);
 
-var errors = {guessError: '', topScorerGroupError: '', topScorerTournamentError:'', topTournamentError: '', worstTournamentError:''}
+var errors = {guessError: '', topAssisterError: '', topScorerGroupError: '', topScorerTournamentError:'', topTournamentError: '', worstTournamentError:''}
 
 var createGuess = function(user, matchup, scorer, homeGoals, awayGoals)
 {
@@ -98,6 +98,52 @@ var createGroupTopScorerGuess = function(user, group, scorer)
 		con.release();
 	});
 }
+
+var createGroupTopAssisterGuess = function(user, assister)
+{
+	pool.getConnection(function(connError, con)
+	{
+		var guess = {user_id: user, player_id: assister};
+		var insertQuery = "INSERT INTO tournament_top_assists SET ?";
+		var query = con.query(insertQuery, guess, function(err, result, fields)
+		{
+			if(err)
+			{
+				pool.getConnection(function(connError2, con2)
+				{
+					var guess2 = {user_id: user, player_id: assister};
+					var updateQuery = "UPDATE tournament_top_assists SET ? WHERE user_id = ?";
+					var query2 = con2.query(updateQuery, [guess2, user], function(err2, result2, fields2)
+					{
+						if(err2)
+						{
+							console.log("UNEXPECTED Failed to create or update an top assister for " + user + ". " + err2);
+							errors.topAssisterError = "Unexpected error occurred while guessing for a top assister :( ";
+						}
+						else
+						{
+							if(result2.affectedRows == 0)
+							{
+								console.log("UNEXPECTED Failed to create or update a tournament top assister for " + user + ". " + result2.affectedRows + " rows affected.");
+								errors.topAssisterError = "Unexpected error occurred while guessing a tournament top assister guess. ";
+							}
+							else
+							{
+								//console.log("Updated a tournament top scorer guess successful.");
+							}
+						}
+					});
+					con2.release();
+				});
+			}
+			else
+			{
+			}
+		});
+		con.release();
+	});
+}
+
 
 var createTournamentTopScorerGuess = function(user, scorer)
 {
@@ -248,6 +294,7 @@ var handleGuesses = function(user, guesses, callback)
 	}
 	createTournamentTopScorerGuess(userId, guesses.tournament_top_scorer);
 	createTournamentWorstRecordGuess(userId, guesses.tournament_worst_record);
+	createGroupTopAssisterGuess(userId, guesses.tournament_top_assister);
 	/* Populate the top teams gueses */
 	for(var i = 0 ; i < guesses.tournament_place.length ; i++)
 	{
