@@ -53,8 +53,8 @@ module.exports = function(app) {
 		// if user is not logged-in redirect back to login page //
 	        res.redirect('/');
 	    }   else{
-			dbpopulation.populatePlayers();
-			dbpopulation.populateMatchups();
+			//dbpopulation.populatePlayers();
+			//dbpopulation.populateMatchups();
 			res.render('home', {
 				title : 'Guess game for the 2014 FIFA World Cup',
 				udata : req.session.user
@@ -290,21 +290,25 @@ module.exports = function(app) {
 					    				{
 						    				dbSelect.getTournamentWorstRecordGuess(req.session.user, function(worstRecord)
 						    				{
-						    					res.render('guesses',
+						    					dbSelect.getTournamentTopAssister(req.session.user, function(topAssister)
 						    					{
-													title : 'Guesses',
-													countries : CT,
-													udata : req.session.user,
-													matches : matchups,
-													players : players,
-													groups : groups,
-													countries : countries,
-													guesses : guesses,
-													topGroupScorers : topGroupScorers,
-													topTeams : topTeamsGuesses,
-													topScorer : topScorer,
-													worstRecord : worstRecord
-												});
+							    					res.render('guesses',
+							    					{
+														title : 'Guesses',
+														countries : CT,
+														udata : req.session.user,
+														matches : matchups,
+														players : players,
+														groups : groups,
+														countries : countries,
+														guesses : guesses,
+														topGroupScorers : topGroupScorers,
+														topTeams : topTeamsGuesses,
+														topScorer : topScorer,
+														worstRecord : worstRecord,
+														topAssister: topAssister
+													});
+						    					});
 											});
 										});
 				    				});
@@ -350,22 +354,26 @@ module.exports = function(app) {
 						    				{
 							    				dbSelect.getTournamentWorstRecordGuess(req.session.user, function(worstRecord)
 							    				{
-													res.render('guesses',
+							    					dbSelect.getTournamentTopAssister(req.session.user, function(topAssister)
 							    					{
-														title : 'Guesses',
-														countries : CT,
-														udata : req.session.user,
-														matches : matchups,
-														players : players,
-														groups : groups,
-														countries : countries,
-														guesses : guesses,
-														topGroupScorers : topGroupScorers,
-														topTeams : topTeamsGuesses,
-														topScorer : topScorer,
-														worstRecord : worstRecord,
-														messages : messages
-													});
+								    					res.render('guesses',
+								    					{
+															title : 'Guesses',
+															countries : CT,
+															udata : req.session.user,
+															matches : matchups,
+															players : players,
+															groups : groups,
+															countries : countries,
+															guesses : guesses,
+															topGroupScorers : topGroupScorers,
+															topTeams : topTeamsGuesses,
+															topScorer : topScorer,
+															worstRecord : worstRecord,
+															topAssister: topAssister,
+															messages : messages
+														});
+							    					});
 												});
 											});
 					    				});

@@ -11,6 +11,7 @@ input(type='hidden', value= user._id)#userId
 - topGroupScorers = typeof(topGroupScorers) != 'undefined' ? topGroupScorers : {}
 - topTeams = typeof(topTeams) != 'undefined' ? topTeams : {}
 - topScorer = typeof(topScorer) != 'undefined' ? topScorer : {}
+- topAssister = typeof(topAssister) != 'undefined' ? topAssister : {}
 - worstRecord = typeof(worstRecord) != 'undefined' ? worstRecord : {}
 - messages = typeof(messages) != 'undefined' ? messages : {}
 
@@ -22,7 +23,7 @@ input(type='hidden', value= user._id)#userId
     - if(messages == {})
       p.alert-success Your guesses were successfully stored!
     - else 
-      p.alert-danger #{messages.guessError} #{messages.topScorerGroupError} #{messages.topScorerTournamentError} #{messages.topTournamentError} #{messages.worstTournamentError}
+      p.alert-danger #{messages.guessError} #{messages.topAssisterError} #{messages.topScorerGroupError} #{messages.topScorerTournamentError} #{messages.topTournamentError} #{messages.worstTournamentError}
 
     h3 Special guesses
     h4 Group Topscorers
@@ -58,6 +59,21 @@ input(type='hidden', value= user._id)#userId
                             - else
                               - var mvp = topScorer[0].scorer_id
                             option(selected = players[player].id == mvp, id=players[player].id, value=players[player].id)= players[player].name + ' (' + countries[country].name + ')'
+    h4 Tournament Top-assister
+    div(data-role='fieldcontain')
+        fieldset
+            #clist-cg.control-group
+                label.control-label(for='tournament_top_assister') Top-assister:
+                .controls
+                    select#tournament_top_assister(name='tournament_top_assister')
+                      - for (country in countries)
+                        - for(player in players)
+                          - if(countries[country].id == players[player].country_id)
+                            - if(topAssister[0] == undefined)
+                              - var top = -1
+                            - else
+                              - var top = topAssister[0].player_id
+                            option(selected = players[player].id == top, id=players[player].id, value=players[player].id)= players[player].name + ' (' + countries[country].name + ')'
     h4 Tournament Worst Record
     div(data-role='fieldcontain')
         fieldset
