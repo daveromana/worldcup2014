@@ -3,9 +3,11 @@ extends layout
 
 block content
 	include navbar
-	include resultsContent
-	include modals/alert
-	include modals/confirm
+	#account-form-container
+		div.well.span7
+			include resultsContent
+			include modals/alert
+			include modals/confirm
 
 block scripts
 	script(src='/vendor/jquery.min.js')
