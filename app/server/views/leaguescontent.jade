@@ -5,9 +5,14 @@ input(type='hidden', value= user._id)#userId
 
 #account-form-container
  div
-  form(action='/guesses',method='post').form-horizontal.well.span6
+  form(action='/leagues',method='post').form-horizontal.well.span6
     h1 #{title}
     h2 Create a League
+        div(data-role='fieldcontain')
+          fieldset(data-role='controlgroup')
+           label(for='leagueName') Name of League:
+           input(id='leagueName',type='text',value='')
+           input(type='submit',value='Create a League',data-transition='fade', data-theme='c')
     h2 Join a League
 
 // display form errors in a custom modal window //

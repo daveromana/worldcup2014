@@ -404,10 +404,49 @@ module.exports = function(app) {
 
 	app.post('/leagues', function(req, res)
 	{
-		if (req.param('logout') == 'true'){
+		console.log(req.body);
+ 		if (req.session.user == null){
+			// if user is not logged-in redirect back to login page //
+	        res.redirect('/');
+	    }
+		else if (req.param('logout') == 'true'){
 			res.clearCookie('user');
 			res.clearCookie('pass');
 			req.session.destroy(function(e){ res.send('ok', 200); });
+		}
+		else
+		{
+			if(req.param('createLeague') == 'true')
+			{
+				var leagueName = req.param('leagueName');
+				leaguemanager.createLeague(leagueName, user, function(code)
+				{
+					leaguemanager.getLeaguesForUser(user, function(leagues)
+					{
+						res.render('leagues',
+						{
+							title : 'Create or join a League',
+							currentUserLeagues : leagues
+						});
+					});
+				});
+			}
+			else if(req.param('joinLeague') == 'true')
+			{
+				var code = req.param.code;
+				leaguemanager.ParticipateInLeague(code, user, function(messages)
+				{
+					leaguemanager.getLeaguesForUser(user, function(leagues)
+					{
+						res.render('leagues',
+						{
+							title : 'Create or join a League',
+							currentUserLeagues : leagues,
+							joinLeagueMessages : messages
+						});
+					});
+				});
+			}
 		}
 	});
 	

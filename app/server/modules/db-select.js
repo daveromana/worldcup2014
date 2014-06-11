@@ -159,6 +159,21 @@ var getCountries = function(callback)
 	});
 }
 
+var getLeagues = function(user, callback)
+{
+	var userId = user._id;
+	pool.getConnection(function(connError, con)
+	{
+		var selectQuery = "SELECT l.name, l.code FROM leagues l, league_participation p WHERE p.league_id = l.id AND p.user_id = ?";
+		var query = con.query(selectQuery, userId, function(err, result, fields)
+		{
+			if(err) throw err;
+			con.release();
+			callback(result);
+		});
+	});
+}
+
 module.exports.getMatchups = getMatchups;
 module.exports.getPlayers = getPlayers;
 module.exports.getGroups = getGroups;
@@ -169,3 +184,4 @@ module.exports.getTopTeamsGuesses = getTopTeamsGuesses;
 module.exports.getTournamentTopScorerGuess = getTournamentTopScorerGuess;
 module.exports.getTournamentWorstRecordGuess = getTournamentWorstRecordGuess;
 module.exports.getTournamentTopAssister = getTournamentTopAssister;
+module.exports.getLeagues = getLeagues;
