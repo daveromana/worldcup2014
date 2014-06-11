@@ -1,6 +1,7 @@
 var mysql = require('mysql');
 var fs = require('fs');
 var serverFunctions = require('./server-functions');
+var accountmanager = require('./account-manager');
 
 var dbConfig =
 {
@@ -126,11 +127,26 @@ var getLeaguesForUser = function(user, callback)
 	});
 }
 
-var getUsersInLeague = function(leagueId, callback)
+var getLeaguesWhichUserIsIn = function(user, callback)
 {
+	var userId = user._id;
 	pool.getConnection(function(connError, con)
 	{
-		var selectQuery = "SELECT lp.user_id, (SELECT s.score FROM scores s WHERE s.user_id = lp.user_id) AS 'score' FROM league_participation lp WHERE lp.league_id = ?";
+		var selectQuery = "SELECT l.id, l.name, l.code FROM leagues l WHERE l.id IN (SELECT lp.league_id FROM league_participation lp WHERE lp.user_id = ?)";
+		var query = con.query(selectQuery, userId, function(err, result, fields)
+		{
+			if(err) throw err;
+			con.release();
+			callback(result);
+		});
+	});
+}
+
+var getUsersInLeague = function(leagueId, callback)
+{
+	pool.getConnection(function(ConnError, con)
+	{
+		var selectQuery = "SELECT lp.user_id, (SELECT s.score FROM scores s WHERE s.user_id = lp.user_id) AS 'score', (SELECT l.name FROM leagues l WHERE l.id = lp.league_id) AS 'league_name', (SELECT l.id FROM leagues l WHERE l.id = lp.league_id) AS 'league_id' FROM league_participation lp WHERE lp.league_id = ?";
 		var query = con.query(selectQuery, leagueId, function(err, result, fields)
 		{
 			if(err) throw err;
@@ -138,6 +154,20 @@ var getUsersInLeague = function(leagueId, callback)
 			callback(result);
 		});
 	});
+}
+
+var getUsersLeagues = function(leagues, callback)
+{
+	var leaguesArray = [];
+	for(league in leagues)
+	{
+		var leagueId = leagues[league].id;
+		getUsersInLeague(leagueId, function(leagueResult)
+		{
+			leaguesArray.push(leagueResult);
+		});
+	}
+	setTimeout(function(){callback(leaguesArray);}, 2500);
 }
 
 var getLeagueName = function(leagueId, callback)
@@ -149,13 +179,42 @@ var getLeagueName = function(leagueId, callback)
 		{
 			if(err) throw err;
 			con.release();
-			callback(result);
+			callback(result[0] == null ? null : result[0].name);
 		});
 	});
 }
 
+var getUser = function(userId, leagueId, callback)
+{
+	accountmanager.findById(userId, function(derp, resultUser)
+	{
+		callback(resultUser, leagueId);
+	});
+}
+
+var getUserNames = function(leagues, callback)
+{
+	var users = [];
+	for(league in leagues)
+	{
+		for(user in leagues[league])
+		{
+			getUser(leagues[league][user].user_id, leagues[league][user].league_id, function(resultUser, currentLeagueId)
+			{
+				getLeagueName(currentLeagueId, function(leagueName)
+				{
+					users.push({user_id: resultUser._id, user_name: resultUser.name, league_id: currentLeagueId, league_name: leagueName});
+				});
+			});
+		}
+	}
+	setTimeout(function(){callback(users);}, 1000);
+}
+
 module.exports.CreateLeague = CreateLeague;
 module.exports.getLeaguesForUser = getLeaguesForUser;
+module.exports.getLeaguesWhichUserIsIn = getLeaguesWhichUserIsIn;
 module.exports.ParticipateInLeague = ParticipateInLeague;
 module.exports.getLeagueName = getLeagueName;
-module.exports.getUsersInLeague = getUsersInLeague;
+module.exports.getUsersLeagues = getUsersLeagues;
+module.exports.getUserNames = getUserNames;

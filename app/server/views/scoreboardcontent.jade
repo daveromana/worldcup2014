@@ -1,0 +1,22 @@
+// preset form values if we receive a userdata object //
+- user = typeof(udata) != 'undefined' ? udata : { }
+- users = typeof(users) != 'undefined' ? users : {}
+// store the userId on the client side in a hidden input field //
+- leagues = typeof(leagues) != 'undefined' ? leagues : {}
+// store the userId on the client side in a hidden input field //
+input(type='hidden', value= user._id)#userId
+
+#account-form-container
+  div.well.span6
+    h1 Overall & League Scoreboard
+    p Join (or create and then join!) a league to see your ranking within each league. Overall ranking coming soon!
+  - for(league in leagues)
+      div.well.span6
+        h2 #{leagues[league].name}
+        - for(user in users)
+          - if(users[user].league_id == leagues[league].id)
+            p #{users[user].user_name} - #{users[user].score == null ? 0 : users[user].score} 
+
+// display form errors in a custom modal window //
+
+include modals/form-errors

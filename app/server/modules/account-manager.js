@@ -200,3 +200,5 @@ var findByMultipleFields = function(a, callback)
 		else callback(null, results)
 	});
 }
+
+module.exports.findById = findById;
