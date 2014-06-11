@@ -43,7 +43,9 @@ var CreateLeague = function (name, user, callback)
 					else
 					{
 						messages.message = 'Successfully created a league!';
-						setTimeout(function(){callback(messages);}, 1000);
+						ParticipateInLeague(user, code, function(partMess){
+							setTimeout(function(){callback(messages);}, 1000);
+						});
 					}
 				});	
 			});
@@ -210,6 +212,44 @@ var getUserNames = function(leagues, callback)
 	setTimeout(function(){callback(users);}, 1000);
 }
 
+var getAllActiveUsers = function(callback)
+{
+	var users = [];
+	getAllActiveGuessUser(function(guessUsers)
+	{
+		for(user in guessUsers)
+		{
+			getUserName(guessUsers[user].user_id, function(name)
+			{
+				users.push({user_id: guessUsers[user].user_id, user_name: name, user_score: guessUsers[user].score});
+			});
+		}
+		setTimeout(function(){callback(users);}, 1000);
+	});
+}
+
+var getAllActiveGuessUser = function(callback)
+{
+	pool.getConnection(function(connError, con)
+	{
+		var selectQuery = "SELECT DISTINCT g.user_id, (SELECT s.score FROM scores s WHERE s.user_id = g.user_id) AS 'score' FROM guesses g;";
+		var query = con.query(selectQuery, function(err, result, fields)
+		{
+			if(err) throw err;
+			con.release();
+			callback(result);
+		});
+	});
+}
+
+var getUserName = function(userId, callback)
+{
+	accountmanager.findById(userId, function(derp, resultUser)
+	{
+		callback(resultUser.name);
+	});
+}
+
 module.exports.CreateLeague = CreateLeague;
 module.exports.getLeaguesForUser = getLeaguesForUser;
 module.exports.getLeaguesWhichUserIsIn = getLeaguesWhichUserIsIn;
@@ -217,3 +257,4 @@ module.exports.ParticipateInLeague = ParticipateInLeague;
 module.exports.getLeagueName = getLeagueName;
 module.exports.getUsersLeagues = getUsersLeagues;
 module.exports.getUserNames = getUserNames;
+module.exports.getAllActiveUsers = getAllActiveUsers;

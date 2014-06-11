@@ -471,13 +471,17 @@ module.exports = function(app) {
 				{
 					leaguemanager.getUserNames(inLeagues, function(users)
 					{
-						console.log(usersInLeagues);
-						res.render('scoreboard',
+						leaguemanager.getAllActiveUsers(function(activeUsers)
 						{
-							title : 'Scoreboard',
-							udata : req.session.user,
-							leagues : usersInLeagues,
-							users: users
+							console.log(activeUsers);
+							res.render('scoreboard',
+							{
+								title : 'Scoreboard',
+								udata : req.session.user,
+								leagues : usersInLeagues,
+								users: users,
+								activeUsers: activeUsers
+							});
 						});
 					});
 				});
