@@ -435,7 +435,7 @@ module.exports = function(app) {
 			else if(req.param('league_code'))
 			{
 				var code = req.param('league_code');
-				leaguemanager.ParticipateInLeague(code, user, function(messages)
+				leaguemanager.ParticipateInLeague(user, code, function(messages)
 				{
 					leaguemanager.getLeaguesForUser(user, function(leagues)
 					{

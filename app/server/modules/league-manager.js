@@ -54,6 +54,7 @@ var ParticipateInLeague = function(user,code,callback)
 	var messages = {success: true, message: ''}
 	FetchLeagueId(code,function(id)
 	{
+		console.log("leagueid is " + id);
 		pool.getConnection(function(connError, con)
 		{	
 			var participation = {league_id: id, user_id: userId};
@@ -91,20 +92,22 @@ var Randomstring = function(callback)
 
 var FetchLeagueId = function(code, callback)
 {
-	code = con.escape(code);
-	var selectQuery = "SELECT id FROM league WHERE code = ?";
-	var query = con.query(selectQuery, code, function(err, result, fields)
+	var selectQuery = "SELECT id FROM leagues WHERE code = ?";
+	pool.getConnection(function(connError, con)
 	{
-		con.release();
-		if(err)
+		var query = con.query(selectQuery, code, function(err, result, fields)
 		{
-			console.log(err);
-			callback(null); 
-		}
-		else
-		{
-			callback(result[0].id);
-		}
+			con.release();
+			if(err)
+			{
+				console.log(err);
+				callback(null); 
+			}
+			else
+			{
+				callback(result[0].id);
+			}
+		});
 	});
 }
 
