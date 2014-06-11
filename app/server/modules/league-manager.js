@@ -29,7 +29,7 @@ var CreateLeague = function (name, user, callback)
 			{
 				var league = {name: name, code: code, owner_id: userId};
 				var insertQuery = "INSERT INTO leagues SET ?";
-				var query = con.query(insertQuery, guess, function(err, result, fields)
+				var query = con.query(insertQuery, league, function(err, result, fields)
 				{
 					con.release();
 					if(err)

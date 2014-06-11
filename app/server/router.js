@@ -6,6 +6,7 @@ var dbpopulation = require('./modules/db-population');
 var dbSelect = require('./modules/db-select');
 var fs = require('fs');
 var guesses = require('./modules/guesses-manager');
+var leaguemanager = require('./modules/league-manager');
 
 http = require('http');
 
@@ -416,10 +417,10 @@ module.exports = function(app) {
 		}
 		else
 		{
-			if(req.param('createLeague') == 'true')
+			if(req.param('league_name'))
 			{
-				var leagueName = req.param('leagueName');
-				leaguemanager.createLeague(leagueName, user, function(code)
+				var leagueName = req.param('league_name');
+				leaguemanager.CreateLeague(leagueName, user, function(code)
 				{
 					leaguemanager.getLeaguesForUser(user, function(leagues)
 					{
@@ -431,9 +432,9 @@ module.exports = function(app) {
 					});
 				});
 			}
-			else if(req.param('joinLeague') == 'true')
+			else if(req.param('league_code'))
 			{
-				var code = req.param.code;
+				var code = req.param('league_code');
 				leaguemanager.ParticipateInLeague(code, user, function(messages)
 				{
 					leaguemanager.getLeaguesForUser(user, function(leagues)

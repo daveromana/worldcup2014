@@ -165,3 +165,4 @@ var populateMatchups = function()
 
 module.exports.populatePlayers = populatePlayers;
 module.exports.populateMatchups = populateMatchups;
+module.exports.getCountryMatchup = getCountryMatchup;
