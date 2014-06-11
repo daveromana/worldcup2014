@@ -54,7 +54,6 @@ var ParticipateInLeague = function(user,code,callback)
 	var messages = {success: true, message: ''}
 	FetchLeagueId(code,function(id)
 	{
-		console.log("leagueid is " + id);
 		pool.getConnection(function(connError, con)
 		{	
 			var participation = {league_id: id, user_id: userId};
@@ -64,16 +63,15 @@ var ParticipateInLeague = function(user,code,callback)
 				con.release();
 				if(err)
 				{
-					console.log(err);
 					messages.success = false;
-					messages.message = 'Failed to join a league. Make sure the league-code is valid.';
-					callback(messages); 
+					messages.message = 'Failed to join a league. Make sure the league-code is valid and that you are not in the league already.';
+					setTimeout(function(){callback(messages);}, 1000);
 				}
 				else
 				{
 					console.log("participation success");
 					messages.message = 'Successfully joined a league!';
-					callback(messages);
+					setTimeout(function(){callback(messages);}, 1000);
 				}
 			});	
 		});

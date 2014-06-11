@@ -398,7 +398,6 @@ module.exports = function(app) {
 			//dbpopulation.populateMatchups();
 			leaguemanager.getLeaguesForUser(req.session.user, function(leagues)
 			{
-				console.log(leagues);
 				res.render('leagues',
 				{
 					title : 'Create or join a League',
@@ -430,7 +429,6 @@ module.exports = function(app) {
 				{
 					leaguemanager.getLeaguesForUser(user, function(leagues)
 					{
-						console.log(leagues);
 						res.render('leagues',
 						{
 							title : 'Create or join a League',
@@ -443,11 +441,10 @@ module.exports = function(app) {
 			else if(req.param('league_code'))
 			{
 				var code = req.param('league_code');
-				leaguemanager.ParticipateInLeague(user, code, function(messages)
+				leaguemanager.getLeaguesForUser(user, function(leagues)
 				{
-					leaguemanager.getLeaguesForUser(user, function(leagues)
+					leaguemanager.ParticipateInLeague(user, code, function(messages)
 					{
-						console.log(leagues);
 						res.render('leagues',
 						{
 							title : 'Create or join a League',

@@ -103,7 +103,8 @@ CREATE TABLE IF NOT EXISTS league_participation
 (
 	id MEDIUMINT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	user_id VARCHAR(64) NOT NULL,
-	league_id MEDIUMINT UNSIGNED NOT NULL REFERENCES leagues(id)
+	league_id MEDIUMINT UNSIGNED NOT NULL REFERENCES leagues(id),
+	CONSTRAINT uc_user_league UNIQUE (user_id, league_id)
 );
 
 CREATE TABLE IF NOT EXISTS group_top_scorers_guesses
