@@ -410,7 +410,6 @@ module.exports = function(app) {
 
 	app.post('/leagues', function(req, res)
 	{
-		console.log(req.body);
  		if (req.session.user == null){
 			// if user is not logged-in redirect back to login page //
 	        res.redirect('/');
@@ -425,7 +424,7 @@ module.exports = function(app) {
 			if(req.param('league_name'))
 			{
 				var leagueName = req.param('league_name');
-				leaguemanager.CreateLeague(leagueName, user, function(code)
+				leaguemanager.CreateLeague(leagueName, user, function(messages)
 				{
 					leaguemanager.getLeaguesForUser(user, function(leagues)
 					{
@@ -433,7 +432,8 @@ module.exports = function(app) {
 						{
 							title : 'Create or join a League',
 							udata : req.session.user,
-							currentUserLeagues : leagues
+							currentUserLeagues : leagues,
+							createLeagueMessages : messages
 						});
 					});
 				});

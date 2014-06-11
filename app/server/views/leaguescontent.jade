@@ -2,6 +2,7 @@
 - user = typeof(udata) != 'undefined' ? udata : { }
 - currentUserLeagues = typeof(currentUserLeagues) != 'undefined' ? currentUserLeagues : {}
 - joinLeagueMessages = typeof(joinLeagueMessages) != 'undefined' ? joinLeagueMessages : {}
+- createLeagueMessages = typeof(createLeagueMessages) != 'undefined' ? createLeagueMessages : {}
 // store the userId on the client side in a hidden input field //
 input(type='hidden', value= user._id)#userId
 
@@ -10,6 +11,7 @@ input(type='hidden', value= user._id)#userId
     form(action='/leagues',method='post').form-horizontal.well.span6
       p
       h2 Create a League
+      p.alert-info #{createLeagueMessages.message}
       p You can create a league and at the bottom of this page you'll be granted an invitation code which you can share with whoever you want to join your league. Note that you need to join your own league if you wish to participate in it.
       div(data-role='fieldcontain')
           fieldset

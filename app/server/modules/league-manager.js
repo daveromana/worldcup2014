@@ -23,6 +23,7 @@ var CreateLeague = function (name, user, callback)
 	else
 	{
 		var userId = user._id;
+		var messages = {success: true, message: ''}
 		pool.getConnection(function(connError, con)
 		{	
 			Randomstring(function(code)
@@ -34,13 +35,14 @@ var CreateLeague = function (name, user, callback)
 					con.release();
 					if(err)
 					{
-						console.log(err);
-						callback(null); 
+						messages.success = false;
+						messages.message = 'Failed to create a league! The name is most likely reserved.';
+						setTimeout(function(){callback(messages);}, 1000);
 					}
 					else
 					{
-						console.log("inserted league successfully");
-						callback(code);
+						messages.message = 'Successfully created a league!';
+						setTimeout(function(){callback(messages);}, 1000);
 					}
 				});	
 			});
