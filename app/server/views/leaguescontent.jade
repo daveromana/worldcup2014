@@ -9,6 +9,7 @@ input(type='hidden', value= user._id)#userId
     form(action='/leagues',method='post').form-horizontal.well.span6
       p
       h2 Create a League
+      p You can create a league and at the bottom of this page you'll be granted an invitation code which you can share with whoever you want to join your league. Note that you need to join your own league if you wish to participate in it.
       div(data-role='fieldcontain')
           fieldset
               #clist-cg.control-group
@@ -19,7 +20,7 @@ input(type='hidden', value= user._id)#userId
   div
     form(action='/leagues',method='post').form-horizontal.well.span6
       h2 Join a League
-      p Description
+      p Wish to join someone's league? Ask him/her for the invitation code and submit it here! Once we finish the Scoreboard (very soon!) you'll see your ranking within the leagues you've participated in. Note that you can be a part of many leagues.
       div(data-role='fieldcontain')
           fieldset
               #clist-cg.control-group
