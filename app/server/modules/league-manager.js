@@ -120,7 +120,6 @@ var getLeaguesForUser = function(user, callback)
 		var selectQuery = "SELECT l.id, l.name, l.code FROM leagues l WHERE l.owner_id = ?";
 		var query = con.query(selectQuery, userId, function(err, result, fields)
 		{
-			if(err) throw err;
 			con.release();
 			callback(result);
 		});

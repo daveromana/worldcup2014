@@ -465,22 +465,19 @@ module.exports = function(app) {
 	    }   else{
 			//dbpopulation.populatePlayers();
 			//dbpopulation.populateMatchups();
-			leaguemanager.getLeaguesForUser(req.session.user, function(leagues)
+			leaguemanager.getLeaguesWhichUserIsIn(req.session.user, function(usersInLeagues)
 			{
-				leaguemanager.getLeaguesWhichUserIsIn(req.session.user, function(usersInLeagues)
+				leaguemanager.getUsersLeagues(usersInLeagues, function(inLeagues)
 				{
-					leaguemanager.getUsersLeagues(usersInLeagues, function(inLeagues)
+					leaguemanager.getUserNames(inLeagues, function(users)
 					{
-						leaguemanager.getUserNames(inLeagues, function(users)
+						console.log(usersInLeagues);
+						res.render('scoreboard',
 						{
-							console.log(usersInLeagues);
-							res.render('scoreboard',
-							{
-								title : 'Scoreboard',
-								udata : req.session.user,
-								leagues : usersInLeagues,
-								users: users
-							});
+							title : 'Scoreboard',
+							udata : req.session.user,
+							leagues : usersInLeagues,
+							users: users
 						});
 					});
 				});
