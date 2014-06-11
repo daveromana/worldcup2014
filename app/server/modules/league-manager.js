@@ -105,7 +105,7 @@ var FetchLeagueId = function(code, callback)
 			}
 			else
 			{
-				callback(result[0].id);
+				callback(result[0] == null ? null : result[0].id);
 			}
 		});
 	});
