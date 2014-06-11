@@ -1,5 +1,6 @@
 // preset form values if we receive a userdata object //
 - user = typeof(udata) != 'undefined' ? udata : { }
+- currentUserLeagues = typeof(currentUserLeagues) != 'undefined' ? currentUserLeagues : {}
 // store the userId on the client side in a hidden input field //
 input(type='hidden', value= user._id)#userId
 
@@ -28,7 +29,10 @@ input(type='hidden', value= user._id)#userId
                   input(type='submit',value='Join a League',data-transition='fade', data-theme='c')
   div.well.span6
     h2 Your Leagues
-      p Parse an object and display league names and codes that the user owns.
+      p Your can invite friends to your league by sharing the code with them
+      -for(league in currentUserLeagues)
+        p League: #{currentUserLeagues[league].name} (Code : #{currentUserLeagues[league].code} )
+
 
 // display form errors in a custom modal window //
 

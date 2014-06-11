@@ -396,9 +396,15 @@ module.exports = function(app) {
 	    }   else{
 			//dbpopulation.populatePlayers();
 			//dbpopulation.populateMatchups();
-			res.render('leagues', {
-				title : 'Create And Join Leagues',
-				udata : req.session.user
+			leaguemanager.getLeaguesForUser(req.session.user, function(leagues)
+			{
+				console.log(leagues);
+				res.render('leagues',
+				{
+					title : 'Create or join a League',
+					udata : req.session.user,
+					currentUserLeagues : leagues
+				});
 			});
 	    }
 	});
@@ -424,9 +430,11 @@ module.exports = function(app) {
 				{
 					leaguemanager.getLeaguesForUser(user, function(leagues)
 					{
+						console.log(leagues);
 						res.render('leagues',
 						{
 							title : 'Create or join a League',
+							udata : req.session.user,
 							currentUserLeagues : leagues
 						});
 					});
@@ -439,10 +447,12 @@ module.exports = function(app) {
 				{
 					leaguemanager.getLeaguesForUser(user, function(leagues)
 					{
+						console.log(leagues);
 						res.render('leagues',
 						{
 							title : 'Create or join a League',
 							currentUserLeagues : leagues,
+							udata : req.session.user,
 							joinLeagueMessages : messages
 						});
 					});

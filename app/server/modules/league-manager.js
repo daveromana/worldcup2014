@@ -144,7 +144,7 @@ var getLeagueName = function(leagueId, callback)
 {
 	pool.getConnection(function(connError, con)
 	{
-		var selectQuery = "SELECT l.league.name FROM leagues l WHERE l.id = ?";
+		var selectQuery = "SELECT l.name FROM leagues l WHERE l.id = ?";
 		var query = con.query(selectQuery, leagueId, function(err, result, fields)
 		{
 			if(err) throw err;
