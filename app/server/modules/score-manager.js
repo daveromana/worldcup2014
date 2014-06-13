@@ -242,20 +242,32 @@ var getUserMatchupGuesses = function(callback)
 								if(userMatchupId == actualMatchupId)
 								{
 									var correctScoreline = userMatchupScoreline == actualMatchupScoreline;
-									scores.score = correctScoreline ? scores.score += 3 : scores.score;
+									// Exact correct result.
+									scores.score = correctScoreline ? scores.score + 3 : scores.score;
 									var correctHomeGoals = parseInt(actualMatchupScoreline.split('–')[0]);
 									var correctAwayGoals = parseInt(actualMatchupScoreline.split('–')[1]);
 									var userMatchupHomeGoals = parseInt(userMatchupScoreline.split('–')[0]);
 									var userMatchupAwayGoals = parseInt(userMatchupScoreline.split('–')[1]);
-									var noNullGoals = correctHomeGoals != null && correctAwayGoals != null && userMatchupHomeGoals != null && userMatchupAwayGoals != null;
-									var correct1times2 = noNullGoals && (( userMatchupHomeGoals > userMatchupAwayGoals && correctHomeGoals > correctAwayGoals ) || ( userMatchupHomeGoals < userMatchupAwayGoals && correctHomeGoals < correctAwayGoals ) || ( userMatchupHomeGoals == userMatchupAwayGoals && correctHomeGoals == correctAwayGoals ));
-									scores.score = correct1times2 = correct1times2 ? scores.score += 2 : scores.score;
+									legitGoals(correctHomeGoals, correctAwayGoals, userMatchupHomeGoals, userMatchupAwayGoals, function(legit)
+									{
+										if(legit)
+										{
+											// Correct 1X2
+											var userHomeTeamWins = userMatchupHomeGoals > userMatchupAwayGoals;
+											var userAwayTeamWins = userMatchupHomeGoals < userMatchupAwayGoals;
+											var correctHomeTeamWins = correctHomeGoals > correctAwayGoals;
+											var correctAwayTeamWins = correctHomeGoals < correctAwayGoals;
+											var userTie = userMatchupHomeGoals == userMatchupAwayGoals;
+											var correctTie = correctHomeGoals == correctAwayGoals;
+											var correctGuess = userHomeTeamWins && correctHomeGoals || userAwayTeamWins && correctAwayTeamWins || userTie && correctTie;
+											scores.score = correctGuess ? scores.score + 2 : scores.score
+										}
+									});
 									var correctHomeScorerGuess = actualHomeScorers.indexOf(userMatchupScorerName) != -1;
 									var correctAwayScorerGuess = actualAwayScorers.indexOf(userMatchupScorerName) != -1;
-									if(correctHomeScorerGuess || correctAwayScorerGuess)
-									{
-										scores.score += 2;
-									}
+									var correctScorer = correctHomeScorerGuess || correctAwayScorerGuess;
+									// Correct scorer.
+									scores.score = correctScorer ? scores.score + 2 : scores.score;
 								}
 							}
 						}
@@ -266,6 +278,16 @@ var getUserMatchupGuesses = function(callback)
 			});
 		});
 	});
+}
+
+var legitGoals = function(correctHomeGoals, correctAwayGoals, userHomeGoals, userAwayGoals, callback)
+{
+	callback(legitGoal(correctHomeGoals) && legitGoal(correctAwayGoals) && legitGoal(userHomeGoals) && legitGoal(userAwayGoals));
+}
+
+var legitGoal = function(goal)
+{
+	return !isNaN(parseFloat(goal));
 }
 
 var insertGuess = function(userId, score)
