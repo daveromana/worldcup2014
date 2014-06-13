@@ -29,11 +29,11 @@
             else
               p Home's scorer: #{data.results[group][game].homescorers.text}
 
-            if parseInt(data.results[group][game].awayscorer.length) > 1
+            if parseInt(data.results[group][game].awayscorers.length) > 1
               p Aways' scorers:
-              -for(var awayscorer in data.results[group][game].awayscorer)
-                p &nbsp;&nbsp;&nbsp;&nbsp; #{data.results[group][game].awayscorer[awayscorer].text}
+              -for(var awayscorer in data.results[group][game].awayscorers)
+                p &nbsp;&nbsp;&nbsp;&nbsp; #{data.results[group][game].awayscorers[awayscorer].text}
             else
-              p Away's scorer: #{data.results[group][game].awayscorer.text}
+              p Away's scorer: #{data.results[group][game].awayscorers.text}
 
             p Results: #{data.results[group][game].scoreline}
