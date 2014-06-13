@@ -55,6 +55,7 @@ module.exports = function(app) {
 		// if user is not logged-in redirect back to login page //
 	        res.redirect('/');
 	    }   else{
+			scoremanager.updateUserScores();
 			//dbpopulation.populatePlayers();
 			//dbpopulation.populateMatchups();
 			res.render('home', {
@@ -219,46 +220,6 @@ module.exports = function(app) {
 				}
 			});
 		}
-		/*
-   		var options =
-		{
-			host: 'www.kimonolabs.com',
-			path: 'http://www.kimonolabs.com/api/9jx2j8b4?apikey=71c506eb1ea29c70e74985c84fcef611',
-			method: 'GET'
-		};
-
-		var apiRequest = http.request(options, function(apiResponse)
-		{
-			console.log("\nCalling api.");
-
-			var requestBody = "";
-			apiResponse.on('data', function(data)
-			{
-				requestBody += data;
-			});
-			apiResponse.on('end', function()
-			{
-				try
-				{
-					var jsonResults = JSON.parse(requestBody);
-					res.render('results',
-					{
-						title : 'Results of 2014',
-						resultsof2014 : jsonResults
-					});
-				}
-				catch(err2)
-				{
-					console.log('Problem with request: ' + err2.message);
-
-				}
-			});
-		});
-		apiRequest.on('error', function(e)
-		{
-			console.log('Error: ' + e.message);
-		});
-		apiRequest.end();*/
 	});
 	
 	app.post('/results', function(req, res){
@@ -464,7 +425,6 @@ module.exports = function(app) {
 		// if user is not logged-in redirect back to login page //
 	        res.redirect('/');
 	    }   else{
-			scoremanager.updateUserScores();
 			//dbpopulation.populatePlayers();
 			//dbpopulation.populateMatchups();
 			leaguemanager.getLeaguesWhichUserIsIn(req.session.user, function(usersInLeagues)

@@ -17,14 +17,17 @@ var pool = mysql.createPool(dbConfig);
 
 var updateUserScores = function()
 {
-	getUserMatchupGuesses(function(userMatchupGuesses)
+	updateNewestResults(function(updatedIfPossible)
 	{
-		for(user in userMatchupGuesses)
+		getUserMatchupGuesses(function(userMatchupGuesses)
 		{
-			var userId = userMatchupGuesses[user].user_id;
-			var score = userMatchupGuesses[user].score;
-			insertGuess(userId, score);
-		}
+			for(user in userMatchupGuesses)
+			{
+				var userId = userMatchupGuesses[user].user_id;
+				var score = userMatchupGuesses[user].score;
+				insertGuess(userId, score);
+			}
+		});
 	});
 }
 
@@ -85,6 +88,95 @@ var getActualMatchups = function(callback)
 	});
 }
 
+var updateNewestResults = function(callback)
+{
+	canFetchNewestResults(function(canFetch)
+	{
+		if(canFetch)
+		{
+	   		var options =
+			{
+				host: 'www.kimonolabs.com',
+				path: 'http://www.kimonolabs.com/api/6o1ie372?apikey=b5e0dc064de0b4591f16d850ae429fca',
+				method: 'GET'
+			};
+
+			var apiRequest = http.request(options, function(apiResponse)
+			{
+				var requestBody = "";
+				apiResponse.on('data', function(data)
+				{
+					requestBody += data;
+				});
+				apiResponse.on('end', function()
+				{
+					try
+					{
+						var file = __dirname + '/../files/results2014.json';
+						var jsonResults = JSON.stringify(JSON.parse(requestBody));
+						fs.writeFile(file, jsonResults, 'utf8', function(){
+							notifyFetch();
+							console.log('Updated newest results.');
+							callback(true);
+						});
+					}
+					catch(err2)
+					{
+						console.log('Problem with request: ' + err2.message);
+					}
+				});
+			});
+			apiRequest.on('error', function(e)
+			{
+				console.log('Error: ' + e.message);
+			});
+			apiRequest.end();
+		}
+		else
+		{
+			callback(true);
+		}
+	});
+}
+
+var canFetchNewestResults = function(callback)
+{
+	pool.getConnection(function(connError, con)
+	{
+		var selectQuery = 'SELECT r.id, r.fetched FROM results_fetches r ORDER BY r.id DESC LIMIT 1';
+		var query = con.query(selectQuery, function(err, result, fields)
+		{
+			if(err) throw err;
+			con.release();
+			var newBase = result[0] == null;
+			if(newBase)
+			{
+				callback(true);
+			}
+			else
+			{
+				var newDateObjTime = (new Date(result[0].fetched.getTime())).getTime() + 15*60000;
+				var now = (new Date).getTime();
+				var timeHasPassed = now > newDateObjTime;
+				callback(timeHasPassed);
+			}
+		});
+	});
+}
+
+var notifyFetch = function()
+{
+	pool.getConnection(function(connError, con)
+	{
+		var insertQuery = 'INSERT INTO results_fetches (fetched) VALUES(CURRENT_TIMESTAMP)';
+		var query = con.query(insertQuery, function(err, result, fields)
+		{
+			if(err) throw err;
+			con.release();
+		});
+	});
+}
+
 var getMatchupId = function(home_team, away_team, callback)
 {
 	home_team = parseInt(home_team) || -1;
@@ -119,6 +211,7 @@ var getUserMatchups = function(callback)
 var getUserMatchupGuesses = function(callback)
 {
 	var userMatchupScores = [];
+
 	/* Get the real results */
 	getActualMatchups(function(actualMatchups) /* matchups */
 	{
