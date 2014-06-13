@@ -150,10 +150,10 @@ var getUserMatchupGuesses = function(callback)
 								{
 									var correctScoreline = userMatchupScoreline == actualMatchupScoreline;
 									scores.score = correctScoreline ? scores.score += 3 : scores.score;
-									var correctHomeGoals = parseInt(actualMatchupScoreline.split('–')[0]) || null;
-									var correctAwayGoals = parseInt(actualMatchupScoreline.split('–')[1]) || null;
-									var userMatchupHomeGoals = parseInt(userMatchupScoreline.split('–')[0]) || null;
-									var userMatchupAwayGoals = parseInt(userMatchupScoreline.split('–')[1]) || null;
+									var correctHomeGoals = parseInt(actualMatchupScoreline.split('–')[0]);
+									var correctAwayGoals = parseInt(actualMatchupScoreline.split('–')[1]);
+									var userMatchupHomeGoals = parseInt(userMatchupScoreline.split('–')[0]);
+									var userMatchupAwayGoals = parseInt(userMatchupScoreline.split('–')[1]);
 									var noNullGoals = correctHomeGoals != null && correctAwayGoals != null && userMatchupHomeGoals != null && userMatchupAwayGoals != null;
 									var correct1times2 = noNullGoals && (( userMatchupHomeGoals > userMatchupAwayGoals && correctHomeGoals > correctAwayGoals ) || ( userMatchupHomeGoals < userMatchupAwayGoals && correctHomeGoals < correctAwayGoals ) || ( userMatchupHomeGoals == userMatchupAwayGoals && correctHomeGoals == correctAwayGoals ));
 									scores.score = correct1times2 = correct1times2 ? scores.score += 2 : scores.score;
