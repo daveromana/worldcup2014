@@ -147,7 +147,7 @@ var getUsersInLeague = function(leagueId, callback)
 {
 	pool.getConnection(function(ConnError, con)
 	{
-		var selectQuery = "SELECT lp.user_id, (SELECT s.score FROM scores s WHERE s.user_id = lp.user_id) AS 'score', (SELECT l.name FROM leagues l WHERE l.id = lp.league_id) AS 'league_name', (SELECT l.id FROM leagues l WHERE l.id = lp.league_id) AS 'league_id' FROM league_participation lp WHERE lp.league_id = ?";
+		var selectQuery = "SELECT lp.user_id, (SELECT s.score FROM scores s WHERE s.user_id = lp.user_id) AS 'score', (SELECT l.name FROM leagues l WHERE l.id = lp.league_id) AS 'league_name', (SELECT l.id FROM leagues l WHERE l.id = lp.league_id) AS 'league_id' FROM league_participation lp WHERE lp.league_id = ? ORDER BY score DESC";
 		var query = con.query(selectQuery, leagueId, function(err, result, fields)
 		{
 			if(err) throw err;
@@ -168,7 +168,7 @@ var getUsersLeagues = function(leagues, callback)
 			leaguesArray.push(leagueResult);
 		});
 	}
-	setTimeout(function(){callback(leaguesArray);}, 2500);
+	setTimeout(function(){callback(leaguesArray);}, 1000);
 }
 
 var getLeagueName = function(leagueId, callback)
@@ -219,9 +219,9 @@ var getAllActiveUsers = function(callback)
 	{
 		for(user in guessUsers)
 		{
-			getUserName(guessUsers[user].user_id, function(name)
+			getUserName(guessUsers[user].user_id, guessUsers[user].score, function(name, userId, score)
 			{
-				users.push({user_id: guessUsers[user].user_id, user_name: name, user_score: guessUsers[user].score});
+				users.push({user_id: userId, user_name: name, user_score: score});
 			});
 		}
 		setTimeout(function(){callback(users);}, 1000);
@@ -232,7 +232,7 @@ var getAllActiveGuessUser = function(callback)
 {
 	pool.getConnection(function(connError, con)
 	{
-		var selectQuery = "SELECT DISTINCT g.user_id, (SELECT s.score FROM scores s WHERE s.user_id = g.user_id) AS 'score' FROM guesses g;";
+		var selectQuery = "SELECT DISTINCT g.user_id, (SELECT s.score FROM scores s WHERE s.user_id = g.user_id) AS 'score' FROM guesses g ORDER BY score DESC;";
 		var query = con.query(selectQuery, function(err, result, fields)
 		{
 			if(err) throw err;
@@ -242,11 +242,11 @@ var getAllActiveGuessUser = function(callback)
 	});
 }
 
-var getUserName = function(userId, callback)
+var getUserName = function(userId, score, callback)
 {
 	accountmanager.findById(userId, function(derp, resultUser)
 	{
-		callback(resultUser.name);
+		callback(resultUser.name, userId, score);
 	});
 }
 
@@ -257,4 +257,5 @@ module.exports.ParticipateInLeague = ParticipateInLeague;
 module.exports.getLeagueName = getLeagueName;
 module.exports.getUsersLeagues = getUsersLeagues;
 module.exports.getUserNames = getUserNames;
+module.exports.getAllActiveGuessUser = getAllActiveGuessUser;
 module.exports.getAllActiveUsers = getAllActiveUsers;

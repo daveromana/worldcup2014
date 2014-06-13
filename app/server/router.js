@@ -7,6 +7,7 @@ var dbSelect = require('./modules/db-select');
 var fs = require('fs');
 var guesses = require('./modules/guesses-manager');
 var leaguemanager = require('./modules/league-manager');
+var scoremanager = require('./modules/score-manager');
 
 http = require('http');
 
@@ -463,6 +464,7 @@ module.exports = function(app) {
 		// if user is not logged-in redirect back to login page //
 	        res.redirect('/');
 	    }   else{
+			scoremanager.updateUserScores();
 			//dbpopulation.populatePlayers();
 			//dbpopulation.populateMatchups();
 			leaguemanager.getLeaguesWhichUserIsIn(req.session.user, function(usersInLeagues)
@@ -473,7 +475,6 @@ module.exports = function(app) {
 					{
 						leaguemanager.getAllActiveUsers(function(activeUsers)
 						{
-							console.log(activeUsers);
 							res.render('scoreboard',
 							{
 								title : 'Scoreboard',

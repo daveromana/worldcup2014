@@ -39,7 +39,7 @@ var getCountryIdSingleArg = function(countryName, callback)
 	});
 }
 
-var getCountryMatchup = function(awayTeam, homeTeam, callback)
+var getCountryMatchup = function(awayTeam, homeTeam, scoreline, homescorers, awayscorers, callback)
 {
 	pool.getConnection(function(connError, con)
 	{
@@ -49,7 +49,7 @@ var getCountryMatchup = function(awayTeam, homeTeam, callback)
 			var query = con.query(selectQuery, [homeTeam], function(err, result2, fields)
 			{
 				con.release();
-				callback(result[0] == null ? null : result[0].id, result2[0] == null ? null : result2[0].id);
+				callback(result[0] == null ? null : result[0].id, result2[0] == null ? null : result2[0].id, scoreline, homescorers, awayscorers);
 			});
 		});
 	});
