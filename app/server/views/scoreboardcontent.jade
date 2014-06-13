@@ -11,12 +11,15 @@ input(type='hidden', value= user._id)#userId
   div.well.span6
     h1 Overall & League Scoreboard
     p Join (or create and then join!) a league to see your ranking within each league.
+    p If your points change then it's because of ingame changes or fixes in our point-calculation-algorithm.
   - for(league in leagues)
       div.well.span6
         h2 #{leagues[league].name}
         - for(user in users)
           - if(users[user].league_id == leagues[league].id)
-            p #{users[user].user_name} - #{users[user].score == null ? 0 : users[user].score} pts
+            - for (activeUser in activeUsers)
+              - if(activeUsers[activeUser].user_name == users[user].user_name)
+                p #{users[user].user_name} - #{activeUsers[activeUser].user_score}
   div.well.span6
     h2 Overall Active Users
       - for (activeUser in activeUsers)
