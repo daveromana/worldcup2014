@@ -243,31 +243,46 @@ var getUserMatchupGuesses = function(callback)
 								{
 									var correctScoreline = userMatchupScoreline == actualMatchupScoreline;
 									// Exact correct result.
-									scores.score = correctScoreline ? scores.score + 3 : scores.score;
 									var correctHomeGoals = parseInt(actualMatchupScoreline.split('–')[0]);
 									var correctAwayGoals = parseInt(actualMatchupScoreline.split('–')[1]);
 									var userMatchupHomeGoals = parseInt(userMatchupScoreline.split('–')[0]);
 									var userMatchupAwayGoals = parseInt(userMatchupScoreline.split('–')[1]);
-									legitGoals(correctHomeGoals, correctAwayGoals, userMatchupHomeGoals, userMatchupAwayGoals, function(legit)
+									if(correctScoreline)
+									{
+										scores.score += 3;
+										//console.log(scores.user_id + " granted 3 points for exact correct score (" + actualMatchupScoreline + ") in " + actualMatchupId);
+									}
+									legitGoals(correctHomeGoals, correctAwayGoals, userMatchupHomeGoals, userMatchupAwayGoals, function(legit, chg, cag, uhg, uag)
 									{
 										if(legit)
 										{
 											// Correct 1X2
-											var userHomeTeamWins = userMatchupHomeGoals > userMatchupAwayGoals;
-											var userAwayTeamWins = userMatchupHomeGoals < userMatchupAwayGoals;
-											var correctHomeTeamWins = correctHomeGoals > correctAwayGoals;
-											var correctAwayTeamWins = correctHomeGoals < correctAwayGoals;
-											var userTie = userMatchupHomeGoals == userMatchupAwayGoals;
-											var correctTie = correctHomeGoals == correctAwayGoals;
-											var correctGuess = userHomeTeamWins && correctHomeGoals || userAwayTeamWins && correctAwayTeamWins || userTie && correctTie;
-											scores.score = correctGuess ? scores.score + 2 : scores.score
+											var userHomeTeamWins = uhg > uag;
+											var correctHomeTeamWins = chg > cag;
+											var userAwayTeamWins = uhg < uag;
+											var correctAwayTeamWins = chg < cag;
+											var userTie = uhg == uag;
+											var correctTie = chg == cag;
+											var userGuessedCorrectHome = userHomeTeamWins && correctHomeTeamWins;
+											var userGuessedCorrectAway = userAwayTeamWins && correctAwayTeamWins;
+											var userGuessedCorrectTie = userTie && correctTie;
+											var correctGuess = userGuessedCorrectHome || userGuessedCorrectAway || userGuessedCorrectTie;
+											if(correctGuess)
+											{
+												scores.score += 2;
+												//console.log(scores.user_id + " granted 2 points for correct 1 times 2 in matchup " + actualMatchupId);
+											}
 										}
 									});
 									var correctHomeScorerGuess = actualHomeScorers.indexOf(userMatchupScorerName) != -1;
 									var correctAwayScorerGuess = actualAwayScorers.indexOf(userMatchupScorerName) != -1;
 									var correctScorer = correctHomeScorerGuess || correctAwayScorerGuess;
 									// Correct scorer.
-									scores.score = correctScorer ? scores.score + 2 : scores.score;
+									if(correctScorer)
+									{
+										scores.score += 2;
+										//console.log(scores.user_id + " granted 2 points for correct scorer.");
+									}
 								}
 							}
 						}
@@ -282,7 +297,8 @@ var getUserMatchupGuesses = function(callback)
 
 var legitGoals = function(correctHomeGoals, correctAwayGoals, userHomeGoals, userAwayGoals, callback)
 {
-	callback(legitGoal(correctHomeGoals) && legitGoal(correctAwayGoals) && legitGoal(userHomeGoals) && legitGoal(userAwayGoals));
+	var legit = legitGoal(correctHomeGoals) && legitGoal(correctAwayGoals) && legitGoal(userHomeGoals) && legitGoal(userAwayGoals);
+	callback(legit, correctHomeGoals, correctAwayGoals, userHomeGoals, userAwayGoals);
 }
 
 var legitGoal = function(goal)
