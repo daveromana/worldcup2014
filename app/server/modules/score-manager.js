@@ -276,9 +276,29 @@ var getUserMatchupGuesses = function(callback)
 										}
 									});
 									var scorerSplit = userMatchupScorerName.split(" ");
-									var scorerFirstName = scorerSplit[0];
-									var scorerLastName = scorerSplit[1];
-									var fixedUserMatchupScorerName = scorerLastName == null ? userMatchupScorerName : scorerLastName;
+									var fixedUserMatchupScorerName = '';
+									if(scorerSplit[1] != null)
+									{
+										for(var i = 0; i < scorerSplit.length ; i++)
+										{
+											if(fixedUserMatchupScorerName == '')
+											{
+												fixedUserMatchupScorerName = scorerSplit[1];
+											}
+											else
+											{
+												if(scorerSplit[i+1] != null)
+												{
+													fixedUserMatchupScorerName = fixedUserMatchupScorerName + " " + scorerSplit[i+1];
+												}
+											}
+										}
+									}
+									else
+									{
+										fixedUserMatchupScorerName = userMatchupScorerName;
+									}
+									
 									var correctHomeScorerGuess = actualHomeScorers.indexOf(fixedUserMatchupScorerName) != -1;
 									var correctAwayScorerGuess = actualAwayScorers.indexOf(fixedUserMatchupScorerName) != -1;
 									var correctScorer = correctHomeScorerGuess || correctAwayScorerGuess;
