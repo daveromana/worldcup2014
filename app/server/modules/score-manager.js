@@ -225,6 +225,7 @@ var getUserMatchupGuesses = function(callback)
 				{
 					var userId = activeUsers[user].user_id;
 					var scores = {user_id: userId, score: 0};
+					//console.log(actualMatchups);
 					for(actualMatchup in actualMatchups)
 					{
 						var actualMatchupId = actualMatchups[actualMatchup].matchup_id;
@@ -274,14 +275,18 @@ var getUserMatchupGuesses = function(callback)
 											}
 										}
 									});
-									var correctHomeScorerGuess = actualHomeScorers.indexOf(userMatchupScorerName) != -1;
-									var correctAwayScorerGuess = actualAwayScorers.indexOf(userMatchupScorerName) != -1;
+									var scorerSplit = userMatchupScorerName.split(" ");
+									var scorerFirstName = scorerSplit[0];
+									var scorerLastName = scorerSplit[1];
+									var fixedUserMatchupScorerName = scorerLastName == null ? userMatchupScorerName : scorerLastName;
+									var correctHomeScorerGuess = actualHomeScorers.indexOf(fixedUserMatchupScorerName) != -1;
+									var correctAwayScorerGuess = actualAwayScorers.indexOf(fixedUserMatchupScorerName) != -1;
 									var correctScorer = correctHomeScorerGuess || correctAwayScorerGuess;
 									// Correct scorer.
 									if(correctScorer)
 									{
 										scores.score += 2;
-										//console.log(scores.user_id + " granted 2 points for correct scorer.");
+										//console.log(scores.user_id + " granted 2 points for correct scorer; " + fixedUserMatchupScorerName + " instead of " + userMatchupScorerName);
 									}
 								}
 							}
