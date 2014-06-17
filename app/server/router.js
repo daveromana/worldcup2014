@@ -420,6 +420,22 @@ module.exports = function(app) {
 		}
 	});
 
+	app.get('/players', function(req,res)
+	{
+	    if (req.session.user == null){
+			// if user is not logged-in redirect back to login page //
+	        res.redirect('/');
+	    }
+	    else
+	    {
+			dbpopulation.populatePlayers();
+			res.render('home', {
+				title : 'Guess game for the 2014 FIFA World Cup',
+				udata : req.session.user
+			});
+	    }
+	});
+
 	app.get('/scoreboard', function(req, res) {
 	    if (req.session.user == null){
 		// if user is not logged-in redirect back to login page //
@@ -450,7 +466,7 @@ module.exports = function(app) {
 	    }
 	});
 	
-	app.post('/scorebaord', function(req, res) {
+	app.post('/scoreboard', function(req, res) {
  		if (req.session.user == null){
 			// if user is not logged-in redirect back to login page //
 	        res.redirect('/');
