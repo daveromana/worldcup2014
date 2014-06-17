@@ -17,17 +17,20 @@ var pool = mysql.createPool(dbConfig);
 
 var updateUserScores = function()
 {
-	updateNewestResults(function(updatedIfPossible)
+	updateNewestResults(function(updatesAvailable)
 	{
-		getUserMatchupGuesses(function(userMatchupGuesses)
+		if(updatesAvailable)
 		{
-			for(user in userMatchupGuesses)
+			getUserMatchupGuesses(function(userMatchupGuesses)
 			{
-				var userId = userMatchupGuesses[user].user_id;
-				var score = userMatchupGuesses[user].score;
-				insertGuess(userId, score);
-			}
-		});
+				for(user in userMatchupGuesses)
+				{
+					var userId = userMatchupGuesses[user].user_id;
+					var score = userMatchupGuesses[user].score;
+					grantScore(userId, score);
+				}
+			});
+		}
 	});
 }
 
@@ -113,16 +116,46 @@ var updateNewestResults = function(callback)
 					try
 					{
 						var file = __dirname + '/../files/results2014.json';
-						var jsonResults = JSON.stringify(JSON.parse(requestBody));
-						fs.writeFile(file, jsonResults, 'utf8', function(){
-							notifyFetch();
-							console.log('Updated newest results.');
-							callback(true);
+						var jsonRequestResults = JSON.stringify(JSON.parse(requestBody));
+						var jsonRequestResultsBody = JSON.parse(requestBody);
+						fs.readFile(file, 'utf8', function (err, readData) 
+						{
+							if (err)
+							{
+							    console.log('Error: ' + err);
+								fs.writeFile(file, jsonRequestResults, 'utf8', function()
+								{
+									notifyFetch();
+									console.log('Failed to read results, updated anyway.');
+									callback(true);
+								});
+							}
+							else
+							{
+								var currentData = JSON.parse(readData);
+								var hasNotChanged = JSON.stringify(jsonRequestResultsBody) === JSON.stringify(currentData);
+
+								if(hasNotChanged)
+								{
+									callback(false);
+									console.log("Nothing has changed.");
+								}
+								else
+								{
+									// Update the file and indicate that user scores can be updated.
+									fs.writeFile(file, jsonRequestResults, 'utf8', function(){
+										notifyFetch();
+										console.log('Updated newest results.');
+										callback(true);
+									});
+								}
+							}
 						});
 					}
 					catch(err2)
 					{
 						console.log('Problem with request: ' + err2.message);
+						callback(false);
 					}
 				});
 			});
@@ -134,7 +167,7 @@ var updateNewestResults = function(callback)
 		}
 		else
 		{
-			callback(true);
+			callback(false);
 		}
 	});
 }
@@ -331,7 +364,7 @@ var legitGoal = function(goal)
 	return !isNaN(parseFloat(goal));
 }
 
-var insertGuess = function(userId, score)
+var grantScore = function(userId, score)
 {
 	pool.getConnection(function(connError, con)
 	{
