@@ -15,11 +15,11 @@ input(type='hidden', value= user._id)#userId
   - for(league in leagues)
       div.well.span6
         h2 #{leagues[league].name}
-        - for(user in users)
-          - if(users[user].league_id == leagues[league].id)
-            - for (activeUser in activeUsers)
+        - for(activeUser in activeUsers)
+         - for(user in users)
+            - if(users[user].league_id == leagues[league].id)
               - if(activeUsers[activeUser].user_name == users[user].user_name)
-                p #{users[user].user_name} - #{activeUsers[activeUser].user_score}
+                p #{users[user].user_name} - #{activeUsers[activeUser].user_score == null ? 0 : activeUsers[activeUser].user_score} pts
   div.well.span6
     h2 Overall Active Users
       - for (activeUser in activeUsers)
