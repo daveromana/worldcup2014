@@ -268,7 +268,28 @@ var getUserMatchupGuesses = function(callback)
 				for(user in activeUsers)
 				{
 					var userId = activeUsers[user].user_id;
+					var userTempObject = {_id : userId};
 					var scores = {user_id: userId, score: 0};
+
+					/* Special guesses */
+
+					dbselect.getTopGroupScorers(userTempObject, function(topScorersGuesses)
+					{
+						dbselect.getActualGroupTopScorers(function(topScorers)
+						{
+							for(guess in topScorersGuesses)
+							{
+								for(actual in topScorers)
+								{
+									if(topScorers[actual].player_id == topScorersGuesses[guess].scorer_id)
+									{
+										scores.score += 2; /* Correct group top scorer */
+									}
+								}
+							}
+						});
+					});
+
 					//console.log(actualMatchups);
 					for(actualMatchup in actualMatchups)
 					{
@@ -319,39 +340,18 @@ var getUserMatchupGuesses = function(callback)
 											}
 										}
 									});
-									var scorerSplit = userMatchupScorerName.split(" ");
-									var fixedUserMatchupScorerName = '';
-									if(scorerSplit[1] != null)
+									fixScorerName(userMatchupScorerName, function(fixedUserMatchupScorerName)
 									{
-										for(var i = 0; i < scorerSplit.length ; i++)
+										var correctHomeScorerGuess = actualHomeScorers.indexOf(fixedUserMatchupScorerName) != -1;
+										var correctAwayScorerGuess = actualAwayScorers.indexOf(fixedUserMatchupScorerName) != -1;
+										var correctScorer = correctHomeScorerGuess || correctAwayScorerGuess;
+										// Correct scorer.
+										if(correctScorer)
 										{
-											if(fixedUserMatchupScorerName == '')
-											{
-												fixedUserMatchupScorerName = scorerSplit[1];
-											}
-											else
-											{
-												if(scorerSplit[i+1] != null)
-												{
-													fixedUserMatchupScorerName = fixedUserMatchupScorerName + " " + scorerSplit[i+1];
-												}
-											}
+											scores.score += 2;
+											//console.log(scores.user_id + " granted 2 points for correct scorer; " + fixedUserMatchupScorerName + " instead of " + userMatchupScorerName);
 										}
-									}
-									else
-									{
-										fixedUserMatchupScorerName = userMatchupScorerName;
-									}
-									
-									var correctHomeScorerGuess = actualHomeScorers.indexOf(fixedUserMatchupScorerName) != -1;
-									var correctAwayScorerGuess = actualAwayScorers.indexOf(fixedUserMatchupScorerName) != -1;
-									var correctScorer = correctHomeScorerGuess || correctAwayScorerGuess;
-									// Correct scorer.
-									if(correctScorer)
-									{
-										scores.score += 2;
-										//console.log(scores.user_id + " granted 2 points for correct scorer; " + fixedUserMatchupScorerName + " instead of " + userMatchupScorerName);
-									}
+									});
 								}
 							}
 						}
@@ -364,24 +364,95 @@ var getUserMatchupGuesses = function(callback)
 	});
 }
 
+var fixScorerName = function(scorerName, callback)
+{
+	var scorerSplit = scorerName.split(" ");
+	var fixedUserMatchupScorerName = '';
+	if(scorerSplit[1] != null)
+	{
+		for(var i = 0; i < scorerSplit.length ; i++)
+		{
+			if(fixedUserMatchupScorerName == '')
+			{
+				fixedUserMatchupScorerName = scorerSplit[1];
+				callback(fixedUserMatchupScorerName);
+			}
+			else
+			{
+				if(scorerSplit[i+1] != null)
+				{
+					fixedUserMatchupScorerName = fixedUserMatchupScorerName + " " + scorerSplit[i+1];
+					callback(fixedUserMatchupScorerName);
+				}
+			}
+		}
+	}
+	else
+	{
+		fixedUserMatchupScorerName = scorerName;
+		callback(fixedUserMatchupScorerName);
+	}
+}
+
+/*
 var topScorers = function(callback)
 {
-	getActualMatchups(function(actualMatchups) /* matchups */
+	getActualMatchups(function(actualMatchups)
 	{
-		var topScorers = {}
+		var topScorers = [];
 		for(actualMatchup in actualMatchups)
 		{
 			var actualMatchupId = actualMatchups[actualMatchup].matchup_id;
-			dbselect.getGroupIdOfTeam(actualMatchupId, function(groupId)
+			dbselect.getGroupIdOfMatchup(actualMatchupId, actualMatchup, function(groupId, actualMatchup)
 			{
-				console.log(groupId);
+				if(topScorers[groupId] == undefined || topScorers[groupId] == null)
+				{
+					topScorers[groupId] = [];
+				}
+				var actualHomeScorers = actualMatchups[actualMatchup].homescorers;
+				var actualAwayScorers = actualMatchups[actualMatchup].awayscorers;
+				for(homeScorer in actualHomeScorers)
+				{
+					fixScorerName(actualHomeScorers[homeScorer], function(fixedScorer)
+					{
+						if(topScorers[groupId][fixedScorer] == undefined || topScorers[groupId][fixedScorer] == null)
+						{
+							topScorers[groupId][fixedScorer] = 1;
+						}
+						else
+						{
+							topScorers[groupId][fixedScorer] += 1;
+						}
+					});
+				}
+				for(awayScorer in actualAwayScorers)
+				{
+					fixScorerName(actualAwayScorers[awayScorer], function(fixedScorer)
+					{
+						if(topScorers[groupId][fixedScorer] == undefined || topScorers[groupId][fixedScorer] == null)
+						{
+							topScorers[groupId][fixedScorer] = 1;
+						}
+						else
+						{
+							topScorers[groupId][fixedScorer] += 1;
+						}
+					});
+				}
+
 			});
-			var actualMatchupScoreline = actualMatchups[actualMatchup].scoreline;
-			var actualHomeScorers = actualMatchups[actualMatchup].homescorers;
 		}
-		callback(true);
+		setTimeout(function()
+		{
+			for(topscorer in topScorers)
+			{
+				console.log(topScorers[topscorer])
+			}
+			callback(topScorers);
+		}, 2000);
 	});
 }
+*/
 
 var legitGoals = function(correctHomeGoals, correctAwayGoals, userHomeGoals, userAwayGoals, callback)
 {
