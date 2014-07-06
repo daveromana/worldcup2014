@@ -1,8 +1,10 @@
 var mysql = require('mysql');
 var fs = require('fs');
+var https = require('https');
 var serverFunctions = require('./server-functions');
 var dbpopulation = require('./db-population');
 var leaguemanager = require('./league-manager');
+var dbselect = require('./db-select');
 
 var dbConfig =
 {
@@ -100,11 +102,11 @@ var updateNewestResults = function(callback)
 	   		var options =
 			{
 				host: 'www.kimonolabs.com',
-				path: 'http://www.kimonolabs.com/api/6o1ie372?apikey=b5e0dc064de0b4591f16d850ae429fca',
+				path: 'https://www.kimonolabs.com/api/6o1ie372?apikey=b5e0dc064de0b4591f16d850ae429fca',
 				method: 'GET'
 			};
 
-			var apiRequest = http.request(options, function(apiResponse)
+			var apiRequest = https.request(options, function(apiResponse)
 			{
 				var requestBody = "";
 				apiResponse.on('data', function(data)
@@ -137,17 +139,26 @@ var updateNewestResults = function(callback)
 
 								if(hasNotChanged)
 								{
-									callback(false);
 									console.log("Nothing has changed.");
+									callback(false);
 								}
 								else
 								{
 									// Update the file and indicate that user scores can be updated.
-									fs.writeFile(file, jsonRequestResults, 'utf8', function(){
-										notifyFetch();
-										console.log('Updated newest results.');
-										callback(true);
-									});
+									try
+									{
+										fs.writeFile(file, jsonRequestResults, 'utf8', function()
+										{
+											notifyFetch();
+											console.log('Updated newest results.');
+											callback(true);
+										});
+									}
+									catch(writeFileException)
+									{
+										console.log("Failed to update newest results; " + writeFileException);
+										callback(false);
+									}
 								}
 							}
 						});
@@ -350,6 +361,25 @@ var getUserMatchupGuesses = function(callback)
 				setTimeout(function(){callback(userMatchupScores)}, 1000);
 			});
 		});
+	});
+}
+
+var topScorers = function(callback)
+{
+	getActualMatchups(function(actualMatchups) /* matchups */
+	{
+		var topScorers = {}
+		for(actualMatchup in actualMatchups)
+		{
+			var actualMatchupId = actualMatchups[actualMatchup].matchup_id;
+			dbselect.getGroupIdOfTeam(actualMatchupId, function(groupId)
+			{
+				console.log(groupId);
+			});
+			var actualMatchupScoreline = actualMatchups[actualMatchup].scoreline;
+			var actualHomeScorers = actualMatchups[actualMatchup].homescorers;
+		}
+		callback(true);
 	});
 }
 
