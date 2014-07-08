@@ -47,7 +47,7 @@ var getTopGroupScorers = function(user, callback)
 	var userId = user._id;
 	pool.getConnection(function(connError, con)
 	{
-		var selectQuery = "SELECT g.group_id, scorer_id FROM group_top_scorers_guesses g WHERE g.user_id = ?";
+		var selectQuery = "SELECT g.group_id, g.scorer_id, g.user_id FROM group_top_scorers_guesses g WHERE g.user_id = ?";
 		var query = con.query(selectQuery, userId, function(err, result, fields)
 		{
 			if(err) throw err;

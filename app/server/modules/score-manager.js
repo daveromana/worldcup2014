@@ -19,18 +19,21 @@ var pool = mysql.createPool(dbConfig);
 
 var updateUserScores = function()
 {
-	updateNewestResults(function(updatesAvailable)
+	canFetchNewestResults(function(canFetch)
 	{
-		if(updatesAvailable)
+		if(canFetch)
 		{
-			getUserMatchupGuesses(function(userMatchupGuesses)
+			updateNewestResults(function()
 			{
-				for(user in userMatchupGuesses)
+				getUserMatchupGuesses(function(userMatchupGuesses)
 				{
-					var userId = userMatchupGuesses[user].user_id;
-					var score = userMatchupGuesses[user].score;
-					grantScore(userId, score);
-				}
+					for(user in userMatchupGuesses)
+					{
+						var userId = userMatchupGuesses[user].user_id;
+						var score = userMatchupGuesses[user].score;
+						grantScore(userId, score);
+					}
+				});
 			});
 		}
 	});
@@ -95,92 +98,82 @@ var getActualMatchups = function(callback)
 
 var updateNewestResults = function(callback)
 {
-	canFetchNewestResults(function(canFetch)
+	var options =
 	{
-		if(canFetch)
+		host: 'www.kimonolabs.com',
+		path: 'https://www.kimonolabs.com/api/6o1ie372?apikey=b5e0dc064de0b4591f16d850ae429fca',
+		method: 'GET'
+	};
+
+	var apiRequest = https.request(options, function(apiResponse)
+	{
+		var requestBody = "";
+		apiResponse.on('data', function(data)
 		{
-	   		var options =
+			requestBody += data;
+		});
+		apiResponse.on('end', function()
+		{
+			try
 			{
-				host: 'www.kimonolabs.com',
-				path: 'https://www.kimonolabs.com/api/6o1ie372?apikey=b5e0dc064de0b4591f16d850ae429fca',
-				method: 'GET'
-			};
-
-			var apiRequest = https.request(options, function(apiResponse)
-			{
-				var requestBody = "";
-				apiResponse.on('data', function(data)
+				var file = __dirname + '/../files/results2014.json';
+				var jsonRequestResults = JSON.stringify(JSON.parse(requestBody));
+				var jsonRequestResultsBody = JSON.parse(requestBody);
+				fs.readFile(file, 'utf8', function (err, readData) 
 				{
-					requestBody += data;
-				});
-				apiResponse.on('end', function()
-				{
-					try
+					if (err)
 					{
-						var file = __dirname + '/../files/results2014.json';
-						var jsonRequestResults = JSON.stringify(JSON.parse(requestBody));
-						var jsonRequestResultsBody = JSON.parse(requestBody);
-						fs.readFile(file, 'utf8', function (err, readData) 
+					    console.log('Error: ' + err);
+						fs.writeFile(file, jsonRequestResults, 'utf8', function()
 						{
-							if (err)
-							{
-							    console.log('Error: ' + err);
-								fs.writeFile(file, jsonRequestResults, 'utf8', function()
-								{
-									notifyFetch();
-									console.log('Failed to read results, updated anyway.');
-									callback(true);
-								});
-							}
-							else
-							{
-								var currentData = JSON.parse(readData);
-								var hasNotChanged = JSON.stringify(jsonRequestResultsBody) === JSON.stringify(currentData);
-
-								if(hasNotChanged)
-								{
-									console.log("Nothing has changed.");
-									callback(false);
-								}
-								else
-								{
-									// Update the file and indicate that user scores can be updated.
-									try
-									{
-										fs.writeFile(file, jsonRequestResults, 'utf8', function()
-										{
-											notifyFetch();
-											console.log('Updated newest results.');
-											callback(true);
-										});
-									}
-									catch(writeFileException)
-									{
-										console.log("Failed to update newest results; " + writeFileException);
-										callback(false);
-									}
-								}
-							}
+							notifyFetch();
+							console.log('Failed to read results, updated anyway.');
+							callback();
 						});
 					}
-					catch(err2)
+					else
 					{
-						console.log('Problem with request: ' + err2.message);
-						callback(false);
+						notifyFetch();
+						var currentData = JSON.parse(readData);
+						var hasNotChanged = JSON.stringify(jsonRequestResultsBody) === JSON.stringify(currentData);
+
+						if(hasNotChanged)
+						{
+							console.log("Nothing has changed.");
+							callback();
+						}
+						else
+						{
+							// Update the file and indicate that user scores can be updated.
+							try
+							{
+								fs.writeFile(file, jsonRequestResults, 'utf8', function()
+								{
+									console.log('Updated newest results.');
+									callback();
+								});
+							}
+							catch(writeFileException)
+							{
+								console.log("Failed to update newest results; " + writeFileException);
+								callback();
+							}
+						}
 					}
 				});
-			});
-			apiRequest.on('error', function(e)
+			}
+			catch(err2)
 			{
-				console.log('Error: ' + e.message);
-			});
-			apiRequest.end();
-		}
-		else
-		{
-			callback(false);
-		}
+				console.log('Problem with request: ' + err2.message);
+				callback();
+			}
+		});
 	});
+	apiRequest.on('error', function(e)
+	{
+		console.log('Error: ' + e.message);
+	});
+	apiRequest.end();
 }
 
 var canFetchNewestResults = function(callback)
@@ -193,13 +186,14 @@ var canFetchNewestResults = function(callback)
 			if(err) throw err;
 			con.release();
 			var newBase = result[0] == null;
+			var mins = 30;
 			if(newBase)
 			{
 				callback(true);
 			}
 			else
 			{
-				var newDateObjTime = (new Date(result[0].fetched.getTime())).getTime() + 15*60000;
+				var newDateObjTime = (new Date(result[0].fetched.getTime())).getTime() + mins*60000;
 				var now = (new Date).getTime();
 				var timeHasPassed = now > newDateObjTime;
 				callback(timeHasPassed);
@@ -269,94 +263,91 @@ var getUserMatchupGuesses = function(callback)
 				{
 					var userId = activeUsers[user].user_id;
 					var userTempObject = {_id : userId};
-					var scores = {user_id: userId, score: 0};
-
-					/* Special guesses */
 
 					dbselect.getTopGroupScorers(userTempObject, function(topScorersGuesses)
 					{
 						dbselect.getActualGroupTopScorers(function(topScorers)
 						{
-							for(guess in topScorersGuesses)
+							var scores = {user_id: topScorersGuesses[0].user_id, score: 0};
+							for(guess in topScorersGuesses) /* Group topscorer special guesses */
 							{
 								for(actual in topScorers)
 								{
 									if(topScorers[actual].player_id == topScorersGuesses[guess].scorer_id)
 									{
 										scores.score += 2; /* Correct group top scorer */
+										//console.log("Correct group top scorer " + topScorersGuesses[guess].scorer_id);
 									}
 								}
 							}
+							for(actualMatchup in actualMatchups) /* Normal matchup guesses */
+							{
+								var actualMatchupId = actualMatchups[actualMatchup].matchup_id;
+								var actualMatchupScoreline = actualMatchups[actualMatchup].scoreline;
+								var actualHomeScorers = actualMatchups[actualMatchup].homescorers;
+								var actualAwayScorers = actualMatchups[actualMatchup].awayscorers;
+								for(userMatchup in userMatchups)
+								{
+									var userMatchupId = userMatchups[userMatchup].matchup_id;
+									var userMatchupUserId = userMatchups[userMatchup].user_id;
+									var userMatchupScoreline = userMatchups[userMatchup].scoreline;
+									var userMatchupScorerName = userMatchups[userMatchup].scorer_name;
+									if(topScorersGuesses[0].user_id == userMatchupUserId)
+									{
+										if(userMatchupId == actualMatchupId)
+										{
+											var correctScoreline = userMatchupScoreline == actualMatchupScoreline;
+											// Exact correct result.
+											var correctHomeGoals = parseInt(actualMatchupScoreline.split('–')[0]);
+											var correctAwayGoals = parseInt(actualMatchupScoreline.split('–')[1]);
+											var userMatchupHomeGoals = parseInt(userMatchupScoreline.split('–')[0]);
+											var userMatchupAwayGoals = parseInt(userMatchupScoreline.split('–')[1]);
+											if(correctScoreline)
+											{
+												scores.score += 3;
+												//console.log(scores.user_id + " granted 3 points for exact correct score (" + actualMatchupScoreline + ") in " + actualMatchupId);
+											}
+											legitGoals(correctHomeGoals, correctAwayGoals, userMatchupHomeGoals, userMatchupAwayGoals, function(legit, chg, cag, uhg, uag)
+											{
+												if(legit)
+												{
+													// Correct 1X2
+													var userHomeTeamWins = uhg > uag;
+													var correctHomeTeamWins = chg > cag;
+													var userAwayTeamWins = uhg < uag;
+													var correctAwayTeamWins = chg < cag;
+													var userTie = uhg == uag;
+													var correctTie = chg == cag;
+													var userGuessedCorrectHome = userHomeTeamWins && correctHomeTeamWins;
+													var userGuessedCorrectAway = userAwayTeamWins && correctAwayTeamWins;
+													var userGuessedCorrectTie = userTie && correctTie;
+													var correctGuess = userGuessedCorrectHome || userGuessedCorrectAway || userGuessedCorrectTie;
+													if(correctGuess)
+													{
+														scores.score += 2;
+														//console.log(scores.user_id + " granted 2 points for correct 1 times 2 in matchup " + actualMatchupId);
+													}
+												}
+											});
+											fixScorerName(userMatchupScorerName, function(fixedUserMatchupScorerName)
+											{
+												var correctHomeScorerGuess = actualHomeScorers.indexOf(fixedUserMatchupScorerName) != -1;
+												var correctAwayScorerGuess = actualAwayScorers.indexOf(fixedUserMatchupScorerName) != -1;
+												var correctScorer = correctHomeScorerGuess || correctAwayScorerGuess;
+												// Correct scorer.
+												if(correctScorer)
+												{
+													scores.score += 2;
+													//console.log(scores.user_id + " granted 2 points for correct scorer; " + fixedUserMatchupScorerName + " instead of " + userMatchupScorerName);
+												}
+											});
+										}
+									}
+								}
+							}
+							userMatchupScores.push(scores);
 						});
 					});
-
-					//console.log(actualMatchups);
-					for(actualMatchup in actualMatchups)
-					{
-						var actualMatchupId = actualMatchups[actualMatchup].matchup_id;
-						var actualMatchupScoreline = actualMatchups[actualMatchup].scoreline;
-						var actualHomeScorers = actualMatchups[actualMatchup].homescorers;
-						var actualAwayScorers = actualMatchups[actualMatchup].awayscorers;
-						for(userMatchup in userMatchups)
-						{
-							var userMatchupId = userMatchups[userMatchup].matchup_id;
-							var userMatchupUserId = userMatchups[userMatchup].user_id;
-							var userMatchupScoreline = userMatchups[userMatchup].scoreline;
-							var userMatchupScorerName = userMatchups[userMatchup].scorer_name;
-							if(userId == userMatchupUserId)
-							{
-								if(userMatchupId == actualMatchupId)
-								{
-									var correctScoreline = userMatchupScoreline == actualMatchupScoreline;
-									// Exact correct result.
-									var correctHomeGoals = parseInt(actualMatchupScoreline.split('–')[0]);
-									var correctAwayGoals = parseInt(actualMatchupScoreline.split('–')[1]);
-									var userMatchupHomeGoals = parseInt(userMatchupScoreline.split('–')[0]);
-									var userMatchupAwayGoals = parseInt(userMatchupScoreline.split('–')[1]);
-									if(correctScoreline)
-									{
-										scores.score += 3;
-										//console.log(scores.user_id + " granted 3 points for exact correct score (" + actualMatchupScoreline + ") in " + actualMatchupId);
-									}
-									legitGoals(correctHomeGoals, correctAwayGoals, userMatchupHomeGoals, userMatchupAwayGoals, function(legit, chg, cag, uhg, uag)
-									{
-										if(legit)
-										{
-											// Correct 1X2
-											var userHomeTeamWins = uhg > uag;
-											var correctHomeTeamWins = chg > cag;
-											var userAwayTeamWins = uhg < uag;
-											var correctAwayTeamWins = chg < cag;
-											var userTie = uhg == uag;
-											var correctTie = chg == cag;
-											var userGuessedCorrectHome = userHomeTeamWins && correctHomeTeamWins;
-											var userGuessedCorrectAway = userAwayTeamWins && correctAwayTeamWins;
-											var userGuessedCorrectTie = userTie && correctTie;
-											var correctGuess = userGuessedCorrectHome || userGuessedCorrectAway || userGuessedCorrectTie;
-											if(correctGuess)
-											{
-												scores.score += 2;
-												//console.log(scores.user_id + " granted 2 points for correct 1 times 2 in matchup " + actualMatchupId);
-											}
-										}
-									});
-									fixScorerName(userMatchupScorerName, function(fixedUserMatchupScorerName)
-									{
-										var correctHomeScorerGuess = actualHomeScorers.indexOf(fixedUserMatchupScorerName) != -1;
-										var correctAwayScorerGuess = actualAwayScorers.indexOf(fixedUserMatchupScorerName) != -1;
-										var correctScorer = correctHomeScorerGuess || correctAwayScorerGuess;
-										// Correct scorer.
-										if(correctScorer)
-										{
-											scores.score += 2;
-											//console.log(scores.user_id + " granted 2 points for correct scorer; " + fixedUserMatchupScorerName + " instead of " + userMatchupScorerName);
-										}
-									});
-								}
-							}
-						}
-					}
-					userMatchupScores.push(scores);
 				}
 				setTimeout(function(){callback(userMatchupScores)}, 1000);
 			});
