@@ -154,3 +154,57 @@ CREATE TABLE IF NOT EXISTS results_fetches
 	id BIGINT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	fetched TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS group_top_scorers
+(
+	id BIGINT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	group_id MEDIUMINT UNSIGNED NOT NULL REFERENCES groups(id),
+	player_id MEDIUMINT UNSIGNED NOT NULL REFERENCES players(id),
+	CONSTRAINT uc_group_player UNIQUE (group_id, player_id)
+);
+INSERT INTO group_top_scorers(group_id, player_id) VALUES(1, 153);
+INSERT INTO group_top_scorers(group_id, player_id) VALUES(2, 626);
+INSERT INTO group_top_scorers(group_id, player_id) VALUES(2, 640);
+INSERT INTO group_top_scorers(group_id, player_id) VALUES(3, 231);
+INSERT INTO group_top_scorers(group_id, player_id) VALUES(4, 697);
+INSERT INTO group_top_scorers(group_id, player_id) VALUES(5, 384);
+INSERT INTO group_top_scorers(group_id, player_id) VALUES(6, 77);
+INSERT INTO group_top_scorers(group_id, player_id) VALUES(7, 321);
+INSERT INTO group_top_scorers(group_id, player_id) VALUES(8, 352);
+/*
+Neymar
+Robben og Robin van Persie
+James Rodriguez
+Suarez
+Enner Valencia
+Messi
+Müller
+Slimani
+
+Neymar 152
+Robben og Robin van Persie 715 721
+James Rodriguez 255
+Suarez 838
+Enner Valencia 380
+Messi 74
+Müller 320
+Slimani 354
+
+
+CREATE TABLE IF NOT EXISTS group_top_scorers
+(
+	id BIGINT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	group_id MEDIUMINT UNSIGNED NOT NULL REFERENCES groups(id),
+	player_id MEDIUMINT UNSIGNED NOT NULL REFERENCES players(id),
+	CONSTRAINT uc_group_player UNIQUE (group_id, player_id)
+);
+INSERT INTO group_top_scorers(group_id, player_id) VALUES(1, 152);
+INSERT INTO group_top_scorers(group_id, player_id) VALUES(2, 715);
+INSERT INTO group_top_scorers(group_id, player_id) VALUES(2, 721);
+INSERT INTO group_top_scorers(group_id, player_id) VALUES(3, 255);
+INSERT INTO group_top_scorers(group_id, player_id) VALUES(4, 838);
+INSERT INTO group_top_scorers(group_id, player_id) VALUES(5, 380);
+INSERT INTO group_top_scorers(group_id, player_id) VALUES(6, 74);
+INSERT INTO group_top_scorers(group_id, player_id) VALUES(7, 320);
+INSERT INTO group_top_scorers(group_id, player_id) VALUES(8, 354);
+*/
