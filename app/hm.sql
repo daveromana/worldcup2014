@@ -171,6 +171,20 @@ INSERT INTO group_top_scorers(group_id, player_id) VALUES(5, 384);
 INSERT INTO group_top_scorers(group_id, player_id) VALUES(6, 77);
 INSERT INTO group_top_scorers(group_id, player_id) VALUES(7, 321);
 INSERT INTO group_top_scorers(group_id, player_id) VALUES(8, 352);
+
+CREATE TABLE IF NOT EXISTS tournament_top_teams
+(
+	id BIGINT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	place INT UNIQUE NOT NULL,
+	country_id MEDIUMINT UNSIGNED UNIQUE NOT NULL REFERENCES countries(id)
+);
+
+INSERT INTO tournament_top_teams(place, country_id) VALUES(1, 26);
+INSERT INTO tournament_top_teams(place, country_id) VALUES(2, 22);
+INSERT INTO tournament_top_teams(place, country_id) VALUES(3, 5);
+
+
+
 /*
 Neymar
 Robben og Robin van Persie
