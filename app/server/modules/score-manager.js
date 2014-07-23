@@ -253,103 +253,143 @@ var getUserMatchupGuesses = function(callback)
 	/* Get the real results */
 	getActualMatchups(function(actualMatchups) /* matchups */
 	{
-		/* Get all users who have made a guess */
-		leaguemanager.getAllActiveGuessUser(function(activeUsers)
+		 /* Get the real top teams*/
+		dbselect.getTournamentTopTeams(function(actualTopTeams)
 		{
-			/* Get all matchup guesses that users have submitted */
-			getUserMatchups(function(userMatchups)
+			/* Get all users who have made a guess */
+			leaguemanager.getAllActiveGuessUser(function(activeUsers)
 			{
-				for(user in activeUsers)
+				/* Get all matchup guesses that users have submitted */
+				getUserMatchups(function(userMatchups)
 				{
-					var userId = activeUsers[user].user_id;
-					var userTempObject = {_id : userId};
-
-					dbselect.getTopGroupScorers(userTempObject, function(topScorersGuesses)
+					for(user in activeUsers)
 					{
-						dbselect.getActualGroupTopScorers(function(topScorers)
+						var userId = activeUsers[user].user_id;
+						var userTempObject = {_id : userId};
+
+						dbselect.getTopGroupScorers(userTempObject, function(topScorersGuesses)
 						{
-							var scores = {user_id: topScorersGuesses[0].user_id, score: 0};
-							for(guess in topScorersGuesses) /* Group topscorer special guesses */
+							dbselect.getActualGroupTopScorers(function(topScorers)
 							{
-								for(actual in topScorers)
+								var scores = {user_id: topScorersGuesses[0].user_id, score: 0};
+								var currentUserObject = {_id : scores.user_id};
+								dbselect.getTopTeamsGuesses(currentUserObject, function(topTeamsGuesses)
 								{
-									if(topScorers[actual].player_id == topScorersGuesses[guess].scorer_id)
+									var bonusPointsCount = 0;
+									for(topTeam in topTeamsGuesses)
 									{
-										scores.score += 2; /* Correct group top scorer */
-										//console.log("Correct group top scorer " + topScorersGuesses[guess].scorer_id);
-									}
-								}
-							}
-							for(actualMatchup in actualMatchups) /* Normal matchup guesses */
-							{
-								var actualMatchupId = actualMatchups[actualMatchup].matchup_id;
-								var actualMatchupScoreline = actualMatchups[actualMatchup].scoreline;
-								var actualHomeScorers = actualMatchups[actualMatchup].homescorers;
-								var actualAwayScorers = actualMatchups[actualMatchup].awayscorers;
-								for(userMatchup in userMatchups)
-								{
-									var userMatchupId = userMatchups[userMatchup].matchup_id;
-									var userMatchupUserId = userMatchups[userMatchup].user_id;
-									var userMatchupScoreline = userMatchups[userMatchup].scoreline;
-									var userMatchupScorerName = userMatchups[userMatchup].scorer_name;
-									if(topScorersGuesses[0].user_id == userMatchupUserId)
-									{
-										if(userMatchupId == actualMatchupId)
+										var currentTopTeamGuess = topTeamsGuesses[topTeam];
+										for(actualTopTeam in actualTopTeams)
 										{
-											var correctScoreline = userMatchupScoreline == actualMatchupScoreline;
-											// Exact correct result.
-											var correctHomeGoals = parseInt(actualMatchupScoreline.split('–')[0]);
-											var correctAwayGoals = parseInt(actualMatchupScoreline.split('–')[1]);
-											var userMatchupHomeGoals = parseInt(userMatchupScoreline.split('–')[0]);
-											var userMatchupAwayGoals = parseInt(userMatchupScoreline.split('–')[1]);
-											if(correctScoreline)
+											var currentActualTopTeam = actualTopTeams[actualTopTeam];
+											if(currentActualTopTeam.country_id == currentTopTeamGuess.country_id)
 											{
-												scores.score += 3;
-												//console.log(scores.user_id + " granted 3 points for exact correct score (" + actualMatchupScoreline + ") in " + actualMatchupId);
+												if(currentTopTeamGuess.place == currentActualTopTeam.place)
+												{
+													bonusPointsCount += 1;
+													var correctPlaceScore = 5 - currentActualTopTeam.place;
+													scores.score += correctPlaceScore;
+													//console.log("\n" + scores.user_id + " granted " + correctPlaceScore + " pt for correct team in top 3, more precisely " + currentActualTopTeam.country_id + " in place " + currentActualTopTeam.place);
+												}
+												else
+												{
+													scores.score += 1;
+													//console.log("\n" + scores.user_id + " granted 1 pt for correct team in top 3 but wrong place, more precisely " + currentActualTopTeam.country_id + " in place " + currentTopTeamGuess.place);
+												}
 											}
-											legitGoals(correctHomeGoals, correctAwayGoals, userMatchupHomeGoals, userMatchupAwayGoals, function(legit, chg, cag, uhg, uag)
-											{
-												if(legit)
-												{
-													// Correct 1X2
-													var userHomeTeamWins = uhg > uag;
-													var correctHomeTeamWins = chg > cag;
-													var userAwayTeamWins = uhg < uag;
-													var correctAwayTeamWins = chg < cag;
-													var userTie = uhg == uag;
-													var correctTie = chg == cag;
-													var userGuessedCorrectHome = userHomeTeamWins && correctHomeTeamWins;
-													var userGuessedCorrectAway = userAwayTeamWins && correctAwayTeamWins;
-													var userGuessedCorrectTie = userTie && correctTie;
-													var correctGuess = userGuessedCorrectHome || userGuessedCorrectAway || userGuessedCorrectTie;
-													if(correctGuess)
-													{
-														scores.score += 2;
-														//console.log(scores.user_id + " granted 2 points for correct 1 times 2 in matchup " + actualMatchupId);
-													}
-												}
-											});
-											fixScorerName(userMatchupScorerName, function(fixedUserMatchupScorerName)
-											{
-												var correctHomeScorerGuess = actualHomeScorers.indexOf(fixedUserMatchupScorerName) != -1;
-												var correctAwayScorerGuess = actualAwayScorers.indexOf(fixedUserMatchupScorerName) != -1;
-												var correctScorer = correctHomeScorerGuess || correctAwayScorerGuess;
-												// Correct scorer.
-												if(correctScorer)
-												{
-													scores.score += 2;
-													//console.log(scores.user_id + " granted 2 points for correct scorer; " + fixedUserMatchupScorerName + " instead of " + userMatchupScorerName);
-												}
-											});
+										}
+									}
+									if(bonusPointsCount > 2)
+									{
+										//console.log("\nBINGO\n");
+										/* Bonus 2 pts for guessing all top teams correctly */
+										scores.score += 2;
+										bonusPointsCount = 0;
+									}
+								});
+
+								for(guess in topScorersGuesses) /* Group topscorer special guesses */
+								{
+									for(actual in topScorers)
+									{
+										if(topScorers[actual].player_id == topScorersGuesses[guess].scorer_id)
+										{
+											scores.score += 2; /* Correct group top scorer */
+											//console.log(scores.user_id + " granted 2 pts for correct group top scorer " + topScorersGuesses[guess].scorer_id);
 										}
 									}
 								}
-							}
-							userMatchupScores.push(scores);
+								for(actualMatchup in actualMatchups) /* Normal matchup guesses */
+								{
+									var actualMatchupId = actualMatchups[actualMatchup].matchup_id;
+									var actualMatchupScoreline = actualMatchups[actualMatchup].scoreline;
+									var actualHomeScorers = actualMatchups[actualMatchup].homescorers;
+									var actualAwayScorers = actualMatchups[actualMatchup].awayscorers;
+									for(userMatchup in userMatchups)
+									{
+										var userMatchupId = userMatchups[userMatchup].matchup_id;
+										var userMatchupUserId = userMatchups[userMatchup].user_id;
+										var userMatchupScoreline = userMatchups[userMatchup].scoreline;
+										var userMatchupScorerName = userMatchups[userMatchup].scorer_name;
+										if(topScorersGuesses[0].user_id == userMatchupUserId)
+										{
+											if(userMatchupId == actualMatchupId)
+											{
+												var correctScoreline = userMatchupScoreline == actualMatchupScoreline;
+												// Exact correct result.
+												var correctHomeGoals = parseInt(actualMatchupScoreline.split('–')[0]);
+												var correctAwayGoals = parseInt(actualMatchupScoreline.split('–')[1]);
+												var userMatchupHomeGoals = parseInt(userMatchupScoreline.split('–')[0]);
+												var userMatchupAwayGoals = parseInt(userMatchupScoreline.split('–')[1]);
+												if(correctScoreline)
+												{
+													scores.score += 3;
+													//console.log(scores.user_id + " granted 3 points for exact correct score (" + actualMatchupScoreline + ") in " + actualMatchupId);
+												}
+												legitGoals(correctHomeGoals, correctAwayGoals, userMatchupHomeGoals, userMatchupAwayGoals, function(legit, chg, cag, uhg, uag)
+												{
+													if(legit)
+													{
+														// Correct 1X2
+														var userHomeTeamWins = uhg > uag;
+														var correctHomeTeamWins = chg > cag;
+														var userAwayTeamWins = uhg < uag;
+														var correctAwayTeamWins = chg < cag;
+														var userTie = uhg == uag;
+														var correctTie = chg == cag;
+														var userGuessedCorrectHome = userHomeTeamWins && correctHomeTeamWins;
+														var userGuessedCorrectAway = userAwayTeamWins && correctAwayTeamWins;
+														var userGuessedCorrectTie = userTie && correctTie;
+														var correctGuess = userGuessedCorrectHome || userGuessedCorrectAway || userGuessedCorrectTie;
+														if(correctGuess)
+														{
+															scores.score += 2;
+															//console.log(scores.user_id + " granted 2 points for correct 1 times 2 in matchup " + actualMatchupId);
+														}
+													}
+												});
+												fixScorerName(userMatchupScorerName, function(fixedUserMatchupScorerName)
+												{
+													var correctHomeScorerGuess = actualHomeScorers.indexOf(fixedUserMatchupScorerName) != -1;
+													var correctAwayScorerGuess = actualAwayScorers.indexOf(fixedUserMatchupScorerName) != -1;
+													var correctScorer = correctHomeScorerGuess || correctAwayScorerGuess;
+													// Correct scorer.
+													if(correctScorer)
+													{
+														scores.score += 2;
+														//console.log(scores.user_id + " granted 2 points for correct scorer; " + fixedUserMatchupScorerName + " instead of " + userMatchupScorerName);
+													}
+												});
+											}
+										}
+									}
+								}
+								userMatchupScores.push(scores);
+							});
 						});
-					});
-				}
-				setTimeout(function(){callback(userMatchupScores)}, 1000);
+					}
+					setTimeout(function(){callback(userMatchupScores)}, 1000);
+				});
 			});
 		});
 	});

@@ -57,6 +57,20 @@ var getTopGroupScorers = function(user, callback)
 	});
 }
 
+var getTournamentTopTeams = function(callback)
+{
+	pool.getConnection(function(connError, con)
+	{
+		var selectQuery = "SELECT t.country_id, t.place FROM tournament_top_teams t";
+		var query = con.query(selectQuery, function(err, result, fields)
+		{
+			if(err) throw err;
+			con.release();
+			callback(result);
+		});
+	});
+}
+
 var getActualGroupTopScorers = function(callback)
 {
 	pool.getConnection(function(connError, con)
@@ -76,7 +90,7 @@ var getTopTeamsGuesses = function(user, callback)
 	var userId = user._id;
 	pool.getConnection(function(connError, con)
 	{
-		var selectQuery = "SELECT t.place, t.country_id FROM tournament_top_teams_guesses t WHERE t.user_id = ?";
+		var selectQuery = "SELECT t.place, t.country_id, t.user_id FROM tournament_top_teams_guesses t WHERE t.user_id = ?";
 		var query = con.query(selectQuery, userId, function(err, result, fields)
 		{
 			if(err) throw err;
@@ -216,3 +230,4 @@ module.exports.getTournamentTopAssister = getTournamentTopAssister;
 module.exports.getLeagues = getLeagues;
 module.exports.getGroupIdOfMatchup = getGroupIdOfMatchup;
 module.exports.getActualGroupTopScorers = getActualGroupTopScorers;
+module.exports.getTournamentTopTeams = getTournamentTopTeams;
